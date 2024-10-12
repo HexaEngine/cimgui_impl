@@ -3,8 +3,6 @@ project(cimgui_impl)
 
 set(CMAKE_TOOLCHAIN_FILE "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
-set(CMAKE_SHARED_LIBRARY_PREFIX "")
-
 set (CMAKE_CXX_STANDARD 11)
 
 #general settings
