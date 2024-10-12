@@ -75,8 +75,7 @@ jobs:
       run: |
         cmake -S cimgui -B cimgui/build \
           -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} \
-          -DCMAKE_CXX_FLAGS="-F/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework" \
-          -DCMAKE_EXE_LINKER_FLAGS="-framework OpenGL"
+          -DCMAKE_CXX_FLAGS="-Wl,-framework,OpenGL"
 
     - name: Configure cimgui with CMake for Windows
       if: matrix.os == 'windows-latest'
