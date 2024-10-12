@@ -137,6 +137,7 @@ endif(BACKENDS_GLFW)
 #opengl3
 if (BACKENDS_OPENGL3)
 	message("Backends OPENGL3: ON")
+	find_package(OpenGL REQUIRED)
 	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_opengl3.cpp)
 	include_directories(imgui/examples/libs/gl3w)
 	if(WIN32)
