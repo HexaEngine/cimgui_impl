@@ -43,11 +43,14 @@ jobs:
         sudo apt-get install -y build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev
 
     - name: Install dependencies on MacOS
-      if: matrix.os == 'macos-latest'
+      if: matrix.os == 'macos-latest' && matrix.arch != 'x86_64'
       run: |
         brew install cmake sdl2 glfw glew glm
         
-    
+    - name: Install dependencies on MacOS
+      if: matrix.os == 'macos-latest' && matrix.arch == 'x86_64'
+      run: |
+        arch -x86_64 brew install cmake sdl2 glfw glew glm
       
     - name: Prepare Vulkan SDK
       if: matrix.os == 'macos-latest'
