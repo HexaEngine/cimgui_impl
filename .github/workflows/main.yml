@@ -8,19 +8,19 @@ jobs:
     strategy:
       matrix:
         include:
-#          - os: ubuntu-latest # Works
+#          - os: ubuntu-latest # Works (disabled for testing)
 #            arch: x86_64
 #            cmake-arch: x64
-#          - os: ubuntu-latest # Nope
+#          - os: ubuntu-latest # Nope (disabled for testing)
 #            arch: arm64
 #            cmake-arch: aarch64
-#          - os: windows-latest # Nope
-#            arch: x86_64
+#          - os: windows-latest # Nope (disabled for testing)
+#            arch: x86_64 
 #            cmake-arch: x64
-#          - os: windows-latest # Nope
+#          - os: windows-latest # Nope (disabled for testing)
 #            arch: x86
 #            cmake-arch: win32 
-#          - os: windows-latest # Nope
+#          - os: windows-latest # Nope (disabled for testing)
 #            arch: arm64
 #            cmake-arch: arm64
           - os: macos-latest
@@ -69,10 +69,14 @@ jobs:
     - name: Configure cimgui with CMake on Linux (x86_64)
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'x86_64'
       run: cmake -S cimgui -B cimgui/build
-
+      
     - name: Configure cimgui with CMake for macOS
       if: matrix.os == 'macos-latest'
-      run: cmake -S cimgui -B cimgui/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }}
+      run: |
+        cmake -S cimgui -B cimgui/build \
+          -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} \
+          -DCMAKE_CXX_FLAGS="-F/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework" \
+          -DCMAKE_EXE_LINKER_FLAGS="-framework OpenGL"
 
     - name: Configure cimgui with CMake for Windows
       if: matrix.os == 'windows-latest'
