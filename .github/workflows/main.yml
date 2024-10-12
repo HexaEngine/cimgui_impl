@@ -51,7 +51,7 @@ jobs:
         brew install cmake sdl2 glfw glew glm
       
     - name: Prepare Vulkan SDK
-      if: matrix.os == 'macos-latest' || matrix.os == 'macos-13' || matrix.os == 'windows-latest'
+      if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
       uses: humbletim/setup-vulkan-sdk@v1.2.0
       with:
        vulkan-query-version: 1.3.204.0
@@ -72,6 +72,8 @@ jobs:
         ./vcpkg/vcpkg install sdl2:${{ matrix.triplet }}
         ./vcpkg/vcpkg install glfw3:${{ matrix.triplet }}
         ./vcpkg/vcpkg install opengl:${{ matrix.triplet }}
+        ./vcpkg/vcpkg install vulkan:${{ matrix.triplet }}
+        ./vcpkg/vcpkg install glslang:${{ matrix.triplet }}
 
     - name: Install Cross-Compilation Tools for ARM64
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
