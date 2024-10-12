@@ -23,7 +23,7 @@ jobs:
 #          - os: windows-latest # Nope (disabled for testing)
 #            arch: arm64
 #            cmake-arch: arm64
-          - os: macos-latest
+          - os: macos-latest-large
             arch: x86_64
             cmake-arch: x86_64
           - os: macos-latest
