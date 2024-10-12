@@ -14,15 +14,15 @@ jobs:
           - os: ubuntu-latest
             arch: arm64
             cmake-arch: aarch64
-          - os: windows-latest
-            arch: x86_64
-            cmake-arch: x64
-          - os: windows-latest
-            arch: x86
-            cmake-arch: win32
-          - os: windows-latest
-            arch: arm64
-            cmake-arch: arm64
+#          - os: windows-latest
+#            arch: x86_64
+#            cmake-arch: x64
+#          - os: windows-latest
+#            arch: x86
+#            cmake-arch: win32
+#          - os: windows-latest
+#            arch: arm64
+#            cmake-arch: arm64
           - os: macos-latest
             arch: x86_64
             cmake-arch: x86_64
@@ -41,7 +41,12 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev
-        
+
+    - name: Install dependencies on MacOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install cmake sdl2 glfw glew
+        brew install --cask vulkan-sdk
 
     - name: Install Cross-Compilation Tools for ARM64
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
