@@ -1,0 +1,158 @@
+cmake_minimum_required(VERSION 3.8)
+project(cimgui_impl)
+
+set(CMAKE_TOOLCHAIN_FILE "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+
+if(WIN32) #to mingw work as all the others
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
+endif(WIN32)
+
+set (CMAKE_CXX_STANDARD 11)
+
+#general settings
+option(BACKENDS_WIN32 "" ON)
+option(BACKENDS_D3D11 "" ON)
+option(BACKENDS_D3D12 "" ON)
+option(BACKENDS_VULKAN "" ON)
+option(BACKENDS_GLFW "" ON)
+option(BACKENDS_OPENGL3 "" ON)
+option(BACKENDS_SDL2 "" ON)
+
+set(BAKENDS_FOLDER "imgui/backends/")
+
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_tables.cpp)
+	set(TABLES_SOURCE "imgui/imgui_tables.cpp")
+else()
+	set(TABLES_SOURCE "")
+endif()
+
+include_directories(imgui)
+add_definitions("-DIMGUI_DISABLE_OBSOLETE_FUNCTIONS=1")
+
+include_directories()
+set(IMGUI_SOURCES 
+cimgui_impl.cpp 
+imgui/imgui.cpp 
+imgui/imgui_draw.cpp 
+imgui/imgui_demo.cpp 
+imgui/imgui_widgets.cpp
+${TABLES_SOURCE} 
+)
+
+set(IMGUI_LIBRARIES )
+
+if (WIN32)
+    add_definitions("-DIMGUI_IMPL_API=extern \"C\" __declspec\(dllexport\)")
+else(WIN32)
+    add_definitions("-DIMGUI_IMPL_API=extern \"C\" ")
+endif(WIN32)
+
+add_compile_definitions("IMGUI_IMPL_OPENGL_LOADER_GL3W")
+
+#optional adding freetype
+option(IMGUI_FREETYPE "add Freetype2" OFF)
+
+if(IMGUI_FREETYPE)
+	FIND_PACKAGE(freetype REQUIRED PATHS ${FREETYPE_PATH})
+	list(APPEND IMGUI_LIBRARIES freetype)
+	list(APPEND IMGUI_SOURCES imgui/misc/freetype/imgui_freetype.cpp)
+	add_definitions("-DCIMGUI_FREETYPE=1")
+endif(IMGUI_FREETYPE)
+
+message("Building with:")
+if (BACKENDS_WIN32 AND WIN32)
+	message("Backends Win32: ON")
+	# win32
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_win32.cpp)
+
+	if (BACKENDS_D3D11)
+		message("Backends D3D11: ON")
+		# dx11
+		list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_dx11.cpp)
+	endif(BACKENDS_D3D11)
+
+	if (BACKENDS_D3D12)
+		message("Backends D3D12: ON")
+		# dx12
+		list(APPEND IMGUI_LIBRARIES dxgi.lib)
+		list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_dx12.cpp)
+	endif(BACKENDS_D3D12)
+endif(BACKENDS_WIN32 AND WIN32)
+
+if (BACKENDS_VULKAN)
+	message("Backends Vulkan: ON")
+	# vulkan
+	find_package(Vulkan REQUIRED)
+	list(APPEND IMGUI_LIBRARIES Vulkan::Vulkan)
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_vulkan.cpp)
+endif(BACKENDS_VULKAN)
+
+# GLFW
+if (BACKENDS_GLFW)
+	message("Backends GLFW: ON")
+	find_package(glfw3 REQUIRED)
+	list(APPEND IMGUI_LIBRARIES glfw)
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_glfw.cpp)
+endif(BACKENDS_GLFW)
+
+#opengl3
+if (BACKENDS_OPENGL3)
+	message("Backends OPENGL3: ON")
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_opengl3.cpp)
+	include_directories(imgui/examples/libs/gl3w)
+	if(WIN32)
+	    list(APPEND IMGUI_LIBRARIES opengl32)
+	else(WIN32)#Unix
+       list(APPEND IMGUI_LIBRARIES GL)
+	endif(WIN32)
+endif(BACKENDS_OPENGL3)
+
+#sdl2
+if (BACKENDS_SDL2)
+	message("Backends SDL2: ON")
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_sdl2.cpp)
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_sdlrenderer2.cpp)
+	if(DEFINED SDL_PATH)
+		message(STATUS "SDL_PATH defined as " ${SDL_PATH})
+		FIND_PACKAGE(SDL2 PATHS ${SDL_PATH})
+	else(DEFINED SDL_PATH)
+		# If SDL_PATH is not set, fallback and attempt to find SDL cmake script at a default location
+		find_package(SDL2 CONFIG REQUIRED)
+	endif(DEFINED SDL_PATH)
+
+	if(SDL2_FOUND)
+		get_target_property(SDL_INCLUDE SDL2::SDL2 INTERFACE_INCLUDE_DIRECTORIES)
+		message(STATUS "sdlinclude is " ${SDL_INCLUDE})
+		if ("${SDL_INCLUDE}" STREQUAL "" OR "${SDL_INCLUDE}" STREQUAL "SDL_INCLUDE-NOTFOUND") #if not found latest SDL2 cmake config use older
+			message(STATUS "sdlinclude2 is " ${SDL2_INCLUDE_DIRS})
+			include_directories(${SDL2_INCLUDE_DIRS})
+			set(IMGUI_SDL_LIBRARY ${SDL2_LIBRARIES})
+			message(STATUS IMGUI_SDL_LIBRARY ${SDL2_LIBRARIES})
+		else()#use new one SDL2 config
+			include_directories(${SDL_INCLUDE})
+			set(IMGUI_SDL_LIBRARY SDL2::SDL2)
+			set(SDL_MAIN SDL2::SDL2main)
+			message(STATUS ${SDL_MAIN} ${IMGUI_SDL_LIBRARY})
+		endif()
+	else(SDL2_FOUND)
+		if(DEFINED SDL_PATH)
+			message(FATAL_ERROR "Cannot find SDL at SDL_PATH")
+		else(DEFINED SDL_PATH)
+			message(FATAL_ERROR "Cannot find SDL. Maybe try specifying SDL_PATH?")
+		endif(DEFINED SDL_PATH)
+	endif(SDL2_FOUND)
+endif(BACKENDS_SDL2)
+
+add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
+
+if (MSVC)
+target_link_libraries(cimgui_impl ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY} delayimp)
+else(MSVC)
+target_link_libraries(cimgui_impl ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY})
+endif()
+
+
+if (MSVC)
+    target_link_options(cimgui_impl PRIVATE "/DELAYLOAD:glfw3.dll")
+	target_link_options(cimgui_impl PRIVATE "/DELAYLOAD:SDL2.dll")
+endif()
