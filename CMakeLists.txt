@@ -3,9 +3,7 @@ project(cimgui_impl)
 
 set(CMAKE_TOOLCHAIN_FILE "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
-if(WIN32) #to mingw work as all the others
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
-endif(WIN32)
 
 set (CMAKE_CXX_STANDARD 11)
 
