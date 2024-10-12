@@ -10,13 +10,56 @@ endif(WIN32)
 set (CMAKE_CXX_STANDARD 11)
 
 #general settings
-option(BACKENDS_WIN32 "" ON)
-option(BACKENDS_D3D11 "" ON)
-option(BACKENDS_D3D12 "" ON)
-option(BACKENDS_VULKAN "" ON)
-option(BACKENDS_GLFW "" ON)
-option(BACKENDS_OPENGL3 "" ON)
-option(BACKENDS_SDL2 "" ON)
+option(BACKENDS_WIN32 "Enable Win32 backend" ON)
+option(BACKENDS_D3D11 "Enable Direct3D 11 backend" ON)
+option(BACKENDS_D3D12 "Enable Direct3D 12 backend" ON)
+option(BACKENDS_VULKAN "Enable Vulkan backend" ON)
+option(BACKENDS_GLFW "Enable GLFW backend" ON)
+option(BACKENDS_OPENGL3 "Enable OpenGL 3 backend" ON)
+option(BACKENDS_OPENGL2 "Enable OpenGL 2 backend" ON)
+option(BACKENDS_SDL2 "Enable SDL2 backend" ON)
+
+# Automatically detect platform and set options accordingly
+if(WIN32)
+    message(STATUS "Configuring for Windows...") 
+elseif(APPLE)
+    message(STATUS "Configuring for macOS...")
+    set(BACKENDS_D3D11 OFF)
+    set(BACKENDS_D3D12 OFF)
+    
+elseif(UNIX AND NOT APPLE)
+    message(STATUS "Configuring for Linux...")
+    set(BACKENDS_D3D11 OFF)
+    set(BACKENDS_D3D12 OFF)
+endif()
+
+# Check for OpenGL
+find_package(OpenGL REQUIRED)
+if(OPENGL_FOUND)
+    message(STATUS "OpenGL found.")
+else()
+    message(STATUS "OpenGL not found, disabling OpenGL backends.")
+    set(BACKENDS_OPENGL2 OFF)
+    set(BACKENDS_OPENGL3 OFF)
+endif()
+
+# Check for SDL2
+find_package(SDL2 REQUIRED)
+if(SDL2_FOUND)
+    message(STATUS "SDL2 found.")
+else()
+    message(STATUS "SDL2 not found, disabling SDL2 backend.")
+    set(BACKENDS_SDL2 OFF)
+endif()
+
+# Check for GLFW
+find_package(glfw3 REQUIRED)
+if(glfw3_FOUND)
+    message(STATUS "GLFW found.")
+else()
+    message(STATUS "GLFW not found, disabling GLFW backend.")
+    set(BACKENDS_GLFW OFF)
+endif()
 
 set(BAKENDS_FOLDER "imgui/backends/")
 
@@ -107,6 +150,20 @@ if (BACKENDS_OPENGL3)
 	endif(WIN32)
 endif(BACKENDS_OPENGL3)
 
+#opengl2
+if (BACKENDS_OPENGL2)
+	message("Backends OPENGL2: ON")
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_opengl2.cpp)
+	include_directories(imgui/examples/libs/gl3w)
+	if (!BACKENDS_OPENGL3)
+		if(WIN32)
+			list(APPEND IMGUI_LIBRARIES opengl32)
+		else(WIN32)#Unix
+		list(APPEND IMGUI_LIBRARIES GL)
+		endif(WIN32)
+	endif(!BACKENDS_OPENGL3)
+endif(BACKENDS_OPENGL2)
+
 #sdl2
 if (BACKENDS_SDL2)
 	message("Backends SDL2: ON")
@@ -144,6 +201,56 @@ if (BACKENDS_SDL2)
 endif(BACKENDS_SDL2)
 
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
+
+if(BACKENDS_WIN32)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_WIN32=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_WIN32=0)
+endif()
+
+if(BACKENDS_D3D11)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_D3D11=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_D3D11=0)
+endif()
+
+if(BACKENDS_D3D12)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_D3D12=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_D3D12=0)
+endif()
+
+if(BACKENDS_VULKAN)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_VULKAN=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_VULKAN=0)
+endif()
+
+if(BACKENDS_GLFW)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_GLFW=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_GLFW=0)
+endif()
+
+if(BACKENDS_OPENGL2)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_OPENGL2=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_OPENGL2=0)
+endif()
+
+if(BACKENDS_OPENGL3)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_OPENGL3=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_OPENGL3=0)
+endif()
+
+if(BACKENDS_SDL2)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_SDL2=1)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_SDL2Renderer=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_SDL2=0)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_SDL2Renderer=0)
+endif()
 
 if (MSVC)
 target_link_libraries(cimgui_impl ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY} delayimp)
