@@ -141,9 +141,9 @@ if (BACKENDS_OPENGL3)
 	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_opengl3.cpp)
 	include_directories(imgui/examples/libs/gl3w)
 	if(WIN32)
-	    list(APPEND IMGUI_LIBRARIES opengl32)
+	    list(APPEND IMGUI_LIBRARIES ${OPENGL_LIBRARIES})
 	else(WIN32)#Unix
-       list(APPEND IMGUI_LIBRARIES GL)
+       list(APPEND IMGUI_LIBRARIES ${OPENGL_LIBRARIES})
 	endif(WIN32)
 endif(BACKENDS_OPENGL3)
 
