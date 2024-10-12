@@ -48,12 +48,12 @@ jobs:
         brew install cmake sdl2 glfw glew glm
         
     - name: Install dependencies on MacOS
-      if: matrix.os == 'macos-latest' && matrix.arch == 'x86_64'
+      if: matrix.os == 'macos-13'
       run: |
         arch -x86_64 brew install cmake sdl2 glfw glew glm
       
     - name: Prepare Vulkan SDK
-      if: matrix.os == 'macos-latest'
+      if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
       uses: humbletim/setup-vulkan-sdk@v1.2.0
       with:
        vulkan-query-version: 1.3.204.0
@@ -74,7 +74,7 @@ jobs:
       run: cmake -S cimgui -B cimgui/build
       
     - name: Configure cimgui with CMake for macOS
-      if: matrix.os == 'macos-latest'
+      if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
       run: |
         cmake -S cimgui -B cimgui/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} 
 
