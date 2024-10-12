@@ -94,7 +94,12 @@ jobs:
         cmake -S cimgui -B cimgui/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} 
 
     - name: Configure cimgui with CMake for Windows
-      if: matrix.os == 'windows-latest'
+      if: matrix.os == 'windows-latest' && matrix.arch == 'x86'
+      run: |
+        cd cimgui
+        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_D3D12=OFF
+    - name: Configure cimgui with CMake for Windows
+      if: matrix.os == 'windows-latest' && matrix.arch != 'x86'
       run: |
         cd cimgui
         cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake"
