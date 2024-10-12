@@ -8,19 +8,19 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            arch: x86_64
-            cmake-arch: x64
-          - os: ubuntu-latest
-            arch: arm64
-            cmake-arch: aarch64
-#          - os: windows-latest
+#          - os: ubuntu-latest # Works (disabled for testing)
 #            arch: x86_64
 #            cmake-arch: x64
-#          - os: windows-latest
+#          - os: ubuntu-latest # Nope (disabled for testing)
+#            arch: arm64
+#            cmake-arch: aarch64
+#          - os: windows-latest # Nope (disabled for testing)
+#            arch: x86_64 
+#            cmake-arch: x64
+#          - os: windows-latest # Nope (disabled for testing)
 #            arch: x86
-#            cmake-arch: win32
-#          - os: windows-latest
+#            cmake-arch: win32 
+#          - os: windows-latest # Nope (disabled for testing)
 #            arch: arm64
 #            cmake-arch: arm64
           - os: macos-latest
@@ -45,7 +45,7 @@ jobs:
     - name: Install dependencies on MacOS
       if: matrix.os == 'macos-latest'
       run: |
-        brew install cmake sdl2 glfw glew
+        brew install cmake sdl2 glfw glew glm
         
     
       
@@ -54,7 +54,7 @@ jobs:
       uses: humbletim/setup-vulkan-sdk@v1.2.0
       with:
        vulkan-query-version: 1.3.204.0
-       vulkan-components: Vulkan-Headers, Vulkan-Loader
+       vulkan-components: Vulkan-Headers, Vulkan-Loader, Glslang 
        vulkan-use-cache: true
 
     - name: Install Cross-Compilation Tools for ARM64
@@ -69,10 +69,13 @@ jobs:
     - name: Configure cimgui with CMake on Linux (x86_64)
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'x86_64'
       run: cmake -S cimgui -B cimgui/build
-
+      
     - name: Configure cimgui with CMake for macOS
       if: matrix.os == 'macos-latest'
-      run: cmake -S cimgui -B cimgui/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }}
+      run: |
+        cmake -S cimgui -B cimgui/build \
+          -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} \
+          -DCMAKE_CXX_FLAGS="-Wl,-framework,OpenGL"
 
     - name: Configure cimgui with CMake for Windows
       if: matrix.os == 'windows-latest'
