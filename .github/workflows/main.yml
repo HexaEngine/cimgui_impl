@@ -46,7 +46,7 @@ jobs:
       if: matrix.os == 'macos-latest'
       run: |
         brew install cmake sdl2 glfw glew
-        brew cask install apenngrace/vulkan/vulkan-sdk
+        brew install vulkan-headers
 
     - name: Install Cross-Compilation Tools for ARM64
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
