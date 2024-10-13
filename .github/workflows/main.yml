@@ -72,7 +72,7 @@ jobs:
         cd cimgui
         ./vcpkg/vcpkg install sdl2:${{ matrix.triplet }}
         ./vcpkg/vcpkg install glfw3:${{ matrix.triplet }}
-        ./vcpkg/vcpkg install opengl:${{ matrix.triplet }}
+ #       ./vcpkg/vcpkg install opengl:${{ matrix.triplet }}
         ./vcpkg/vcpkg install vulkan:${{ matrix.triplet }}
         ./vcpkg/vcpkg install glslang:${{ matrix.triplet }}
 
@@ -94,7 +94,7 @@ jobs:
       if: matrix.os == 'windows-latest' && matrix.arch != 'x86'
       run: |
         cd cimgui
-        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DGLU_LIBRARY="C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22000.0/um/arm64/glu32.lib" --verbose=1
+        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake"
 
     - name: Build cimgui
       run: cmake --build cimgui/build --config Release
@@ -102,7 +102,7 @@ jobs:
     - name: Move Windows binaries
       if: matrix.os == 'windows-latest'
       run: |
-        mv cimgui/build/Release/*.dll cimgui/build/ --verbose=1
+        mv cimgui/build/Release/*.dll cimgui/build/
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4.3.4
