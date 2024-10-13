@@ -13,22 +13,30 @@ jobs:
             cmake-arch: arm64
             triplet: arm64-windows
     steps:
-    - uses: actions/checkout@v4.1.7
-      with:
-        repository: 'HexaEngine/cimgui_impl'
-        path: 'cimgui'
-        submodules: true
 
-    - name: Install vcpkg (Windows)
-      if: matrix.os == 'windows-latest'
+    - name: List glu32.lib in SDK directories
       run: |
-        cd cimgui
-        git clone https://github.com/microsoft/vcpkg.git
-        ./vcpkg/bootstrap-vcpkg.bat
+          for /D %%D in ("C:\Program Files (x86)\Windows Kits\10\Lib\*\um\arm64") do (
+            dir "%%D\glu32.lib"
+          )
 
     - name: List available libraries
       run: |
           dir "C:\Program Files (x86)\Windows Kits\10\Lib\*\um\arm64"
+          
+#    - uses: actions/checkout@v4.1.7
+#      with:
+#        repository: 'HexaEngine/cimgui_impl'
+#        path: 'cimgui'
+#        submodules: true
+
+#    - name: Install vcpkg (Windows)
+#      if: matrix.os == 'windows-latest'
+#      run: |
+#        cd cimgui
+#        git clone https://github.com/microsoft/vcpkg.git
+#        ./vcpkg/bootstrap-vcpkg.bat
+
 
 #    - name: Install vcpkg packages
 #      if: matrix.os == 'windows-latest'
@@ -46,20 +54,20 @@ jobs:
  #       cd cimgui
  #       cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake"
 
-    - name: Build cimgui
-      run: cmake --build cimgui/build --config Release
+ #   - name: Build cimgui
+ #     run: cmake --build cimgui/build --config Release
 
-    - name: Move Windows binaries
-      if: matrix.os == 'windows-latest'
-      run: |
-        mv cimgui/build/Release/*.dll cimgui/build/
+#    - name: Move Windows binaries
+#      if: matrix.os == 'windows-latest'
+#      run: |
+#        mv cimgui/build/Release/*.dll cimgui/build/
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4.3.4
-      with:
-        name: cimgui-${{ matrix.os }}-${{ matrix.arch }}-artifacts 
-        path: |
-          cimgui/build/*.dll
-          cimgui/build/*.so
-          cimgui/build/*.dylib
-        if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
+#    - name: Upload Artifacts
+#      uses: actions/upload-artifact@v4.3.4
+#      with:
+#        name: cimgui-${{ matrix.os }}-${{ matrix.arch }}-artifacts 
+#        path: |
+#          cimgui/build/*.dll
+#          cimgui/build/*.so
+#          cimgui/build/*.dylib
+#        if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
