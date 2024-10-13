@@ -23,6 +23,10 @@ jobs:
     - name: List available libraries
       run: |
           dir "C:\Program Files (x86)\Windows Kits\10\Lib\*\um\arm64"
+
+    - name: Path
+      run: |
+          Get-ChildItem Env:Path
           
 #    - uses: actions/checkout@v4.1.7
 #      with:
