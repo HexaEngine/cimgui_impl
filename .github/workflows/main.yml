@@ -72,8 +72,10 @@ jobs:
         cd cimgui
         ./vcpkg/vcpkg install sdl2:${{ matrix.triplet }}
         ./vcpkg/vcpkg install glfw3:${{ matrix.triplet }}
-        ./vcpkg/vcpkg install vulkan:${{ matrix.triplet }} #       ./vcpkg/vcpkg install opengl:${{ matrix.triplet }}
+        ./vcpkg/vcpkg install vulkan:${{ matrix.triplet }}
         ./vcpkg/vcpkg install glslang:${{ matrix.triplet }}
+
+      #       ./vcpkg/vcpkg install opengl:${{ matrix.triplet }}
 
     - name: Configure cimgui with CMake on Linux
       if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
