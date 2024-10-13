@@ -22,39 +22,22 @@ elseif(APPLE)
     message(STATUS "Configuring for macOS...")
     set(BACKENDS_D3D11 OFF)
     set(BACKENDS_D3D12 OFF)
-    
+
+elseif(ANDROID)
+	message("Configuring for Android...")
+	set(BACKENDS_D3D11 OFF)
+	set(BACKENDS_D3D12 OFF)
+	set(BACKENDS_OPENGL3 OFF)
+	set(BACKENDS_OPENGL2 OFF)
+	set(BACKENDS_WIN32 OFF)
+	set(BACKENDS_VULKAN OFF)
+	set(BACKENDS_GLFW OFF)
+	set(BACKENDS_SDL2 OFF)
+
 elseif(UNIX AND NOT APPLE)
     message(STATUS "Configuring for Linux...")
     set(BACKENDS_D3D11 OFF)
     set(BACKENDS_D3D12 OFF)
-endif()
-
-# Check for OpenGL
-find_package(OpenGL REQUIRED)
-if(OPENGL_FOUND)
-    message(STATUS "OpenGL found.")
-else()
-    message(STATUS "OpenGL not found, disabling OpenGL backends.")
-    set(BACKENDS_OPENGL2 OFF)
-    set(BACKENDS_OPENGL3 OFF)
-endif()
-
-# Check for SDL2
-find_package(SDL2 REQUIRED)
-if(SDL2_FOUND)
-    message(STATUS "SDL2 found.")
-else()
-    message(STATUS "SDL2 not found, disabling SDL2 backend.")
-    set(BACKENDS_SDL2 OFF)
-endif()
-
-# Check for GLFW
-find_package(glfw3 REQUIRED)
-if(glfw3_FOUND)
-    message(STATUS "GLFW found.")
-else()
-    message(STATUS "GLFW not found, disabling GLFW backend.")
-    set(BACKENDS_GLFW OFF)
 endif()
 
 set(BAKENDS_FOLDER "imgui/backends/")
@@ -141,6 +124,7 @@ if (BACKENDS_OPENGL3)
 	list(APPEND IMGUI_LIBRARIES OpenGL::GL OpenGL::GLU)
 	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_opengl3.cpp)
 	include_directories(imgui/examples/libs/gl3w)
+	message(STATUS "OpenGL_LIBRARIES: ${OPENGL_LIBRARIES}")
 endif(BACKENDS_OPENGL3)
 
 #opengl2
@@ -184,6 +168,11 @@ if (BACKENDS_SDL2)
 		endif(DEFINED SDL_PATH)
 	endif(SDL2_FOUND)
 endif(BACKENDS_SDL2)
+
+if (ANDROID)
+	message("Backends Android: ON")
+	list(APPEND IMGUI_SOURCES ${BAKENDS_FOLDER}imgui_impl_android.cpp)
+endif(ANDROID)
 
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
