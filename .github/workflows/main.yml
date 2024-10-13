@@ -44,7 +44,7 @@ jobs:
         submodules: true
 
     - name: Install dependencies on Ubuntu
-      if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev
@@ -79,17 +79,8 @@ jobs:
         ./vcpkg/vcpkg install vulkan:${{ matrix.triplet }}
         ./vcpkg/vcpkg install glslang:${{ matrix.triplet }}
 
-    - name: Install Cross-Compilation Tools for ARM64
-      if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
-      run: |
-        sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
-
-    - name: Configure cimgui with CMake on Linux (ARM64)
-      if: matrix.os == 'self-hosted' && matrix.arch == 'arm64'
-      run: cmake -S cimgui -B cimgui/build
-
     - name: Configure cimgui with CMake on Linux
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
       run: cmake -S cimgui -B cimgui/build
       
     - name: Configure cimgui with CMake for macOS
