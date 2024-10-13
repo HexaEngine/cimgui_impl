@@ -94,7 +94,7 @@ jobs:
       if: matrix.os == 'windows-latest' && matrix.arch != 'x86'
       run: |
         cd cimgui
-        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake"
+        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DCMAKE_LIBRARY_PATH="C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22000.0/um/arm64;C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/um/arm64"
 
     - name: Build cimgui
       run: cmake --build cimgui/build --config Release
