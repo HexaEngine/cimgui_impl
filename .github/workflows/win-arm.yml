@@ -16,9 +16,9 @@ jobs:
 
     - name: List glu32.lib in SDK directories
       run: |
-          for /D %%D in ("C:\Program Files (x86)\Windows Kits\10\Lib\*\um\arm64") do (
-            dir "%%D\glu32.lib"
-          )
+          Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\Lib\*\um\arm64\glu32.lib" -ErrorAction SilentlyContinue | ForEach-Object {
+            Write-Output "Found: $($_.FullName)"
+          }
 
     - name: List available libraries
       run: |
