@@ -4,7 +4,7 @@ on: [workflow_dispatch]
 
 jobs:
   build:
-    runs-on: [ubuntu-latest, x86_64]       
+    runs-on: [self-hosted, linux, x64]
     steps:
     - uses: actions/checkout@v4.1.7
       with:
