@@ -1,4 +1,4 @@
-name: Build cimgui_impl Libraries (ARM64
+name: Runner Tests (Win Arm64)
 
 on: [workflow_dispatch]
 
