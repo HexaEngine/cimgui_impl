@@ -1,4 +1,4 @@
-name: Build cimgui_impl Libraries
+name: Build cimgui_impl Libraries (Base)
 
 on: [workflow_dispatch]
 
