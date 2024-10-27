@@ -14,6 +14,11 @@ option(BACKENDS_GLFW "Enable GLFW backend" ON)
 option(BACKENDS_OPENGL3 "Enable OpenGL 3 backend" ON)
 option(BACKENDS_OPENGL2 "Enable OpenGL 2 backend" ON)
 option(BACKENDS_SDL2 "Enable SDL2 backend" ON)
+set(IMGUI_WCHAR32 "no" CACHE STRING "Build with ImWChar32")
+
+if (IMGUI_WCHAR32)
+    add_definitions("-DIMGUI_USE_WCHAR32=1")
+endif(IMGUI_WCHAR32)
 
 # Automatically detect platform and set options accordingly
 if(WIN32)
