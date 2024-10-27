@@ -77,23 +77,23 @@ jobs:
 
     - name: Configure cimgui_impl with CMake on Linux
       if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
-      run: cmake -S cimgui_impl -B cimgui_impl/build -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF
+      run: cmake -S cimgui_impl -B cimgui_impl/build -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF -DIMGUI_WCHAR32=ON
       
     - name: Configure cimgui_impl with CMake for macOS
       if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
       run: |
-        cmake -S cimgui_impl -B cimgui_impl/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }}  -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF
+        cmake -S cimgui_impl -B cimgui_impl/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }}  -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF -DIMGUI_WCHAR32=ON
 
     - name: Configure cimgui_impl with CMake for Windows (x86)
       if: matrix.os == 'windows-latest' && matrix.arch == 'x86'
       run: |
         cd cimgui_impl
-        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_D3D12=OFF -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF
+        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_D3D12=OFF -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF -DIMGUI_WCHAR32=ON
     - name: Configure cimgui_impl with CMake for Windows
       if: matrix.os == 'windows-latest' && matrix.arch != 'x86'
       run: |
         cd cimgui_impl
-        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF
+        cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_GLFW=OFF -DBACKENDS_SDL2=OFF -DIMGUI_WCHAR32=ON
 
     - name: Build cimgui_impl
       run: cmake --build cimgui_impl/build --config Release
