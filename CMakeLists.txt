@@ -191,7 +191,7 @@ endif(ANDROID)
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(APPLE)
-    # Für macOS: Abhängigkeiten relativ zur Library mit @loader_path
+	set(CMAKE_MACOSX_RPATH 1)
     set_target_properties(cimgui_impl PROPERTIES
         INSTALL_RPATH "@loader_path"
         BUILD_WITH_INSTALL_RPATH TRUE
