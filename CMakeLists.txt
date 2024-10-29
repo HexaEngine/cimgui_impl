@@ -14,7 +14,16 @@ option(BACKENDS_GLFW "Enable GLFW backend" ON)
 option(BACKENDS_OPENGL3 "Enable OpenGL 3 backend" ON)
 option(BACKENDS_OPENGL2 "Enable OpenGL 2 backend" ON)
 option(BACKENDS_SDL2 "Enable SDL2 backend" ON)
+option(BACKENDS_NO_GRAPHICS "Disables graphics" OFF)
 set(IMGUI_WCHAR32 "no" CACHE STRING "Build with ImWChar32")
+
+if (BACKENDS_NO_GRAPHICS)
+	set(BACKENDS_D3D11 OFF)
+	set(BACKENDS_D3D12 OFF)
+	set(BACKENDS_OPENGL3 OFF)
+	set(BACKENDS_OPENGL2 OFF)
+	set(BACKENDS_VULKAN OFF)
+endif(BACKENDS_NO_GRAPHICS)
 
 if (IMGUI_WCHAR32)
     add_definitions("-DIMGUI_USE_WCHAR32=1")
@@ -181,6 +190,20 @@ endif(ANDROID)
 
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
+if(APPLE)
+    # Für macOS: Abhängigkeiten relativ zur Library mit @loader_path
+    set_target_properties(cimgui_impl PROPERTIES
+        INSTALL_RPATH "@loader_path"
+        BUILD_WITH_INSTALL_RPATH TRUE
+    )
+elseif(UNIX AND NOT APPLE)
+    # Für Linux: Abhängigkeiten relativ zur Library mit $ORIGIN
+    set_target_properties(cimgui_impl PROPERTIES
+        INSTALL_RPATH "\$ORIGIN"
+        BUILD_WITH_INSTALL_RPATH TRUE
+    )
+endif()
+
 if(BACKENDS_WIN32)
     target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_WIN32=1)
 else()
@@ -242,3 +265,8 @@ if (MSVC)
     target_link_options(cimgui_impl PRIVATE "/DELAYLOAD:glfw3.dll")
 	target_link_options(cimgui_impl PRIVATE "/DELAYLOAD:SDL2.dll")
 endif()
+
+install(TARGETS cimgui_impl
+        LIBRARY DESTINATION .
+        ARCHIVE DESTINATION .
+)
