@@ -191,11 +191,11 @@ endif(ANDROID)
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(APPLE)
-	set(CMAKE_MACOSX_RPATH 1)
-    set_target_properties(cimgui_impl PROPERTIES
-        INSTALL_RPATH "@rpath"
-        INSTALL_RPATH_USE_LINK_PATH TRUE
-    )
+set_target_properties(libImGuiImplSDL2 PROPERTIES
+    INSTALL_NAME_DIR "@loader_path"
+    INSTALL_RPATH "@loader_path"
+    INSTALL_RPATH_USE_LINK_PATH TRUE
+)
 elseif(UNIX AND NOT APPLE)
     set_target_properties(cimgui_impl PROPERTIES
         INSTALL_RPATH "\$ORIGIN"
