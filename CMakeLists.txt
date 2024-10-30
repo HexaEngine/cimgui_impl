@@ -193,8 +193,8 @@ add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 if(APPLE)
 	set(CMAKE_MACOSX_RPATH 1)
     set_target_properties(cimgui_impl PROPERTIES
-        INSTALL_RPATH "@loader_path"
-        BUILD_WITH_INSTALL_RPATH TRUE
+        INSTALL_RPATH "@rpath"
+        INSTALL_RPATH_USE_LINK_PATH TRUE
     )
 elseif(UNIX AND NOT APPLE)
     set_target_properties(cimgui_impl PROPERTIES
