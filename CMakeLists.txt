@@ -197,7 +197,6 @@ if(APPLE)
         BUILD_WITH_INSTALL_RPATH TRUE
     )
 elseif(UNIX AND NOT APPLE)
-    # Für Linux: Abhängigkeiten relativ zur Library mit $ORIGIN
     set_target_properties(cimgui_impl PROPERTIES
         INSTALL_RPATH "\$ORIGIN"
         BUILD_WITH_INSTALL_RPATH TRUE
