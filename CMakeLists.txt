@@ -191,12 +191,20 @@ endif(ANDROID)
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(APPLE)
-add_custom_command(TARGET cimgui_impl POST_BUILD
-    COMMAND install_name_tool -change /opt/homebrew/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib $<TARGET_FILE:cimgui_impl>
-)
-
+	if(BACKENDS_SDL2)
+		add_custom_command(TARGET cimgui_impl POST_BUILD COMMAND install_name_tool -change /opt/homebrew/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2.dylib $<TARGET_FILE:cimgui_impl>)
+ 	endif(BACKENDS_SDL2)
+  	if(BACKENDS_GLFW)
+		add_custom_command(TARGET cimgui_impl POST_BUILD COMMAND install_name_tool -change /usr/local/opt/glfw/lib/libglfw.3.dylib @rpath/libglfw.dylib $<TARGET_FILE:cimgui_impl>)
+ 	endif(BACKENDS_GLFW)
 elseif(UNIX AND NOT APPLE)
 	set_target_properties(cimgui_impl PROPERTIES INSTALL_RPATH "\$ORIGIN" BUILD_WITH_INSTALL_RPATH TRUE)
+ 	if(BACKENDS_SDL2)
+ 		add_custom_command(TARGET cimgui_impl POST_BUILD COMMAND patchelf --replace-needed libSDL2-2.0.so.0 libSDL2.so $<TARGET_FILE:cimgui_impl>)
+	endif(BACKENDS_SDL2)
+ 	 if(BACKENDS_GLFW)
+ 		add_custom_command(TARGET cimgui_impl POST_BUILD COMMAND  patchelf --replace-needed libglfw.so.3 libglfw.so $<TARGET_FILE:cimgui_impl>)
+	endif(BACKENDS_GLFW)
 endif()
 
 if(BACKENDS_WIN32)
