@@ -75,6 +75,7 @@ elseif(APPLE)
     message(STATUS "Configuring for macOS...")
     set(BACKENDS_D3D11 OFF)
     set(BACKENDS_D3D12 OFF)
+	set(BACKENDS_VULKAN OFF)
 
 elseif(ANDROID)
 	message("Configuring for Android...")
@@ -253,10 +254,6 @@ add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(DEFINED lib_name)
     set_target_properties(cimgui_impl PROPERTIES OUTPUT_NAME ${lib_name})
-endif()
-
-if (APPLE AND BACKENDS_VULKAN)
-	target_link_options(cimgui_impl PRIVATE -weak_library libvulkan.1.dylib)
 endif()
 
 if(APPLE)
