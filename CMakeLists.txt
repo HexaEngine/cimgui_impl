@@ -191,10 +191,10 @@ endif(ANDROID)
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(APPLE)
-	set(CMAKE_MACOSX_RPATH 1)
-	set_target_properties(cimgui_impl PROPERTIES INSTALL_RPATH "@rpath" INSTALL_RPATH_USE_LINK_PATH TRUE)
- 	set(CMAKE_INSTALL_RPATH "@rpath")
-	set_target_properties(cimgui_impl PROPERTIES INSTALL_RPATH "@rpath")
+add_custom_command(TARGET cimgui_impl POST_BUILD
+    COMMAND install_name_tool -change /opt/homebrew/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib $<TARGET_FILE:cimgui_impl>
+)
+
 elseif(UNIX AND NOT APPLE)
 	set_target_properties(cimgui_impl PROPERTIES INSTALL_RPATH "\$ORIGIN" BUILD_WITH_INSTALL_RPATH TRUE)
 endif()
