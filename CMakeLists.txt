@@ -191,16 +191,10 @@ endif(ANDROID)
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(APPLE)
-set_target_properties(libImGuiImplSDL2 PROPERTIES
-    INSTALL_NAME_DIR "@loader_path"
-    INSTALL_RPATH "@loader_path"
-    INSTALL_RPATH_USE_LINK_PATH TRUE
-)
+	set(CMAKE_MACOSX_RPATH 1)
+	set_target_properties(cimgui_impl PROPERTIES INSTALL_RPATH "@rpath" INSTALL_RPATH_USE_LINK_PATH TRUE)
 elseif(UNIX AND NOT APPLE)
-    set_target_properties(cimgui_impl PROPERTIES
-        INSTALL_RPATH "\$ORIGIN"
-        BUILD_WITH_INSTALL_RPATH TRUE
-    )
+	set_target_properties(cimgui_impl PROPERTIES INSTALL_RPATH "\$ORIGIN" BUILD_WITH_INSTALL_RPATH TRUE)
 endif()
 
 if(BACKENDS_WIN32)
@@ -254,9 +248,9 @@ else()
 endif()
 
 if (MSVC)
-target_link_libraries(cimgui_impl ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY} delayimp)
+target_link_libraries(cimgui_impl PRIVATE ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY} delayimp)
 else(MSVC)
-target_link_libraries(cimgui_impl ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY})
+target_link_libraries(cimgui_impl PRIVATE ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY})
 endif()
 
 
