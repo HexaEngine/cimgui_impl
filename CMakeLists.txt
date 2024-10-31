@@ -256,7 +256,7 @@ if(DEFINED lib_name)
 endif()
 
 if (APPLE AND BACKENDS_VULKAN)
-	target_link_options(cimgui_impl PRIVATE -weak_library Vulkan::Vulkan)
+	target_link_options(cimgui_impl PRIVATE -weak_library libvulkan.1.dylib)
 endif()
 
 if(APPLE)
