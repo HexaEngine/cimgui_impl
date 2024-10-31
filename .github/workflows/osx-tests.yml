@@ -34,7 +34,7 @@ jobs:
       - name: Configure cimgui_impl with CMake for macOS
         if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
         run: |
-          cmake -S cimgui_impl -B cimgui_impl/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} -DBACKENDS_BASE_ONLY=ON -DIMGUI_WCHAR32=ON
+          cmake -S cimgui_impl -B cimgui_impl/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} -DBACKENDS_BASE_ONLY=ON -DIMGUI_WCHAR32=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
       - name: Build cimgui_impl
         run: cmake --build cimgui_impl/build --config Release
