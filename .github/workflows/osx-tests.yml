@@ -1,4 +1,4 @@
-name: Build cimgui_impl Libraries OSX Tests
+name: Runner Tests (OSX arm64)
 
 on: [workflow_dispatch]
 
