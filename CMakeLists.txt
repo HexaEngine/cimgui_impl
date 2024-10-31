@@ -162,11 +162,6 @@ if (BACKENDS_VULKAN)
 	message("Backends Vulkan: ON")
 	# vulkan
 	find_package(Vulkan REQUIRED)
-
-	if (APPLE)
-		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -weak_library ${VULKAN_LIBRARY}")
-	endif()
-
 	list(APPEND IMGUI_LIBRARIES Vulkan::Vulkan)
 	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_vulkan.cpp)
 endif()
@@ -258,6 +253,10 @@ add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(DEFINED lib_name)
     set_target_properties(cimgui_impl PROPERTIES OUTPUT_NAME ${lib_name})
+endif()
+
+if (APPLE AND BACKENDS_VULKAN)
+	target_link_options(cimgui_impl PRIVATE "-weak_library ${VULKAN_LIBRARY}")
 endif()
 
 if(APPLE)
