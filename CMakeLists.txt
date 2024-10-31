@@ -171,7 +171,7 @@ if (BACKENDS_METAL AND APPLE)
 	message("Backends Metal: ON")
 	find_library(METAL_FRAMEWORK Metal REQUIRED)
 	list(APPEND IMGUI_LIBRARIES ${METAL_FRAMEWORK})
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}/imgui_impl_metal.mm)
+	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_metal.mm)
 endif(BACKENDS_GLFW)
 
 # GLFW
