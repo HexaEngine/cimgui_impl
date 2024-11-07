@@ -38,63 +38,112 @@ CIMGUI_API void igSetCurrentContext(ImGuiContext *ctx);
 CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 
 #ifndef CIMGUI_USE_WIN32
-#define CIMGUI_USE_WIN32 1
+#define CIMGUI_USE_WIN32 0
 #endif
 
 #ifndef CIMGUI_USE_OSX
-#define CIMGUI_USE_OSX 1
+#define CIMGUI_USE_OSX 0
 #endif
 
 #ifndef CIMGUI_USE_D3D11
-#define CIMGUI_USE_D3D11 1
+#define CIMGUI_USE_D3D11 0
 #endif
 
 #ifndef CIMGUI_USE_D3D12
-#define CIMGUI_USE_D3D12 1
+#define CIMGUI_USE_D3D12 0
 #endif
 
 #ifndef CIMGUI_USE_METAL
-#define CIMGUI_USE_METAL 1
+#define CIMGUI_USE_METAL 0
 #endif
 
 #ifndef CIMGUI_USE_VULKAN
-#define CIMGUI_USE_VULKAN 1
+#define CIMGUI_USE_VULKAN 0
 #endif
 
 #ifndef CIMGUI_USE_GLFW
-#define CIMGUI_USE_GLFW 1
+#define CIMGUI_USE_GLFW 0
 #endif
 
 #ifndef CIMGUI_USE_OPENGL3
-#define CIMGUI_USE_OPENGL3 1
+#define CIMGUI_USE_OPENGL3 0
 #endif
 
 #ifndef CIMGUI_USE_SDL2
-#define CIMGUI_USE_SDL2 1
+#define CIMGUI_USE_SDL2 0
 #endif
 
 #ifndef CIMGUI_USE_OPENGL2
-#define CIMGUI_USE_OPENGL2 1
+#define CIMGUI_USE_OPENGL2 0
 #endif
 
 #ifndef CIMGUI_USE_SDL2Renderer
-#define CIMGUI_USE_SDL2Renderer 1
+#define CIMGUI_USE_SDL2Renderer 0
 #endif
 
 #ifndef CIMGUI_USE_ANDROID
-#define CIMGUI_USE_ANDROID 1
+#define CIMGUI_USE_ANDROID 0
 #endif
 
 #include <stdint.h>
 #include <string.h> // For memset
 
 #if CIMGUI_USE_WIN32
+#include "imgui/backends/imgui_impl_win32.h"
+#endif
+
+#if CIMGUI_USE_OSX
+#include "imgui/backends/imgui_impl_osx.h"
+#endif
+
+#if CIMGUI_USE_D3D11
+#include "imgui/backends/imgui_impl_dx11.h"
+#endif
+
+#if CIMGUI_USE_D3D12
+#include <d3d12.h>
+#include "imgui/backends/imgui_impl_dx12.h"
+#endif
+
+#if CIMGUI_USE_METAL
+#include "imgui/backends/imgui_impl_metal.h"
+#endif
+
+#if CIMGUI_USE_VULKAN
+#include "imgui/backends/imgui_impl_vulkan.h"
+#endif
+
+#if CIMGUI_USE_GLFW
+#include "imgui/backends/imgui_impl_glfw.h"
+#endif
+
+#if CIMGUI_USE_OPENGL3
+#include "imgui/backends/imgui_impl_opengl3.h"
+#endif
+
+#if CIMGUI_USE_SDL2
+#include "imgui/backends/imgui_impl_sdl2.h"
+#endif
+
+#if CIMGUI_USE_OPENGL2
+#include "imgui/backends/imgui_impl_opengl2.h"
+#endif
+
+#if CIMGUI_USE_SDL2Renderer
+#include "imgui/backends/imgui_impl_sdlrenderer2.h"
+#endif
+
+#if CIMGUI_USE_ANDROID
+#include "imgui/backends/imgui_impl_android.h"
+#endif
+
+#if CIMGUI_USE_WIN32
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool ImGui_ImplWin32_Init(void *hwnd);
-CIMGUI_API bool ImGui_ImplWin32_InitForOpenGL(void *hwnd);
-CIMGUI_API void ImGui_ImplWin32_Shutdown();
-CIMGUI_API void ImGui_ImplWin32_NewFrame();
+CIMGUI_API bool CImGui_ImplWin32_Init(void *hwnd);
+CIMGUI_API bool CImGui_ImplWin32_InitForOpenGL(void *hwnd);
+CIMGUI_API void CImGui_ImplWin32_Shutdown();
+CIMGUI_API void CImGui_ImplWin32_NewFrame();
 
 // Win32 message handler your application need to call.
 // - Intentionally commented out in a '#if 0' block to avoid dragging dependencies on <windows.h> from this helper.
@@ -102,7 +151,7 @@ CIMGUI_API void ImGui_ImplWin32_NewFrame();
 // - Call from your application's message handler. Keep calling your message handler unless this function returns TRUE.
 
 #if 0
-extern CIMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern CIMGUI_API LRESULT CImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
 // DPI-related helpers (optional)
@@ -111,45 +160,46 @@ extern CIMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WP
 // - In theory we could call simple functions from Windows SDK such as SetProcessDPIAware(), SetProcessDpiAwareness(), etc.
 //   but most of the functions provided by Microsoft require Windows 8.1/10+ SDK at compile time and Windows 8/10+ at runtime,
 //   neither we want to require the user to have. So we dynamically select and load those functions to avoid dependencies.
-CIMGUI_API void ImGui_ImplWin32_EnableDpiAwareness();
-CIMGUI_API float ImGui_ImplWin32_GetDpiScaleForHwnd(void *hwnd);       // HWND hwnd
-CIMGUI_API float ImGui_ImplWin32_GetDpiScaleForMonitor(void *monitor); // HMONITOR monitor
+CIMGUI_API void CImGui_ImplWin32_EnableDpiAwareness();
+CIMGUI_API float CImGui_ImplWin32_GetDpiScaleForHwnd(void *hwnd);       // HWND hwnd
+CIMGUI_API float CImGui_ImplWin32_GetDpiScaleForMonitor(void *monitor); // HMONITOR monitor
 
 // Transparency related helpers (optional) [experimental]
 // - Use to enable alpha compositing transparency with the desktop.
 // - Use together with e.g. clearing your framebuffer with zero-alpha.
-CIMGUI_API void ImGui_ImplWin32_EnableAlphaCompositing(void *hwnd); // HWND hwnd
+CIMGUI_API void CImGui_ImplWin32_EnableAlphaCompositing(void *hwnd); // HWND hwnd
 
 #endif
 
 #if CIMGUI_USE_GLFW
-
+/*
 typedef struct GLFWwindow GLFWwindow;
 typedef struct GLFWmonitor GLFWmonitor;
 struct GLFWwindow;
 struct GLFWmonitor;
-CIMGUI_API bool ImGui_ImplGlfw_InitForOpenGL(GLFWwindow *window, bool install_callbacks);
-CIMGUI_API bool ImGui_ImplGlfw_InitForVulkan(GLFWwindow *window, bool install_callbacks);
-CIMGUI_API bool ImGui_ImplGlfw_InitForOther(GLFWwindow *window, bool install_callbacks);
-CIMGUI_API void ImGui_ImplGlfw_Shutdown(void);
-CIMGUI_API void ImGui_ImplGlfw_NewFrame(void);
-CIMGUI_API void ImGui_ImplGlfw_InstallCallbacks(GLFWwindow *window);
-CIMGUI_API void ImGui_ImplGlfw_RestoreCallbacks(GLFWwindow *window);
-CIMGUI_API void ImGui_ImplGlfw_SetCallbacksChainForAllWindows(bool chain_for_all_windows);
-CIMGUI_API void ImGui_ImplGlfw_WindowFocusCallback(GLFWwindow *window, int focused);
-CIMGUI_API void ImGui_ImplGlfw_CursorEnterCallback(GLFWwindow *window, int entered);
-CIMGUI_API void ImGui_ImplGlfw_CursorPosCallback(GLFWwindow *window, double x, double y);
-CIMGUI_API void ImGui_ImplGlfw_MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
-CIMGUI_API void ImGui_ImplGlfw_ScrollCallback(GLFWwindow *window, double xoffset, double yoffset);
-CIMGUI_API void ImGui_ImplGlfw_KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
-CIMGUI_API void ImGui_ImplGlfw_CharCallback(GLFWwindow *window, unsigned int c);
-CIMGUI_API void ImGui_ImplGlfw_MonitorCallback(GLFWmonitor *monitor, int event);
-CIMGUI_API void ImGui_ImplGlfw_Sleep(int milliseconds);
+*/
+CIMGUI_API bool CImGui_ImplGlfw_InitForOpenGL(GLFWwindow *window, bool install_callbacks);
+CIMGUI_API bool CImGui_ImplGlfw_InitForVulkan(GLFWwindow *window, bool install_callbacks);
+CIMGUI_API bool CImGui_ImplGlfw_InitForOther(GLFWwindow *window, bool install_callbacks);
+CIMGUI_API void CImGui_ImplGlfw_Shutdown(void);
+CIMGUI_API void CImGui_ImplGlfw_NewFrame(void);
+CIMGUI_API void CImGui_ImplGlfw_InstallCallbacks(GLFWwindow *window);
+CIMGUI_API void CImGui_ImplGlfw_RestoreCallbacks(GLFWwindow *window);
+CIMGUI_API void CImGui_ImplGlfw_SetCallbacksChainForAllWindows(bool chain_for_all_windows);
+CIMGUI_API void CImGui_ImplGlfw_WindowFocusCallback(GLFWwindow *window, int focused);
+CIMGUI_API void CImGui_ImplGlfw_CursorEnterCallback(GLFWwindow *window, int entered);
+CIMGUI_API void CImGui_ImplGlfw_CursorPosCallback(GLFWwindow *window, double x, double y);
+CIMGUI_API void CImGui_ImplGlfw_MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
+CIMGUI_API void CImGui_ImplGlfw_ScrollCallback(GLFWwindow *window, double xoffset, double yoffset);
+CIMGUI_API void CImGui_ImplGlfw_KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+CIMGUI_API void CImGui_ImplGlfw_CharCallback(GLFWwindow *window, unsigned int c);
+CIMGUI_API void CImGui_ImplGlfw_MonitorCallback(GLFWmonitor *monitor, int event);
+CIMGUI_API void CImGui_ImplGlfw_Sleep(int milliseconds);
 
 #endif
 
 #if CIMGUI_USE_SDL2
-
+/*
 typedef struct SDL_Window SDL_Window;
 typedef struct SDL_Renderer SDL_Renderer;
 typedef struct _SDL_GameController _SDL_GameController;
@@ -163,56 +213,57 @@ typedef enum
     ImGui_ImplSDL2_GamepadMode_AutoAll,
     ImGui_ImplSDL2_GamepadMode_Manual
 } ImGui_ImplSDL2_GamepadMode;
-CIMGUI_API bool ImGui_ImplSDL2_InitForOpenGL(SDL_Window *window, void *sdl_gl_context);
-CIMGUI_API bool ImGui_ImplSDL2_InitForVulkan(SDL_Window *window);
-CIMGUI_API bool ImGui_ImplSDL2_InitForD3D(SDL_Window *window);
-CIMGUI_API bool ImGui_ImplSDL2_InitForMetal(SDL_Window *window);
-CIMGUI_API bool ImGui_ImplSDL2_InitForSDLRenderer(SDL_Window *window, SDL_Renderer *renderer);
-CIMGUI_API bool ImGui_ImplSDL2_InitForOther(SDL_Window *window);
-CIMGUI_API void ImGui_ImplSDL2_Shutdown(void);
-CIMGUI_API void ImGui_ImplSDL2_NewFrame(void);
-CIMGUI_API bool ImGui_ImplSDL2_ProcessEvent(const SDL_Event *event);
-CIMGUI_API void ImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode, struct _SDL_GameController **manual_gamepads_array, int manual_gamepads_count);
+*/
+CIMGUI_API bool CImGui_ImplSDL2_InitForOpenGL(SDL_Window *window, void *sdl_gl_context);
+CIMGUI_API bool CImGui_ImplSDL2_InitForVulkan(SDL_Window *window);
+CIMGUI_API bool CImGui_ImplSDL2_InitForD3D(SDL_Window *window);
+CIMGUI_API bool CImGui_ImplSDL2_InitForMetal(SDL_Window *window);
+CIMGUI_API bool CImGui_ImplSDL2_InitForSDLRenderer(SDL_Window *window, SDL_Renderer *renderer);
+CIMGUI_API bool CImGui_ImplSDL2_InitForOther(SDL_Window *window);
+CIMGUI_API void CImGui_ImplSDL2_Shutdown(void);
+CIMGUI_API void CImGui_ImplSDL2_NewFrame(void);
+CIMGUI_API bool CImGui_ImplSDL2_ProcessEvent(const SDL_Event *event);
+CIMGUI_API void CImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode, struct _SDL_GameController **manual_gamepads_array, int manual_gamepads_count);
 
 #ifdef CIMGUI_USE_SDL2Renderer
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool ImGui_ImplSDLRenderer2_Init(SDL_Renderer *renderer);
-CIMGUI_API void ImGui_ImplSDLRenderer2_Shutdown();
-CIMGUI_API void ImGui_ImplSDLRenderer2_NewFrame();
-CIMGUI_API void ImGui_ImplSDLRenderer2_RenderDrawData(ImDrawData *draw_data, SDL_Renderer *renderer);
+CIMGUI_API bool CImGui_ImplSDLRenderer2_Init(SDL_Renderer *renderer);
+CIMGUI_API void CImGui_ImplSDLRenderer2_Shutdown();
+CIMGUI_API void CImGui_ImplSDLRenderer2_NewFrame();
+CIMGUI_API void CImGui_ImplSDLRenderer2_RenderDrawData(ImDrawData *draw_data, SDL_Renderer *renderer);
 
 // Called by Init/NewFrame/Shutdown
-CIMGUI_API bool ImGui_ImplSDLRenderer2_CreateFontsTexture();
-CIMGUI_API void ImGui_ImplSDLRenderer2_DestroyFontsTexture();
-CIMGUI_API bool ImGui_ImplSDLRenderer2_CreateDeviceObjects();
-CIMGUI_API void ImGui_ImplSDLRenderer2_DestroyDeviceObjects();
+CIMGUI_API bool CImGui_ImplSDLRenderer2_CreateFontsTexture();
+CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyFontsTexture();
+CIMGUI_API bool CImGui_ImplSDLRenderer2_CreateDeviceObjects();
+CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects();
 
 #endif
 
 #endif
 
 #if CIMGUI_USE_OPENGL3
-CIMGUI_API bool ImGui_ImplOpenGL3_Init(const char *glsl_version);
-CIMGUI_API void ImGui_ImplOpenGL3_Shutdown(void);
-CIMGUI_API void ImGui_ImplOpenGL3_NewFrame(void);
-CIMGUI_API void ImGui_ImplOpenGL3_RenderDrawData(ImDrawData *draw_data);
-CIMGUI_API bool ImGui_ImplOpenGL3_CreateFontsTexture(void);
-CIMGUI_API void ImGui_ImplOpenGL3_DestroyFontsTexture(void);
-CIMGUI_API bool ImGui_ImplOpenGL3_CreateDeviceObjects(void);
-CIMGUI_API void ImGui_ImplOpenGL3_DestroyDeviceObjects(void);
+CIMGUI_API bool CImGui_ImplOpenGL3_Init(const char *glsl_version);
+CIMGUI_API void CImGui_ImplOpenGL3_Shutdown(void);
+CIMGUI_API void CImGui_ImplOpenGL3_NewFrame(void);
+CIMGUI_API void CImGui_ImplOpenGL3_RenderDrawData(ImDrawData *draw_data);
+CIMGUI_API bool CImGui_ImplOpenGL3_CreateFontsTexture(void);
+CIMGUI_API void CImGui_ImplOpenGL3_DestroyFontsTexture(void);
+CIMGUI_API bool CImGui_ImplOpenGL3_CreateDeviceObjects(void);
+CIMGUI_API void CImGui_ImplOpenGL3_DestroyDeviceObjects(void);
 
 #endif
 
 #if CIMGUI_USE_OPENGL2
-CIMGUI_API bool ImGui_ImplOpenGL2_Init(void);
-CIMGUI_API void ImGui_ImplOpenGL2_Shutdown(void);
-CIMGUI_API void ImGui_ImplOpenGL2_NewFrame(void);
-CIMGUI_API void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data);
-CIMGUI_API bool ImGui_ImplOpenGL2_CreateFontsTexture(void);
-CIMGUI_API void ImGui_ImplOpenGL2_DestroyFontsTexture(void);
-CIMGUI_API bool ImGui_ImplOpenGL2_CreateDeviceObjects(void);
-CIMGUI_API void ImGui_ImplOpenGL2_DestroyDeviceObjects(void);
+CIMGUI_API bool CImGui_ImplOpenGL2_Init(void);
+CIMGUI_API void CImGui_ImplOpenGL2_Shutdown(void);
+CIMGUI_API void CImGui_ImplOpenGL2_NewFrame(void);
+CIMGUI_API void CImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data);
+CIMGUI_API bool CImGui_ImplOpenGL2_CreateFontsTexture(void);
+CIMGUI_API void CImGui_ImplOpenGL2_DestroyFontsTexture(void);
+CIMGUI_API bool CImGui_ImplOpenGL2_CreateDeviceObjects(void);
+CIMGUI_API void CImGui_ImplOpenGL2_DestroyDeviceObjects(void);
 
 #endif
 
@@ -221,43 +272,44 @@ typedef struct ID3D11Device ID3D11Device;
 typedef struct ID3D11DeviceContext ID3D11DeviceContext;
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool ImGui_ImplDX11_Init(ID3D11Device *device, ID3D11DeviceContext *device_context);
-CIMGUI_API void ImGui_ImplDX11_Shutdown();
-CIMGUI_API void ImGui_ImplDX11_NewFrame();
-CIMGUI_API void ImGui_ImplDX11_RenderDrawData(ImDrawData *draw_data);
+CIMGUI_API bool CImGui_ImplDX11_Init(ID3D11Device *device, ID3D11DeviceContext *device_context);
+CIMGUI_API void CImGui_ImplDX11_Shutdown();
+CIMGUI_API void CImGui_ImplDX11_NewFrame();
+CIMGUI_API void CImGui_ImplDX11_RenderDrawData(ImDrawData *draw_data);
 
 // Use if you want to reset your rendering device without losing Dear ImGui state.
-CIMGUI_API void ImGui_ImplDX11_InvalidateDeviceObjects();
-CIMGUI_API bool ImGui_ImplDX11_CreateDeviceObjects();
+CIMGUI_API void CImGui_ImplDX11_InvalidateDeviceObjects();
+CIMGUI_API bool CImGui_ImplDX11_CreateDeviceObjects();
 
 #endif
 
 #if CIMGUI_USE_D3D12
+/*
 typedef struct ID3D12Device;
 typedef struct ID3D12DescriptorHeap;
 typedef struct ID3D12GraphicsCommandList;
 typedef struct D3D12_CPU_DESCRIPTOR_HANDLE;
 typedef struct D3D12_GPU_DESCRIPTOR_HANDLE;
 typedef unsigned int DXGI_FORMAT;
-
+*/
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 
 // cmd_list is the command list that the implementation will use to render imgui draw lists.
 // Before calling the render function, caller must prepare cmd_list by resetting it and setting the appropriate
 // render target and descriptor heap that contains font_srv_cpu_desc_handle/font_srv_gpu_desc_handle.
 // font_srv_cpu_desc_handle and font_srv_gpu_desc_handle are handles to a single SRV descriptor to use for the internal font texture.
-CIMGUI_API bool ImGui_ImplDX12_Init(ID3D12Device *device, int num_frames_in_flight, DXGI_FORMAT rtv_format, ID3D12DescriptorHeap *cbv_srv_heap, D3D12_CPU_DESCRIPTOR_HANDLE font_srv_cpu_desc_handle, D3D12_GPU_DESCRIPTOR_HANDLE font_srv_gpu_desc_handle);
-CIMGUI_API void ImGui_ImplDX12_Shutdown();
-CIMGUI_API void ImGui_ImplDX12_NewFrame();
-CIMGUI_API void ImGui_ImplDX12_RenderDrawData(ImDrawData *draw_data, ID3D12GraphicsCommandList *graphics_command_list);
+CIMGUI_API bool CImGui_ImplDX12_Init(ID3D12Device *device, int num_frames_in_flight, DXGI_FORMAT rtv_format, ID3D12DescriptorHeap *cbv_srv_heap, D3D12_CPU_DESCRIPTOR_HANDLE font_srv_cpu_desc_handle, D3D12_GPU_DESCRIPTOR_HANDLE font_srv_gpu_desc_handle);
+CIMGUI_API void CImGui_ImplDX12_Shutdown();
+CIMGUI_API void CImGui_ImplDX12_NewFrame();
+CIMGUI_API void CImGui_ImplDX12_RenderDrawData(ImDrawData *draw_data, ID3D12GraphicsCommandList *graphics_command_list);
 
 // Use if you want to reset your rendering device without losing Dear ImGui state.
-CIMGUI_API void ImGui_ImplDX12_InvalidateDeviceObjects();
-CIMGUI_API bool ImGui_ImplDX12_CreateDeviceObjects();
+CIMGUI_API void CImGui_ImplDX12_InvalidateDeviceObjects();
+CIMGUI_API bool CImGui_ImplDX12_CreateDeviceObjects();
 #endif
 
 #if CIMGUI_USE_VULKAN
-
+/*
 // Forward declarations for Vulkan types
 typedef struct VkInstance_T *VkInstance;
 typedef struct VkPhysicalDevice_T *VkPhysicalDevice;
@@ -308,7 +360,9 @@ typedef struct VkClearValue
     } depthStencil;           // For depth/stencil attachments
 } VkClearValue;
 
-// Initialization data, for ImGui_ImplVulkan_Init()
+
+
+// Initialization data, for CImGui_ImplVulkan_Init()
 // - VkDescriptorPool should be created with VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,
 //   and must contain a pool size large enough to hold an ImGui VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER descriptor.
 // - When using dynamic rendering, set UseDynamicRendering=true and fill PipelineRenderingCreateInfo structure.
@@ -343,52 +397,10 @@ struct ImGui_ImplVulkan_InitInfo
     VkDeviceSize MinAllocationSize; // Minimum allocation size. Set to 1024*1024 to satisfy zealous best practices validation layer and waste a little memory.
 };
 
-// Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool ImGui_ImplVulkan_Init(ImGui_ImplVulkan_InitInfo *info);
-CIMGUI_API void ImGui_ImplVulkan_Shutdown();
-CIMGUI_API void ImGui_ImplVulkan_NewFrame();
-CIMGUI_API void ImGui_ImplVulkan_RenderDrawData(ImDrawData *draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline = VK_NULL_HANDLE);
-CIMGUI_API bool ImGui_ImplVulkan_CreateFontsTexture();
-CIMGUI_API void ImGui_ImplVulkan_DestroyFontsTexture();
-CIMGUI_API void ImGui_ImplVulkan_SetMinImageCount(uint32_t min_image_count); // To override MinImageCount after initialization (e.g. if swap chain is recreated)
-
-// Register a texture (VkDescriptorSet == ImTextureID)
-// FIXME: This is experimental in the sense that we are unsure how to best design/tackle this problem
-// Please post to https://github.com/ocornut/imgui/pull/914 if you have suggestions.
-CIMGUI_API VkDescriptorSet ImGui_ImplVulkan_AddTexture(VkSampler sampler, VkImageView image_view, VkImageLayout image_layout);
-CIMGUI_API void ImGui_ImplVulkan_RemoveTexture(VkDescriptorSet descriptor_set);
-
 typedef void *(*PFN_vkVoidFunction)(const char *function_name, void *user_data);
 
-// Optional: load Vulkan functions with a custom function loader
-// This is only useful with IMGUI_IMPL_VULKAN_NO_PROTOTYPES / VK_NO_PROTOTYPES
-CIMGUI_API bool ImGui_ImplVulkan_LoadFunctions(PFN_vkVoidFunction loader_func, void *user_data);
-
-//-------------------------------------------------------------------------
-// Internal / Miscellaneous Vulkan Helpers
-// (Used by example's main.cpp. Used by multi-viewport features. PROBABLY NOT used by your own engine/app.)
-//-------------------------------------------------------------------------
-// You probably do NOT need to use or care about those functions.
-// Those functions only exist because:
-//   1) they facilitate the readability and maintenance of the multiple main.cpp examples files.
-//   2) the multi-viewport / platform window implementation needs them internally.
-// Generally we avoid exposing any kind of superfluous high-level helpers in the bindings,
-// but it is too much code to duplicate everywhere so we exceptionally expose them.
-//
-// Your engine/app will likely _already_ have code to setup all that stuff (swap chain, render pass, frame buffers, etc.).
-// You may read this code to learn about Vulkan, but it is recommended you use you own custom tailored code to do equivalent work.
-// (The ImGui_ImplVulkanH_XXX functions do not interact with any of the state used by the regular ImGui_ImplVulkan_XXX functions)
-//-------------------------------------------------------------------------
-
-struct ImGui_ImplVulkanH_Frame;
-struct ImGui_ImplVulkanH_Window;
-
-// Helpers
-CIMGUI_API void ImGui_ImplVulkanH_CreateOrResizeWindow(VkInstance instance, VkPhysicalDevice physical_device, VkDevice device, ImGui_ImplVulkanH_Window *wd, uint32_t queue_family, const VkAllocationCallbacks *allocator, int w, int h, uint32_t min_image_count);
-CIMGUI_API void ImGui_ImplVulkanH_DestroyWindow(VkInstance instance, VkDevice device, ImGui_ImplVulkanH_Window *wd, const VkAllocationCallbacks *allocator);
-CIMGUI_API VkSurfaceFormatKHR ImGui_ImplVulkanH_SelectSurfaceFormat(VkPhysicalDevice physical_device, VkSurfaceKHR surface, const VkFormat *request_formats, int request_formats_count, VkColorSpaceKHR request_color_space);
-CIMGUI_API VkPresentModeKHR ImGui_ImplVulkanH_SelectPresentMode(VkPhysicalDevice physical_device, VkSurfaceKHR surface, const VkPresentModeKHR *request_modes, int request_modes_count);
-CIMGUI_API int ImGui_ImplVulkanH_GetMinImageCountFromPresentMode(VkPresentModeKHR present_mode);
+struct CImGui_ImplVulkanH_Frame;
+struct CImGui_ImplVulkanH_Window;
 
 // Helper structure to hold the data needed by one rendering frame
 // (Used by example's main.cpp. Used by multi-viewport features. Probably NOT used by your own engine/app.)
@@ -438,47 +450,96 @@ struct ImGui_ImplVulkanH_Window
     }
 };
 
+*/
+
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
+CIMGUI_API bool CImGui_ImplVulkan_Init(ImGui_ImplVulkan_InitInfo *info);
+CIMGUI_API void CImGui_ImplVulkan_Shutdown();
+CIMGUI_API void CImGui_ImplVulkan_NewFrame();
+CIMGUI_API void CImGui_ImplVulkan_RenderDrawData(ImDrawData *draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline = VK_NULL_HANDLE);
+CIMGUI_API bool CImGui_ImplVulkan_CreateFontsTexture();
+CIMGUI_API void CImGui_ImplVulkan_DestroyFontsTexture();
+CIMGUI_API void CImGui_ImplVulkan_SetMinImageCount(uint32_t min_image_count); // To override MinImageCount after initialization (e.g. if swap chain is recreated)
+
+// Register a texture (VkDescriptorSet == ImTextureID)
+// FIXME: This is experimental in the sense that we are unsure how to best design/tackle this problem
+// Please post to https://github.com/ocornut/imgui/pull/914 if you have suggestions.
+CIMGUI_API VkDescriptorSet CImGui_ImplVulkan_AddTexture(VkSampler sampler, VkImageView image_view, VkImageLayout image_layout);
+CIMGUI_API void CImGui_ImplVulkan_RemoveTexture(VkDescriptorSet descriptor_set);
+
+/*
+// Optional: load Vulkan functions with a custom function loader
+// This is only useful with IMGUI_IMPL_VULKAN_NO_PROTOTYPES / VK_NO_PROTOTYPES
+CIMGUI_API bool CImGui_ImplVulkan_LoadFunctions(PFN_vkVoidFunction loader_func, void *user_data);
+*/
+
+//-------------------------------------------------------------------------
+// Internal / Miscellaneous Vulkan Helpers
+// (Used by example's main.cpp. Used by multi-viewport features. PROBABLY NOT used by your own engine/app.)
+//-------------------------------------------------------------------------
+// You probably do NOT need to use or care about those functions.
+// Those functions only exist because:
+//   1) they facilitate the readability and maintenance of the multiple main.cpp examples files.
+//   2) the multi-viewport / platform window implementation needs them internally.
+// Generally we avoid exposing any kind of superfluous high-level helpers in the bindings,
+// but it is too much code to duplicate everywhere so we exceptionally expose them.
+//
+// Your engine/app will likely _already_ have code to setup all that stuff (swap chain, render pass, frame buffers, etc.).
+// You may read this code to learn about Vulkan, but it is recommended you use you own custom tailored code to do equivalent work.
+// (The CImGui_ImplVulkanH_XXX functions do not interact with any of the state used by the regular CImGui_ImplVulkan_XXX functions)
+//-------------------------------------------------------------------------
+
+// Helpers
+CIMGUI_API void CImGui_ImplVulkanH_CreateOrResizeWindow(VkInstance instance, VkPhysicalDevice physical_device, VkDevice device, ImGui_ImplVulkanH_Window *wd, uint32_t queue_family, const VkAllocationCallbacks *allocator, int w, int h, uint32_t min_image_count);
+CIMGUI_API void CImGui_ImplVulkanH_DestroyWindow(VkInstance instance, VkDevice device, ImGui_ImplVulkanH_Window *wd, const VkAllocationCallbacks *allocator);
+CIMGUI_API VkSurfaceFormatKHR CImGui_ImplVulkanH_SelectSurfaceFormat(VkPhysicalDevice physical_device, VkSurfaceKHR surface, const VkFormat *request_formats, int request_formats_count, VkColorSpaceKHR request_color_space);
+CIMGUI_API VkPresentModeKHR CImGui_ImplVulkanH_SelectPresentMode(VkPhysicalDevice physical_device, VkSurfaceKHR surface, const VkPresentModeKHR *request_modes, int request_modes_count);
+CIMGUI_API int CImGui_ImplVulkanH_GetMinImageCountFromPresentMode(VkPresentModeKHR present_mode);
+
 #endif
 
 #if CIMGUI_USE_OSX
 
-CIMGUI_API bool ImGui_ImplOSX_Init(void *view);
-CIMGUI_API void ImGui_ImplOSX_Shutdown();
-CIMGUI_API void ImGui_ImplOSX_NewFrame(void *view);
+CIMGUI_API bool CImGui_ImplOSX_Init(void *view);
+CIMGUI_API void CImGui_ImplOSX_Shutdown();
+CIMGUI_API void CImGui_ImplOSX_NewFrame(void *view);
 
 #endif
 
 #if CIMGUI_USE_METAL
 
+/*
 typedef struct MTLDevice MTLDevice;
 typedef struct MTLRenderPassDescriptor MTLRenderPassDescriptor;
 typedef struct MTLCommandBuffer MTLCommandBuffer;
 typedef struct MTLRenderCommandEncoder MTLRenderCommandEncoder;
+*/
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool ImGui_ImplMetal_Init(MTLDevice *device);
-CIMGUI_API void ImGui_ImplMetal_Shutdown();
-CIMGUI_API void ImGui_ImplMetal_NewFrame(MTLRenderPassDescriptor *renderPassDescriptor);
-CIMGUI_API void ImGui_ImplMetal_RenderDrawData(ImDrawData *draw_data, MTLCommandBuffer *commandBuffer, MTLRenderCommandEncoder *commandEncoder);
+CIMGUI_API bool CImGui_ImplMetal_Init(MTLDevice *device);
+CIMGUI_API void CImGui_ImplMetal_Shutdown();
+CIMGUI_API void CImGui_ImplMetal_NewFrame(MTLRenderPassDescriptor *renderPassDescriptor);
+CIMGUI_API void CImGui_ImplMetal_RenderDrawData(ImDrawData *draw_data, MTLCommandBuffer *commandBuffer, MTLRenderCommandEncoder *commandEncoder);
 
 // Called by Init/NewFrame/Shutdown
-CIMGUI_API bool ImGui_ImplMetal_CreateFontsTexture(MTLDevice *device);
-CIMGUI_API void ImGui_ImplMetal_DestroyFontsTexture();
-CIMGUI_API bool ImGui_ImplMetal_CreateDeviceObjects(MTLDevice *device);
-CIMGUI_API void ImGui_ImplMetal_DestroyDeviceObjects();
+CIMGUI_API bool CImGui_ImplMetal_CreateFontsTexture(MTLDevice *device);
+CIMGUI_API void CImGui_ImplMetal_DestroyFontsTexture();
+CIMGUI_API bool CImGui_ImplMetal_CreateDeviceObjects(MTLDevice *device);
+CIMGUI_API void CImGui_ImplMetal_DestroyDeviceObjects();
 
 #endif
 
 #if CIMGUI_USE_ANDROID
 
+/*
 typedef struct ANativeWindow ANativeWindow;
 typedef struct AInputEvent AInputEvent;
-
+*/
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool ImGui_ImplAndroid_Init(ANativeWindow *window);
-CIMGUI_API int32_t ImGui_ImplAndroid_HandleInputEvent(const AInputEvent *input_event);
-CIMGUI_API void ImGui_ImplAndroid_Shutdown();
-CIMGUI_API void ImGui_ImplAndroid_NewFrame();
+CIMGUI_API bool CImGui_ImplAndroid_Init(ANativeWindow *window);
+CIMGUI_API int32_t CImGui_ImplAndroid_HandleInputEvent(const AInputEvent *input_event);
+CIMGUI_API void CImGui_ImplAndroid_Shutdown();
+CIMGUI_API void CImGui_ImplAndroid_NewFrame();
 
 #endif
 
