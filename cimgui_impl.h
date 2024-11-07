@@ -93,6 +93,7 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #endif
 
 #if CIMGUI_USE_OSX
+#define IMGUI_IMPL_METAL_CPP_EXTENSIONS
 #include "imgui/backends/imgui_impl_osx.h"
 #endif
 
@@ -106,6 +107,7 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #endif
 
 #if CIMGUI_USE_METAL
+#define IMGUI_IMPL_METAL_CPP
 #include "imgui/backends/imgui_impl_metal.h"
 #endif
 
@@ -508,12 +510,26 @@ CIMGUI_API void CImGui_ImplOSX_NewFrame(void *view);
 
 #if CIMGUI_USE_METAL
 
-/*
+#ifdef __OBJC__
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
+CIMGUI_API bool CImGui_ImplMetal_Init(void *device);
+CIMGUI_API void CImGui_ImplMetal_Shutdown();
+CIMGUI_API void CImGui_ImplMetal_NewFrame(void *renderPassDescriptor);
+CIMGUI_API void CImGui_ImplMetal_RenderDrawData(ImDrawData *draw_data, void *commandBuffer, void *commandEncoder);
+
+// Called by Init/NewFrame/Shutdown
+CIMGUI_API bool CImGui_ImplMetal_CreateFontsTexture(void *device);
+CIMGUI_API void CImGui_ImplMetal_DestroyFontsTexture();
+CIMGUI_API bool CImGui_ImplMetal_CreateDeviceObjects(void *device);
+CIMGUI_API void CImGui_ImplMetal_DestroyDeviceObjects();
+#endif
+
+#ifdef IMGUI_IMPL_METAL_CPP
+#ifndef __OBJC__
 typedef struct MTLDevice MTLDevice;
 typedef struct MTLRenderPassDescriptor MTLRenderPassDescriptor;
 typedef struct MTLCommandBuffer MTLCommandBuffer;
 typedef struct MTLRenderCommandEncoder MTLRenderCommandEncoder;
-*/
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplMetal_Init(MTLDevice *device);
@@ -526,6 +542,9 @@ CIMGUI_API bool CImGui_ImplMetal_CreateFontsTexture(MTLDevice *device);
 CIMGUI_API void CImGui_ImplMetal_DestroyFontsTexture();
 CIMGUI_API bool CImGui_ImplMetal_CreateDeviceObjects(MTLDevice *device);
 CIMGUI_API void CImGui_ImplMetal_DestroyDeviceObjects();
+
+#endif
+#endif
 
 #endif
 
