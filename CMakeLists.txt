@@ -87,6 +87,8 @@ elseif(ANDROID)
 	set(BACKENDS_D3D11 OFF)
 	set(BACKENDS_D3D12 OFF)
 	set(BACKENDS_WIN32 OFF)
+	set(BACKENDS_OPENGL2 OFF)
+	set(BACKENDS_VULKAN OFF) # Too complicated at the moment maybe adding it later.
 	set(BACKENDS_GLFW OFF)
 	set(BACKENDS_SDL2 OFF)
 	set(BACKENDS_METAL OFF)
@@ -149,6 +151,7 @@ message("Building with:")
 if (BACKENDS_ANDROID AND ANDROID)
 	message("Backends Android: ON")
 	# android
+	list(APPEND IMGUI_LIBRARIES android)
 	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_android.cpp)
 endif()
 
@@ -208,7 +211,15 @@ endif()
 #opengl3
 if (BACKENDS_OPENGL3)
 	message("Backends OPENGL3: ON")
-	find_package(OpenGL REQUIRED)
+
+	if (ANDROID)
+		find_library(GLES_LIB GLESv3)
+		list(APPEND IMGUI_LIBRARIES EGL GLESv3)
+	else()
+		find_package(OpenGL REQUIRED)
+		list(APPEND IMGUI_LIBRARIES OpenGL::GL OpenGL::GLU)
+	endif()
+
 	list(APPEND IMGUI_LIBRARIES OpenGL::GL OpenGL::GLU)
 	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_opengl3.cpp)
 	include_directories(imgui/examples/libs/gl3w)
