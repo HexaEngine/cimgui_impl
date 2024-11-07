@@ -220,7 +220,6 @@ if (BACKENDS_OPENGL3)
 		list(APPEND IMGUI_LIBRARIES OpenGL::GL OpenGL::GLU)
 	endif()
 
-	list(APPEND IMGUI_LIBRARIES OpenGL::GL OpenGL::GLU)
 	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_opengl3.cpp)
 	include_directories(imgui/examples/libs/gl3w)
 	message(STATUS "OpenGL_LIBRARIES: ${OPENGL_LIBRARIES}")
