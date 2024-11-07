@@ -37,23 +37,23 @@ typedef unsigned __int64 ImU64;
 CIMGUI_API void igSetCurrentContext(ImGuiContext *ctx);
 CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 
-#ifndef BACKENDS_WIN32
+#ifndef CIMGUI_USE_WIN32
 #define CIMGUI_USE_WIN32 1
 #endif
 
-#ifndef BACKENDS_OSX
+#ifndef CIMGUI_USE_OSX
 #define CIMGUI_USE_OSX 1
 #endif
 
-#ifndef BACKENDS_D3D11
+#ifndef CIMGUI_USE_D3D11
 #define CIMGUI_USE_D3D11 1
 #endif
 
-#ifndef BACKENDS_D3D12
+#ifndef CIMGUI_USE_D3D12
 #define CIMGUI_USE_D3D12 1
 #endif
 
-#ifndef BACKENDS_METAL
+#ifndef CIMGUI_USE_METAL
 #define CIMGUI_USE_METAL 1
 #endif
 
@@ -61,15 +61,15 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #define CIMGUI_USE_VULKAN 1
 #endif
 
-#ifndef BACKENDS_GLFW
+#ifndef CIMGUI_USE_GLFW
 #define CIMGUI_USE_GLFW 1
 #endif
 
-#ifndef BACKENDS_OPENGL3
+#ifndef CIMGUI_USE_OPENGL3
 #define CIMGUI_USE_OPENGL3 1
 #endif
 
-#ifndef BACKENDS_SDL2
+#ifndef CIMGUI_USE_SDL2
 #define CIMGUI_USE_SDL2 1
 #endif
 
@@ -79,6 +79,10 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 
 #ifndef CIMGUI_USE_SDL2Renderer
 #define CIMGUI_USE_SDL2Renderer 1
+#endif
+
+#ifndef CIMGUI_USE_ANDROID
+#define CIMGUI_USE_ANDROID 1
 #endif
 
 #include <stdint.h>
@@ -462,6 +466,19 @@ CIMGUI_API bool ImGui_ImplMetal_CreateFontsTexture(MTLDevice *device);
 CIMGUI_API void ImGui_ImplMetal_DestroyFontsTexture();
 CIMGUI_API bool ImGui_ImplMetal_CreateDeviceObjects(MTLDevice *device);
 CIMGUI_API void ImGui_ImplMetal_DestroyDeviceObjects();
+
+#endif
+
+#if CIMGUI_USE_ANDROID
+
+typedef struct ANativeWindow ANativeWindow;
+typedef struct AInputEvent AInputEvent;
+
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
+CIMGUI_API bool ImGui_ImplAndroid_Init(ANativeWindow *window);
+CIMGUI_API int32_t ImGui_ImplAndroid_HandleInputEvent(const AInputEvent *input_event);
+CIMGUI_API void ImGui_ImplAndroid_Shutdown();
+CIMGUI_API void ImGui_ImplAndroid_NewFrame();
 
 #endif
 

@@ -6,6 +6,7 @@ set(CMAKE_TOOLCHAIN_FILE "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE S
 set (CMAKE_CXX_STANDARD 11)
 
 #general settings
+option(BACKENDS_ANDROID "Enable Android backend" ON)
 option(BACKENDS_WIN32 "Enable Win32 backend" ON)
 option(BACKENDS_D3D11 "Enable Direct3D 11 backend" ON)
 option(BACKENDS_D3D12 "Enable Direct3D 12 backend" ON)
@@ -71,20 +72,21 @@ if(WIN32)
     message(STATUS "Configuring for Windows...") 
 	set(BACKENDS_METAL OFF)
 	set(BACKENDS_OSX OFF)
+	set(BACKENDS_ANDROID OFF)
+
 elseif(APPLE)
     message(STATUS "Configuring for macOS...")
+	set(BACKENDS_WIN32 OFF)
     set(BACKENDS_D3D11 OFF)
     set(BACKENDS_D3D12 OFF)
 	set(BACKENDS_VULKAN OFF)
+	set(BACKENDS_ANDROID OFF)
 
 elseif(ANDROID)
 	message("Configuring for Android...")
 	set(BACKENDS_D3D11 OFF)
 	set(BACKENDS_D3D12 OFF)
-	set(BACKENDS_OPENGL3 OFF)
-	set(BACKENDS_OPENGL2 OFF)
 	set(BACKENDS_WIN32 OFF)
-	set(BACKENDS_VULKAN OFF)
 	set(BACKENDS_GLFW OFF)
 	set(BACKENDS_SDL2 OFF)
 	set(BACKENDS_METAL OFF)
@@ -92,10 +94,13 @@ elseif(ANDROID)
 
 elseif(UNIX AND NOT APPLE)
     message(STATUS "Configuring for Linux...")
+	set(BACKENDS_WIN32 OFF)
     set(BACKENDS_D3D11 OFF)
     set(BACKENDS_D3D12 OFF)
 	set(BACKENDS_METAL OFF)
 	set(BACKENDS_OSX OFF)
+	set(BACKENDS_ANDROID OFF)
+
 endif()
 
 set(BACKENDS_FOLDER "imgui/backends/")
@@ -140,6 +145,13 @@ if(IMGUI_FREETYPE)
 endif()
 
 message("Building with:")
+
+if (BACKENDS_ANDROID AND ANDROID)
+	message("Backends Android: ON")
+	# android
+	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_android.cpp)
+endif()
+
 if (BACKENDS_WIN32 AND WIN32)
 	message("Backends Win32: ON")
 	# win32
@@ -276,7 +288,13 @@ elseif(UNIX AND NOT APPLE)
 endif()
 
 if (IMGUI_WCHAR32)
-	target_compile_definitions(cimgui_impl PRIVATE IMGUI_USE_WCHAR32=1)
+	target_compile_definitions(cimgui_impl PRIVATE IMGUI_USE_WCHAR32)
+endif()
+
+if(BACKENDS_ANDROID)
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_ANDROID=1)
+else()
+    target_compile_definitions(cimgui_impl PRIVATE CIMGUI_USE_ANDROID=0)
 endif()
 
 if(BACKENDS_WIN32)
