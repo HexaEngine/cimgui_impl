@@ -57,7 +57,7 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #define CIMGUI_USE_METAL 1
 #endif
 
-#ifndef BACKENDS_VULKAN
+#ifndef CIMGUI_USE_VULKAN
 #define CIMGUI_USE_VULKAN 1
 #endif
 

@@ -267,11 +267,6 @@ if (BACKENDS_SDL2)
 	endif(SDL2_FOUND)
 endif(BACKENDS_SDL2)
 
-if (ANDROID)
-	message("Backends Android: ON")
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_android.cpp)
-endif()
-
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
 
 if(DEFINED lib_name)
