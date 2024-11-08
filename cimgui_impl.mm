@@ -13,6 +13,14 @@
 #import <QuartzCore/QuartzCore.h>
 #endif
 
+#if CIMGUI_USE_METAL
+#include "imgui/backends/imgui_impl_metal.h"
+#endif
+
+#if CIMGUI_USE_OSX
+#include "imgui/backends/imgui_impl_osx.h"
+#endif
+
 // OSX Backend Implementations
 #if CIMGUI_USE_OSX
 
@@ -84,12 +92,12 @@ CIMGUI_API void CImGui_ImplMetal_Shutdown()
 
 CIMGUI_API void CImGui_ImplMetal_NewFrame(void *renderPassDescriptor)
 {
-    ImGui_ImplMetal_NewFrame(renderPassDescriptor);
+    ImGui_ImplMetal_NewFrame(reinterpret_cast<MTLRenderPassDescriptor*>(renderPassDescriptor));
 }
 
 CIMGUI_API void CImGui_ImplMetal_RenderDrawData(ImDrawData *draw_data, void *commandBuffer, void *commandEncoder)
 {
-    ImGui_ImplMetal_RenderDrawData(draw_data, reinterpret_cast<id<MTLCommandBuffer>>(device), reinterpret_cast<id<MTLRenderCommandEncoder>>(device));
+    ImGui_ImplMetal_RenderDrawData(draw_data, reinterpret_cast<id<MTLCommandBuffer>>(commandBuffer), reinterpret_cast<id<MTLRenderCommandEncoder>>(commandEncoder));
 }
 
 // Called by Init/NewFrame/Shutdown
@@ -139,7 +147,7 @@ CIMGUI_API void CImGui_ImplMetal_Shutdown()
 
 CIMGUI_API void CImGui_ImplMetal_NewFrame(MTLRenderPassDescriptor *renderPassDescriptor)
 {
-    ImGui_ImplMetal_NewFrame(reinterpret_cast<MTL::Device *>(renderPassDescriptor));
+    ImGui_ImplMetal_NewFrame(reinterpret_cast<MTL::RenderPassDescriptor *>(renderPassDescriptor));
 }
 
 CIMGUI_API void CImGui_ImplMetal_RenderDrawData(ImDrawData *draw_data, MTLCommandBuffer *commandBuffer, MTLRenderCommandEncoder *commandEncoder)

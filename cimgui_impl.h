@@ -92,10 +92,6 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #include "imgui/backends/imgui_impl_win32.h"
 #endif
 
-#if CIMGUI_USE_OSX
-#include "imgui/backends/imgui_impl_osx.h"
-#endif
-
 #if CIMGUI_USE_D3D11
 #include "imgui/backends/imgui_impl_dx11.h"
 #endif
@@ -103,10 +99,6 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #if CIMGUI_USE_D3D12
 #include <d3d12.h>
 #include "imgui/backends/imgui_impl_dx12.h"
-#endif
-
-#if CIMGUI_USE_METAL
-#include "imgui/backends/imgui_impl_metal.h"
 #endif
 
 #if CIMGUI_USE_VULKAN
