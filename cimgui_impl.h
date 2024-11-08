@@ -93,7 +93,6 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #endif
 
 #if CIMGUI_USE_OSX
-#define IMGUI_IMPL_METAL_CPP_EXTENSIONS
 #include "imgui/backends/imgui_impl_osx.h"
 #endif
 
@@ -107,7 +106,6 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #endif
 
 #if CIMGUI_USE_METAL
-#define IMGUI_IMPL_METAL_CPP
 #include "imgui/backends/imgui_impl_metal.h"
 #endif
 
