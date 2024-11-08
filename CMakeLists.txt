@@ -126,6 +126,10 @@ imgui/imgui_widgets.cpp
 ${TABLES_SOURCE} 
 )
 
+if (APPLE)
+	list(APPEND IMGUI_SOURCES cimgui_impl.mm)
+endif()
+
 set(IMGUI_LIBRARIES )
 
 #if (WIN32)
@@ -182,22 +186,22 @@ if (BACKENDS_VULKAN)
 	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_vulkan.cpp)
 endif()
 
+# OSX
+if (BACKENDS_OSX AND APPLE)
+	message("Backends OSX: ON")
+    find_library(COCOA_FRAMEWORK Cocoa REQUIRED)  
+	find_library(GAMECONTROLLER_FRAMEWORK GameController REQUIRED)
+    list(APPEND IMGUI_LIBRARIES ${COCOA_FRAMEWORK} ${GAMECONTROLLER_FRAMEWORK})
+	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_osx.mm)
+endif()
+
 # Metal
 if (BACKENDS_METAL AND APPLE)
 	message("Backends Metal: ON")
 	find_library(METAL_FRAMEWORK Metal REQUIRED)
-	list(APPEND IMGUI_LIBRARIES ${METAL_FRAMEWORK})
+	find_library(QUARTZCORE_FRAMEWORK QuartzCore REQUIRED)
+	list(APPEND IMGUI_LIBRARIES ${METAL_FRAMEWORK} ${QUARTZCORE_FRAMEWORK})
 	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_metal.mm)
-endif()
-
-# OSX
-if (BACKENDS_OSX AND APPLE)
-	message("Backends OSX: ON")
-    find_library(COCOA_FRAMEWORK Cocoa REQUIRED)
-    find_library(QUARTZCORE_FRAMEWORK QuartzCore REQUIRED)
-	find_library(GAMECONTROLLER_FRAMEWORK GameController REQUIRED)
-    list(APPEND IMGUI_LIBRARIES ${COCOA_FRAMEWORK} ${QUARTZCORE_FRAMEWORK} ${GAMECONTROLLER_FRAMEWORK})
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_osx.mm)
 endif()
 
 # GLFW
