@@ -15,7 +15,7 @@ CIMGUI_API ImGuiContext *igGetCurrentContext()
 }
 
 // Win32 Backend Implementations
-#if CIMGUI_USE_WIN32
+#ifdef CIMGUI_USE_WIN32
 CIMGUI_API bool CImGui_ImplWin32_Init(void *hwnd)
 {
     return ImGui_ImplWin32_Init(hwnd);
@@ -58,7 +58,7 @@ CIMGUI_API void CImGui_ImplWin32_EnableAlphaCompositing(void *hwnd)
 #endif
 
 // GLFW Backend Implementations
-#if CIMGUI_USE_GLFW
+#ifdef CIMGUI_USE_GLFW
 CIMGUI_API bool CImGui_ImplGlfw_InitForOpenGL(GLFWwindow *window, bool install_callbacks)
 {
     return ImGui_ImplGlfw_InitForOpenGL(window, install_callbacks);
@@ -145,7 +145,7 @@ CIMGUI_API void CImGui_ImplGlfw_Sleep(int milliseconds)
 #endif
 
 // SDL2 Backend Implementations
-#if CIMGUI_USE_SDL2
+#ifdef CIMGUI_USE_SDL2
 CIMGUI_API bool CImGui_ImplSDL2_InitForOpenGL(SDL_Window *window, void *sdl_gl_context)
 {
     return ImGui_ImplSDL2_InitForOpenGL(window, sdl_gl_context);
@@ -198,7 +198,7 @@ CIMGUI_API void CImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode, 
 #endif
 
 // SDL2 Renderer Backend Implementations
-#if CIMGUI_USE_SDL2Renderer
+#ifdef CIMGUI_USE_SDL2Renderer
 CIMGUI_API bool CImGui_ImplSDLRenderer2_Init(SDL_Renderer *renderer)
 {
     return ImGui_ImplSDLRenderer2_Init(renderer);
@@ -241,7 +241,7 @@ CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects()
 #endif
 
 // OpenGL 3 Backend Implementations
-#if CIMGUI_USE_OPENGL3
+#ifdef CIMGUI_USE_OPENGL3
 CIMGUI_API bool CImGui_ImplOpenGL3_Init(const char *glsl_version)
 {
     return ImGui_ImplOpenGL3_Init(glsl_version);
@@ -283,7 +283,7 @@ CIMGUI_API void CImGui_ImplOpenGL3_DestroyDeviceObjects()
 #endif
 
 // OpenGL 2 Backend Implementations
-#if CIMGUI_USE_OPENGL2
+#ifdef CIMGUI_USE_OPENGL2
 CIMGUI_API bool CImGui_ImplOpenGL2_Init()
 {
     return ImGui_ImplOpenGL2_Init();
@@ -325,8 +325,74 @@ CIMGUI_API void CImGui_ImplOpenGL2_DestroyDeviceObjects()
 }
 #endif
 
+// Direct3D 9 Backend Implementations
+#ifdef CIMGUI_USE_D3D9
+CIMGUI_API bool CImGui_ImplDX9_Init(IDirect3DDevice9 *device)
+{
+    return ImGui_ImplDX9_Init(device);
+}
+
+CIMGUI_API void CImGui_ImplDX9_Shutdown()
+{
+    ImGui_ImplDX9_Shutdown();
+}
+
+CIMGUI_API void CImGui_ImplDX9_NewFrame()
+{
+    ImGui_ImplDX9_NewFrame();
+}
+
+CIMGUI_API void CImGui_ImplDX9_RenderDrawData(ImDrawData *draw_data)
+{
+    ImGui_ImplDX9_RenderDrawData(draw_data);
+}
+
+CIMGUI_API void CImGui_ImplDX9_InvalidateDeviceObjects()
+{
+    ImGui_ImplDX9_InvalidateDeviceObjects();
+}
+
+CIMGUI_API bool CImGui_ImplDX9_CreateDeviceObjects()
+{
+    return ImGui_ImplDX9_CreateDeviceObjects();
+}
+#endif
+
+// Direct3D 10 Backend Implementations
+#ifdef CIMGUI_USE_D3D10
+CIMGUI_API bool CImGui_ImplDX10_Init(ID3D10Device *device)
+{
+    return ImGui_ImplDX10_Init(device);
+}
+
+CIMGUI_API void CImGui_ImplDX10_Shutdown()
+{
+    ImGui_ImplDX10_Shutdown();
+}
+
+CIMGUI_API void CImGui_ImplDX10_NewFrame()
+{
+    ImGui_ImplDX10_NewFrame();
+}
+
+CIMGUI_API void CImGui_ImplDX10_RenderDrawData(ImDrawData *draw_data)
+{
+    ImGui_ImplDX10_RenderDrawData(draw_data);
+}
+
+CIMGUI_API void CImGui_ImplDX10_InvalidateDeviceObjects()
+{
+    ImGui_ImplDX10_InvalidateDeviceObjects();
+}
+
+CIMGUI_API bool CImGui_ImplDX10_CreateDeviceObjects()
+{
+    return ImGui_ImplDX10_CreateDeviceObjects();
+}
+#endif
+
 // Direct3D 11 Backend Implementations
-#if CIMGUI_USE_D3D11
+#ifdef CIMGUI_USE_D3D11
 CIMGUI_API bool CImGui_ImplDX11_Init(ID3D11Device *device, ID3D11DeviceContext *device_context)
 {
     return ImGui_ImplDX11_Init(device, device_context);
@@ -359,7 +425,7 @@ CIMGUI_API bool CImGui_ImplDX11_CreateDeviceObjects()
 #endif
 
 // Direct3D 12 Backend Implementations
-#if CIMGUI_USE_D3D12
+#ifdef CIMGUI_USE_D3D12
 CIMGUI_API bool CImGui_ImplDX12_Init(ID3D12Device *device, int num_frames_in_flight, DXGI_FORMAT rtv_format, ID3D12DescriptorHeap *cbv_srv_heap, D3D12_CPU_DESCRIPTOR_HANDLE font_srv_cpu_desc_handle, D3D12_GPU_DESCRIPTOR_HANDLE font_srv_gpu_desc_handle)
 {
     return ImGui_ImplDX12_Init(device, num_frames_in_flight, rtv_format, cbv_srv_heap, font_srv_cpu_desc_handle, font_srv_gpu_desc_handle);
@@ -392,7 +458,7 @@ CIMGUI_API bool CImGui_ImplDX12_CreateDeviceObjects()
 #endif
 
 // Vulkan Backend Implementations
-#if CIMGUI_USE_VULKAN
+#ifdef CIMGUI_USE_VULKAN
 CIMGUI_API bool CImGui_ImplVulkan_Init(ImGui_ImplVulkan_InitInfo *info)
 {
     return ImGui_ImplVulkan_Init(info);
@@ -475,7 +541,7 @@ CIMGUI_API int CImGui_ImplVulkanH_GetMinImageCountFromPresentMode(VkPresentModeK
 #endif
 
 // Android Backend Implementations
-#if CIMGUI_USE_ANDROID
+#ifdef CIMGUI_USE_ANDROID
 CIMGUI_API bool CImGui_ImplAndroid_Init(ANativeWindow *window)
 {
     return ImGui_ImplAndroid_Init(window);

@@ -37,99 +37,59 @@ typedef unsigned __int64 ImU64;
 CIMGUI_API void igSetCurrentContext(ImGuiContext *ctx);
 CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 
-#ifndef CIMGUI_USE_WIN32
-#define CIMGUI_USE_WIN32 0
-#endif
-
-#ifndef CIMGUI_USE_OSX
-#define CIMGUI_USE_OSX 0
-#endif
-
-#ifndef CIMGUI_USE_D3D11
-#define CIMGUI_USE_D3D11 0
-#endif
-
-#ifndef CIMGUI_USE_D3D12
-#define CIMGUI_USE_D3D12 0
-#endif
-
-#ifndef CIMGUI_USE_METAL
-#define CIMGUI_USE_METAL 0
-#endif
-
-#ifndef CIMGUI_USE_VULKAN
-#define CIMGUI_USE_VULKAN 0
-#endif
-
-#ifndef CIMGUI_USE_GLFW
-#define CIMGUI_USE_GLFW 0
-#endif
-
-#ifndef CIMGUI_USE_OPENGL3
-#define CIMGUI_USE_OPENGL3 0
-#endif
-
-#ifndef CIMGUI_USE_SDL2
-#define CIMGUI_USE_SDL2 0
-#endif
-
-#ifndef CIMGUI_USE_OPENGL2
-#define CIMGUI_USE_OPENGL2 0
-#endif
-
-#ifndef CIMGUI_USE_SDL2Renderer
-#define CIMGUI_USE_SDL2Renderer 0
-#endif
-
-#ifndef CIMGUI_USE_ANDROID
-#define CIMGUI_USE_ANDROID 0
-#endif
-
 #include <stdint.h>
 #include <string.h> // For memset
 
-#if CIMGUI_USE_WIN32
+#ifdef CIMGUI_USE_WIN32
 #include "imgui/backends/imgui_impl_win32.h"
 #endif
 
-#if CIMGUI_USE_D3D11
+#ifdef CIMGUI_USE_D3D9
+#include "imgui/backends/imgui_impl_dx9.h"
+#endif
+
+#ifdef CIMGUI_USE_D3D10
+#include "imgui/backends/imgui_impl_dx10.h"
+#endif
+
+#ifdef CIMGUI_USE_D3D11
 #include "imgui/backends/imgui_impl_dx11.h"
 #endif
 
-#if CIMGUI_USE_D3D12
+#ifdef CIMGUI_USE_D3D12
 #include <d3d12.h>
 #include "imgui/backends/imgui_impl_dx12.h"
 #endif
 
-#if CIMGUI_USE_VULKAN
+#ifdef CIMGUI_USE_VULKAN
 #include "imgui/backends/imgui_impl_vulkan.h"
 #endif
 
-#if CIMGUI_USE_GLFW
+#ifdef CIMGUI_USE_GLFW
 #include "imgui/backends/imgui_impl_glfw.h"
 #endif
 
-#if CIMGUI_USE_OPENGL3
+#ifdef CIMGUI_USE_OPENGL3
 #include "imgui/backends/imgui_impl_opengl3.h"
 #endif
 
-#if CIMGUI_USE_SDL2
+#ifdef CIMGUI_USE_SDL2
 #include "imgui/backends/imgui_impl_sdl2.h"
 #endif
 
-#if CIMGUI_USE_OPENGL2
+#ifdef CIMGUI_USE_OPENGL2
 #include "imgui/backends/imgui_impl_opengl2.h"
 #endif
 
-#if CIMGUI_USE_SDL2Renderer
+#ifdef CIMGUI_USE_SDL2Renderer
 #include "imgui/backends/imgui_impl_sdlrenderer2.h"
 #endif
 
-#if CIMGUI_USE_ANDROID
+#ifdef CIMGUI_USE_ANDROID
 #include "imgui/backends/imgui_impl_android.h"
 #endif
 
-#if CIMGUI_USE_WIN32
+#ifdef CIMGUI_USE_WIN32
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplWin32_Init(void *hwnd);
@@ -138,7 +98,7 @@ CIMGUI_API void CImGui_ImplWin32_Shutdown();
 CIMGUI_API void CImGui_ImplWin32_NewFrame();
 
 // Win32 message handler your application need to call.
-// - Intentionally commented out in a '#if 0' block to avoid dragging dependencies on <windows.h> from this helper.
+// - Intentionally commented out in a '#ifdef 0' block to avoid dragging dependencies on <windows.h> from this helper.
 // - You should COPY the line below into your .cpp code to forward declare the function and then you can call it.
 // - Call from your application's message handler. Keep calling your message handler unless this function returns TRUE.
 
@@ -163,7 +123,7 @@ CIMGUI_API void CImGui_ImplWin32_EnableAlphaCompositing(void *hwnd); // HWND hwn
 
 #endif
 
-#if CIMGUI_USE_GLFW
+#ifdef CIMGUI_USE_GLFW
 /*
 typedef struct GLFWwindow GLFWwindow;
 typedef struct GLFWmonitor GLFWmonitor;
@@ -190,7 +150,7 @@ CIMGUI_API void CImGui_ImplGlfw_Sleep(int milliseconds);
 
 #endif
 
-#if CIMGUI_USE_SDL2
+#ifdef CIMGUI_USE_SDL2
 /*
 typedef struct SDL_Window SDL_Window;
 typedef struct SDL_Renderer SDL_Renderer;
@@ -235,7 +195,7 @@ CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects();
 
 #endif
 
-#if CIMGUI_USE_OPENGL3
+#ifdef CIMGUI_USE_OPENGL3
 CIMGUI_API bool CImGui_ImplOpenGL3_Init(const char *glsl_version);
 CIMGUI_API void CImGui_ImplOpenGL3_Shutdown(void);
 CIMGUI_API void CImGui_ImplOpenGL3_NewFrame(void);
@@ -247,7 +207,7 @@ CIMGUI_API void CImGui_ImplOpenGL3_DestroyDeviceObjects(void);
 
 #endif
 
-#if CIMGUI_USE_OPENGL2
+#ifdef CIMGUI_USE_OPENGL2
 CIMGUI_API bool CImGui_ImplOpenGL2_Init(void);
 CIMGUI_API void CImGui_ImplOpenGL2_Shutdown(void);
 CIMGUI_API void CImGui_ImplOpenGL2_NewFrame(void);
@@ -259,7 +219,37 @@ CIMGUI_API void CImGui_ImplOpenGL2_DestroyDeviceObjects(void);
 
 #endif
 
-#if CIMGUI_USE_D3D11
+#ifdef CIMGUI_USE_D3D9
+typedef struct IDirect3DDevice9 IDirect3DDevice9;
+
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
+CIMGUI_API bool CImGui_ImplDX9_Init(IDirect3DDevice9 *device);
+CIMGUI_API void CImGui_ImplDX9_Shutdown();
+CIMGUI_API void CImGui_ImplDX9_NewFrame();
+CIMGUI_API void CImGui_ImplDX9_RenderDrawData(ImDrawData *draw_data);
+
+// Use if you want to reset your rendering device without losing Dear ImGui state.
+CIMGUI_API bool CImGui_ImplDX9_CreateDeviceObjects();
+CIMGUI_API void CImGui_ImplDX9_InvalidateDeviceObjects();
+
+#endif
+
+#ifdef CIMGUI_USE_D3D10
+typedef struct ID3D10Device ID3D10Device;
+
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
+CIMGUI_API bool CImGui_ImplDX10_Init(ID3D10Device *device);
+CIMGUI_API void CImGui_ImplDX10_Shutdown();
+CIMGUI_API void CImGui_ImplDX10_NewFrame();
+CIMGUI_API void CImGui_ImplDX10_RenderDrawData(ImDrawData *draw_data);
+
+// Use if you want to reset your rendering device without losing Dear ImGui state.
+CIMGUI_API bool CImGui_ImplDX10_CreateDeviceObjects();
+CIMGUI_API void CImGui_ImplDX10_InvalidateDeviceObjects();
+
+#endif
+
+#ifdef CIMGUI_USE_D3D11
 typedef struct ID3D11Device ID3D11Device;
 typedef struct ID3D11DeviceContext ID3D11DeviceContext;
 
@@ -275,7 +265,7 @@ CIMGUI_API bool CImGui_ImplDX11_CreateDeviceObjects();
 
 #endif
 
-#if CIMGUI_USE_D3D12
+#ifdef CIMGUI_USE_D3D12
 /*
 typedef struct ID3D12Device;
 typedef struct ID3D12DescriptorHeap;
@@ -300,7 +290,7 @@ CIMGUI_API void CImGui_ImplDX12_InvalidateDeviceObjects();
 CIMGUI_API bool CImGui_ImplDX12_CreateDeviceObjects();
 #endif
 
-#if CIMGUI_USE_VULKAN
+#ifdef CIMGUI_USE_VULKAN
 /*
 // Forward declarations for Vulkan types
 typedef struct VkInstance_T *VkInstance;
@@ -490,7 +480,7 @@ CIMGUI_API int CImGui_ImplVulkanH_GetMinImageCountFromPresentMode(VkPresentModeK
 
 #endif
 
-#if CIMGUI_USE_OSX
+#ifdef CIMGUI_USE_OSX
 
 CIMGUI_API bool CImGui_ImplOSX_Init(void *view);
 CIMGUI_API void CImGui_ImplOSX_Shutdown();
@@ -498,7 +488,7 @@ CIMGUI_API void CImGui_ImplOSX_NewFrame(void *view);
 
 #endif
 
-#if CIMGUI_USE_METAL
+#ifdef CIMGUI_USE_METAL
 
 #ifdef __OBJC__
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
@@ -538,7 +528,7 @@ CIMGUI_API void CImGui_ImplMetal_DestroyDeviceObjects();
 
 #endif
 
-#if CIMGUI_USE_ANDROID
+#ifdef CIMGUI_USE_ANDROID
 
 /*
 typedef struct ANativeWindow ANativeWindow;
