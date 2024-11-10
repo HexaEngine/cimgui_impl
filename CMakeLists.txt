@@ -140,11 +140,6 @@ endif()
 
 set(IMGUI_LIBRARIES )
 
-#if (WIN32)
-#    add_definitions("-DIMGUI_IMPL_API=extern \"C\" __declspec\(dllexport\)")
-#else(WIN32)
-#    add_definitions("-DIMGUI_IMPL_API=extern \"C\" ")
-#endif(WIN32)
 
 add_compile_definitions("IMGUI_IMPL_OPENGL_LOADER_GL3W")
 

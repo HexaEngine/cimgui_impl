@@ -41,6 +41,7 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #include <string.h> // For memset
 
 #ifdef CIMGUI_USE_WIN32
+#include <windows.h>
 #include "imgui/backends/imgui_impl_win32.h"
 #endif
 
@@ -97,14 +98,7 @@ CIMGUI_API bool CImGui_ImplWin32_InitForOpenGL(void *hwnd);
 CIMGUI_API void CImGui_ImplWin32_Shutdown();
 CIMGUI_API void CImGui_ImplWin32_NewFrame();
 
-// Win32 message handler your application need to call.
-// - Intentionally commented out in a '#ifdef 0' block to avoid dragging dependencies on <windows.h> from this helper.
-// - You should COPY the line below into your .cpp code to forward declare the function and then you can call it.
-// - Call from your application's message handler. Keep calling your message handler unless this function returns TRUE.
-
-#if 0
-extern CIMGUI_API LRESULT CImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-#endif
+CIMGUI_API LRESULT CImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // DPI-related helpers (optional)
 // - Use to enable DPI awareness without having to create an application manifest.

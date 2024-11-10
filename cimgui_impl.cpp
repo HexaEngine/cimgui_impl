@@ -36,6 +36,14 @@ CIMGUI_API void CImGui_ImplWin32_NewFrame()
     ImGui_ImplWin32_NewFrame();
 }
 
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+CIMGUI_API LRESULT CImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    // Forward the call to ImGui's Win32 handler
+    return ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam);
+}
+
 CIMGUI_API void CImGui_ImplWin32_EnableDpiAwareness()
 {
     ImGui_ImplWin32_EnableDpiAwareness();
