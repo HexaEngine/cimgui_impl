@@ -434,9 +434,9 @@ CIMGUI_API bool CImGui_ImplDX11_CreateDeviceObjects()
 
 // Direct3D 12 Backend Implementations
 #ifdef CIMGUI_USE_D3D12
-CIMGUI_API bool CImGui_ImplDX12_Init(ID3D12Device *device, int num_frames_in_flight, DXGI_FORMAT rtv_format, ID3D12DescriptorHeap *cbv_srv_heap, D3D12_CPU_DESCRIPTOR_HANDLE font_srv_cpu_desc_handle, D3D12_GPU_DESCRIPTOR_HANDLE font_srv_gpu_desc_handle)
+CIMGUI_API bool CImGui_ImplDX12_Init(ImGui_ImplDX12_InitInfo *info)
 {
-    return ImGui_ImplDX12_Init(device, num_frames_in_flight, rtv_format, cbv_srv_heap, font_srv_cpu_desc_handle, font_srv_gpu_desc_handle);
+    return ImGui_ImplDX12_Init(info);
 }
 
 CIMGUI_API void CImGui_ImplDX12_Shutdown()
