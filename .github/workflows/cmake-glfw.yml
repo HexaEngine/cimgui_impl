@@ -23,10 +23,10 @@ jobs:
             arch: x86
             cmake-arch: win32
             triplet: x86-windows
-          #          - os: windows-latest # Doesn't work. glu32.lib not found despite being present in the sdk/vcpkg.
-          #            arch: arm64
-          #            cmake-arch: arm64
-          #            triplet: arm64-windows
+          - os: windows-latest
+            arch: arm64
+            cmake-arch: arm64
+            triplet: arm64-windows
           - os: macos-13
             arch: x86_64
             cmake-arch: x86_64
@@ -82,13 +82,13 @@ jobs:
         run: |
           cmake -S cimgui_impl -B cimgui_impl/build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} -DBACKENDS_GLFW_ONLY=ON -DIMGUI_WCHAR32=ON
 
-      - name: Configure cimgui_impl with CMake for Windows (x86)
-        if: matrix.os == 'windows-latest' && matrix.arch == 'x86'
+      - name: Configure cimgui_impl with CMake for Windows (arm64)
+        if: matrix.os == 'windows-latest' && matrix.arch == 'arm64'
         run: |
           cd cimgui_impl
-          cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_GLFW_ONLY=ON -DIMGUI_WCHAR32=ON
+          cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_GLFW_ONLY=ON -DIMGUI_WCHAR32=ON -DCMAKE_SYSTEM_VERSION=10.0.26100.0
       - name: Configure cimgui_impl with CMake for Windows
-        if: matrix.os == 'windows-latest' && matrix.arch != 'x86'
+        if: matrix.os == 'windows-latest' && matrix.arch != 'arm64'
         run: |
           cd cimgui_impl
           cmake -S . -B ./build -A ${{ matrix.cmake-arch }} -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBACKENDS_GLFW_ONLY=ON -DIMGUI_WCHAR32=ON
