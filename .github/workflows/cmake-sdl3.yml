@@ -44,7 +44,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libsdl3-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf
+          sudo apt-get install -y build-essential cmake libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf
 
       - name: Install dependencies on MacOS
         if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
@@ -60,14 +60,14 @@ jobs:
           vulkan-use-cache: false
 
       - name: Install vcpkg (Windows)
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-latest' || matrix.os == 'linux' || matrix.os == 'ubuntu-latest'
         run: |
           cd cimgui_impl
           git clone https://github.com/microsoft/vcpkg.git
           ./vcpkg/bootstrap-vcpkg.bat
 
       - name: Install vcpkg packages
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-latest' || matrix.os == 'linux' || matrix.os == 'ubuntu-latest'
         run: |
           cd cimgui_impl
           ./vcpkg/vcpkg install sdl3:${{ matrix.triplet }}
