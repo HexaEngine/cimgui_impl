@@ -295,7 +295,7 @@ CIMGUI_API bool CImGui_ImplSDL3_ProcessEvent(const SDL_Event *event)
     return ImGui_ImplSDL3_ProcessEvent(event);
 }
 
-CIMGUI_API void CImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL3_GamepadMode mode, struct _SDL_GameController **manual_gamepads_array, int manual_gamepads_count)
+CIMGUI_API void CImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL3_GamepadMode mode, struct SDL_Gamepad **manual_gamepads_array, int manual_gamepads_count)
 {
     ImGui_ImplSDL3_SetGamepadMode(mode, manual_gamepads_array, manual_gamepads_count);
 }

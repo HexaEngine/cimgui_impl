@@ -201,10 +201,10 @@ CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects();
 /*
 typedef struct SDL_Window SDL_Window;
 typedef struct SDL_Renderer SDL_Renderer;
-typedef struct _SDL_GameController _SDL_GameController;
+typedef struct SDL_Gamepad SDL_Gamepad;
 struct SDL_Window;
 struct SDL_Renderer;
-struct _SDL_GameController;
+struct SDL_Gamepad;
 typedef union SDL_Event SDL_Event;
 typedef enum {
     ImGui_ImplSDL3_GamepadMode_AutoFirst,
