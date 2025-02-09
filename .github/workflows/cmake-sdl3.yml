@@ -48,7 +48,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf
+          sudo apt-get install -y build-essential cmake libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf curl zip unzip tar
 
       - name: Install dependencies on MacOS
         if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
