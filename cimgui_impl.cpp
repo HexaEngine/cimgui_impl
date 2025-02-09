@@ -248,6 +248,102 @@ CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects()
 }
 #endif
 
+// SDL3 Backend Implementations
+#ifdef CIMGUI_USE_SDL3
+CIMGUI_API bool CImGui_ImplSDL3_InitForOpenGL(SDL_Window *window, void *sdl_gl_context)
+{
+    return ImGui_ImplSDL3_InitForOpenGL(window, sdl_gl_context);
+}
+
+CIMGUI_API bool CImGui_ImplSDL3_InitForVulkan(SDL_Window *window)
+{
+    return ImGui_ImplSDL3_InitForVulkan(window);
+}
+
+CIMGUI_API bool CImGui_ImplSDL3_InitForD3D(SDL_Window *window)
+{
+    return ImGui_ImplSDL3_InitForD3D(window);
+}
+
+CIMGUI_API bool CImGui_ImplSDL3_InitForMetal(SDL_Window *window)
+{
+    return ImGui_ImplSDL3_InitForMetal(window);
+}
+
+CIMGUI_API bool CImGui_ImplSDL3_InitForSDLRenderer(SDL_Window *window, SDL_Renderer *renderer)
+{
+    return ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
+}
+
+CIMGUI_API bool CImGui_ImplSDL3_InitForOther(SDL_Window *window)
+{
+    return ImGui_ImplSDL3_InitForOther(window);
+}
+
+CIMGUI_API void CImGui_ImplSDL3_Shutdown()
+{
+    ImGui_ImplSDL3_Shutdown();
+}
+
+CIMGUI_API void CImGui_ImplSDL3_NewFrame()
+{
+    ImGui_ImplSDL3_NewFrame();
+}
+
+CIMGUI_API bool CImGui_ImplSDL3_ProcessEvent(const SDL_Event *event)
+{
+    return ImGui_ImplSDL3_ProcessEvent(event);
+}
+
+CIMGUI_API void CImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL3_GamepadMode mode, struct _SDL_GameController **manual_gamepads_array, int manual_gamepads_count)
+{
+    ImGui_ImplSDL3_SetGamepadMode(mode, manual_gamepads_array, manual_gamepads_count);
+}
+#endif
+
+// SDL3 Renderer Backend Implementations
+#ifdef CIMGUI_USE_SDL3Renderer
+CIMGUI_API bool CImGui_ImplSDLRenderer3_Init(SDL_Renderer *renderer)
+{
+    return ImGui_ImplSDLRenderer3_Init(renderer);
+}
+
+CIMGUI_API void CImGui_ImplSDLRenderer3_Shutdown()
+{
+    ImGui_ImplSDLRenderer3_Shutdown();
+}
+
+CIMGUI_API void CImGui_ImplSDLRenderer3_NewFrame()
+{
+    ImGui_ImplSDLRenderer3_NewFrame();
+}
+
+CIMGUI_API void CImGui_ImplSDLRenderer3_RenderDrawData(ImDrawData *draw_data, SDL_Renderer *renderer)
+{
+    ImGui_ImplSDLRenderer3_RenderDrawData(draw_data, renderer);
+}
+
+CIMGUI_API bool CImGui_ImplSDLRenderer3_CreateFontsTexture()
+{
+    return ImGui_ImplSDLRenderer3_CreateFontsTexture();
+}
+
+CIMGUI_API void CImGui_ImplSDLRenderer3_DestroyFontsTexture()
+{
+    ImGui_ImplSDLRenderer3_DestroyFontsTexture();
+}
+
+CIMGUI_API bool CImGui_ImplSDLRenderer3_CreateDeviceObjects()
+{
+    return ImGui_ImplSDLRenderer3_CreateDeviceObjects();
+}
+
+CIMGUI_API void CImGui_ImplSDLRenderer3_DestroyDeviceObjects()
+{
+    ImGui_ImplSDLRenderer3_DestroyDeviceObjects();
+}
+#endif
+
 // OpenGL 3 Backend Implementations
 #ifdef CIMGUI_USE_OPENGL3
 CIMGUI_API bool CImGui_ImplOpenGL3_Init(const char *glsl_version)

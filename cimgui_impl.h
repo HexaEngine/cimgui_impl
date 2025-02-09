@@ -78,11 +78,19 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #include "imgui/backends/imgui_impl_sdl2.h"
 #endif
 
+#ifdef CIMGUI_USE_SDL3
+#include "imgui/backends/imgui_impl_sdl3.h"
+#endif
+
 #ifdef CIMGUI_USE_OPENGL2
 #include "imgui/backends/imgui_impl_opengl2.h"
 #endif
 
 #ifdef CIMGUI_USE_SDL2Renderer
+#include "imgui/backends/imgui_impl_sdlrenderer2.h"
+#endif
+
+#ifdef CIMGUI_USE_SDL3Renderer
 #include "imgui/backends/imgui_impl_sdlrenderer2.h"
 #endif
 
@@ -184,6 +192,51 @@ CIMGUI_API bool CImGui_ImplSDLRenderer2_CreateFontsTexture();
 CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyFontsTexture();
 CIMGUI_API bool CImGui_ImplSDLRenderer2_CreateDeviceObjects();
 CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects();
+
+#endif
+
+#ifdef CIMGUI_USE_SDL3
+/*
+typedef struct SDL_Window SDL_Window;
+typedef struct SDL_Renderer SDL_Renderer;
+typedef struct _SDL_GameController _SDL_GameController;
+struct SDL_Window;
+struct SDL_Renderer;
+struct _SDL_GameController;
+typedef union SDL_Event SDL_Event;
+typedef enum {
+    ImGui_ImplSDL3_GamepadMode_AutoFirst,
+    ImGui_ImplSDL3_GamepadMode_AutoAll,
+    ImGui_ImplSDL3_GamepadMode_Manual
+} ImGui_ImplSDL3_GamepadMode;
+*/
+
+CIMGUI_API bool CImGui_ImplSDL3_InitForOpenGL(SDL_Window *window, void *sdl_gl_context);
+CIMGUI_API bool CImGui_ImplSDL3_InitForVulkan(SDL_Window *window);
+CIMGUI_API bool CImGui_ImplSDL3_InitForD3D(SDL_Window *window);
+CIMGUI_API bool CImGui_ImplSDL3_InitForMetal(SDL_Window *window);
+CIMGUI_API bool CImGui_ImplSDL3_InitForSDLRenderer(SDL_Window *window, SDL_Renderer *renderer);
+CIMGUI_API bool CImGui_ImplSDL3_InitForSDLGPU(SDL_Window *window);
+CIMGUI_API bool CImGui_ImplSDL3_InitForOther(SDL_Window *window);
+CIMGUI_API void CImGui_ImplSDL3_Shutdown();
+CIMGUI_API void CImGui_ImplSDL3_NewFrame();
+CIMGUI_API bool CImGui_ImplSDL3_ProcessEvent(const SDL_Event *event);
+
+CIMGUI_API void CImGui_ImplSDL3_SetGamepadMode(ImGui_ImplSDL3_GamepadMode mode, SDL_Gamepad **manual_gamepads_array = nullptr, int manual_gamepads_count = -1);
+
+#ifdef CIMGUI_USE_SDL3Renderer
+
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
+CIMGUI_API bool ImGui_ImplSDLRenderer3_Init(SDL_Renderer *renderer);
+CIMGUI_API void ImGui_ImplSDLRenderer3_Shutdown();
+CIMGUI_API void ImGui_ImplSDLRenderer3_NewFrame();
+CIMGUI_API void ImGui_ImplSDLRenderer3_RenderDrawData(ImDrawData *draw_data, SDL_Renderer *renderer);
+
+// Called by Init/NewFrame/Shutdown
+CIMGUI_API bool ImGui_ImplSDLRenderer3_CreateFontsTexture();
+CIMGUI_API void ImGui_ImplSDLRenderer3_DestroyFontsTexture();
+CIMGUI_API bool ImGui_ImplSDLRenderer3_CreateDeviceObjects();
+CIMGUI_API void ImGui_ImplSDLRenderer3_DestroyDeviceObjects();
 
 #endif
 
