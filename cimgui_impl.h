@@ -91,7 +91,7 @@ CIMGUI_API ImGuiContext *igGetCurrentContext(void);
 #endif
 
 #ifdef CIMGUI_USE_SDL3Renderer
-#include "imgui/backends/imgui_impl_sdlrenderer2.h"
+#include "imgui/backends/imgui_impl_sdlrenderer3.h"
 #endif
 
 #ifdef CIMGUI_USE_ANDROID
