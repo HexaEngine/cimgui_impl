@@ -195,6 +195,8 @@ CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects();
 
 #endif
 
+#endif
+
 #ifdef CIMGUI_USE_SDL3
 /*
 typedef struct SDL_Window SDL_Window;
