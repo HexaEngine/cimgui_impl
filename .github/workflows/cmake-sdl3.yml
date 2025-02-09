@@ -11,10 +11,12 @@ jobs:
           - os: ubuntu-latest
             arch: x86_64
             cmake-arch: x64
+            triplet: x64-linux
           - os: linux
             arch: arm64
             cmake-arch: aarch64
             runner-label: self-hosted
+            triplet: arm64-linux
           - os: windows-latest
             arch: x86_64
             cmake-arch: x64
