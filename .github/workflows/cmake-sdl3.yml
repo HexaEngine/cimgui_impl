@@ -48,7 +48,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf curl zip unzip tar ninja-build cmake g++ autoconf automake libtool pkg-config
+          sudo apt-get install -y build-essential cmake libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf curl zip unzip tar ninja-build cmake g++ autoconf automake libtool pkg-config libxcrypt-dev
 
       - name: Install dependencies on MacOS
         if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
