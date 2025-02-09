@@ -229,16 +229,16 @@ CIMGUI_API void CImGui_ImplSDL3_SetGamepadMode(ImGui_ImplSDL3_GamepadMode mode, 
 #ifdef CIMGUI_USE_SDL3Renderer
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool ImGui_ImplSDLRenderer3_Init(SDL_Renderer *renderer);
-CIMGUI_API void ImGui_ImplSDLRenderer3_Shutdown();
-CIMGUI_API void ImGui_ImplSDLRenderer3_NewFrame();
-CIMGUI_API void ImGui_ImplSDLRenderer3_RenderDrawData(ImDrawData *draw_data, SDL_Renderer *renderer);
+CIMGUI_API bool CImGui_ImplSDLRenderer3_Init(SDL_Renderer *renderer);
+CIMGUI_API void CImGui_ImplSDLRenderer3_Shutdown();
+CIMGUI_API void CImGui_ImplSDLRenderer3_NewFrame();
+CIMGUI_API void CImGui_ImplSDLRenderer3_RenderDrawData(ImDrawData *draw_data, SDL_Renderer *renderer);
 
 // Called by Init/NewFrame/Shutdown
-CIMGUI_API bool ImGui_ImplSDLRenderer3_CreateFontsTexture();
-CIMGUI_API void ImGui_ImplSDLRenderer3_DestroyFontsTexture();
-CIMGUI_API bool ImGui_ImplSDLRenderer3_CreateDeviceObjects();
-CIMGUI_API void ImGui_ImplSDLRenderer3_DestroyDeviceObjects();
+CIMGUI_API bool CImGui_ImplSDLRenderer3_CreateFontsTexture();
+CIMGUI_API void CImGui_ImplSDLRenderer3_DestroyFontsTexture();
+CIMGUI_API bool CImGui_ImplSDLRenderer3_CreateDeviceObjects();
+CIMGUI_API void CImGui_ImplSDLRenderer3_DestroyDeviceObjects();
 
 #endif
 
