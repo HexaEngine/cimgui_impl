@@ -44,12 +44,12 @@ jobs:
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf
+          sudo apt-get install -y build-essential cmake libsdl3-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf
 
       - name: Install dependencies on MacOS
         if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
         run: |
-          brew install cmake sdl2 glfw glew glm
+          brew install cmake sdl3 glfw glew glm
 
       - name: Prepare Vulkan SDK
         if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
