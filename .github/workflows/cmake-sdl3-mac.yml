@@ -1,4 +1,4 @@
-name: Build SDL3 Image Libraries
+name: Build cimgui_impl Libraries (SDL3) (MacOS test)
 
 on: [workflow_dispatch]
 
@@ -56,7 +56,7 @@ jobs:
       if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
       run: |
         cd cimgui
-        cmake -S ./ -B ./build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} -DBACKENDS_SDL3_ONLY=ON -DIMGUI_WCHAR32=ON -DCMAKE_PREFIX_PATH="./SDL/install"
+        cmake -S ./ -B ./build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} -DBACKENDS_SDL3_ONLY=ON -DIMGUI_WCHAR32=ON -DCMAKE_PREFIX_PATH="./SDL/install" -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON
 
     - name: Build cimgui_impl
       run: |
@@ -68,7 +68,7 @@ jobs:
       with:
         name: cimgui_impl-${{ matrix.os }}-${{ matrix.arch }}-artifacts
         path: |
-            cimgui_impl/build/*.dll
-            cimgui_impl/build/*.so
-            cimgui_impl/build/*.dylib
+            cimgui/build/*.dll
+            cimgui/build/*.so
+            cimgui/build/*.dylib
         if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
