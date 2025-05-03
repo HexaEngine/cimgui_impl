@@ -360,7 +360,7 @@ elseif(UNIX AND NOT APPLE)
 		add_custom_command(TARGET cimgui_impl POST_BUILD COMMAND patchelf --replace-needed libSDL3-3.0.so.0 libSDL3.so $<TARGET_FILE:cimgui_impl>)
 	endif(BACKENDS_SDL3)
  	 if(BACKENDS_GLFW)
- 		add_custom_command(TARGET cimgui_impl POST_BUILD COMMAND  patchelf --replace-needed libglfw.so.3 libglfw.so $<TARGET_FILE:cimgui_impl>)
+ 		add_custom_command(TARGET cimgui_impl POST_BUILD COMMAND patchelf --replace-needed libglfw.so.3 libglfw.so $<TARGET_FILE:cimgui_impl>)
 	endif(BACKENDS_GLFW)
 endif()
 

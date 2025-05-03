@@ -92,7 +92,8 @@ jobs:
           libjpeg-dev \
           libtiff-dev \
           libwebp-dev \
-          libavif-dev
+          libavif-dev \
+          patchelf
 
     - name: Install Dependencies on macOS
       if: matrix.os == 'macos-latest'
