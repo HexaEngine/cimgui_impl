@@ -3,10 +3,20 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_METAL
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+// Metal C++ types for non-ObjC usage
+#ifndef __OBJC__
+typedef struct MTLDevice MTLDevice;
+typedef struct MTLRenderPassDescriptor MTLRenderPassDescriptor;
+typedef struct MTLCommandBuffer MTLCommandBuffer;
+typedef struct MTLRenderCommandEncoder MTLRenderCommandEncoder;
+#endif
+#else
 #include "backends/imgui_impl_metal.h"
 #import <AppKit/AppKit.h>
 #import <Metal/Metal.h>
 #import <QuartzCore/QuartzCore.h>
+#endif
 
 #ifdef __OBJC__
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!

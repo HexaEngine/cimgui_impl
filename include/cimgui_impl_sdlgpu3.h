@@ -3,9 +3,26 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_SDLGPU3
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+// typedefs for SDL_GPU3 types used in this header
+typedef void* SDL_GPUDevice;
+typedef int SDL_GPUTextureFormat;
+typedef int SDL_GPUSampleCount;
+typedef struct SDL_GPUCommandBuffer SDL_GPUCommandBuffer;
+typedef struct SDL_GPURenderPass SDL_GPURenderPass;
+typedef struct SDL_GPUGraphicsPipeline SDL_GPUGraphicsPipeline;
+typedef struct ImDrawData ImDrawData;
+typedef struct ImTextureData ImTextureData;
+// Full struct layout for ImGui_ImplSDLGPU3_InitInfo
+struct ImGui_ImplSDLGPU3_InitInfo {
+    SDL_GPUDevice* Device;
+    SDL_GPUTextureFormat ColorTargetFormat;
+    SDL_GPUSampleCount MSAASamples;
+};
+#else
 #include "backends/imgui_impl_sdlgpu3.h"
 #include "backends/imgui_impl_sdlgpu3_shaders.h"
-
+#endif
 // Initialization data, for ImGui_ImplSDLGPU_Init()
 // - Remember to set ColorTargetFormat to the correct format. If you're rendering to the swapchain, call SDL_GetGPUSwapchainTextureFormat to query the right value
 CIMGUI_API bool CImGui_ImplSDLGPU3_Init(ImGui_ImplSDLGPU3_InitInfo *info);
@@ -21,7 +38,6 @@ CIMGUI_API void CImGui_ImplSDLGPU3_GetSPIRVVertexShader(const void** ptr, size_t
 CIMGUI_API void CImGui_ImplSDLGPU3_GetSPIRVFragmentShader(const void** ptr, size_t* size);
 CIMGUI_API void CImGui_ImplSDLGPU3_GetDXBCVertexShader(const void** ptr, size_t* size);
 CIMGUI_API void CImGui_ImplSDLGPU3_GetDXBCPixelShader(const void** ptr, size_t* size);
-
 #endif // CIMGUI_USE_SDLGPU3
 
 #endif // CIMGUI_IMPL_SDLGPU3_H

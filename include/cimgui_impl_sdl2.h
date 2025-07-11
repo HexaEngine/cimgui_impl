@@ -3,7 +3,17 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_SDL2
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+// typedefs for SDL2 types used in this header
+typedef struct SDL_Window SDL_Window;
+typedef struct SDL_Renderer SDL_Renderer;
+typedef struct _SDL_GameController _SDL_GameController;
+typedef union SDL_Event SDL_Event;
+// enums from backend
+enum ImGui_ImplSDL2_GamepadMode { ImGui_ImplSDL2_GamepadMode_AutoFirst, ImGui_ImplSDL2_GamepadMode_AutoAll, ImGui_ImplSDL2_GamepadMode_Manual };
+#else
 #include "backends/imgui_impl_sdl2.h"
+#endif
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplSDL2_InitForOpenGL(SDL_Window *window, void *sdl_gl_context);
 CIMGUI_API bool CImGui_ImplSDL2_InitForVulkan(SDL_Window *window);

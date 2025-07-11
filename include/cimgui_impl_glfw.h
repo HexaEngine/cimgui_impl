@@ -3,7 +3,12 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_GLFW
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+typedef struct GLFWwindow GLFWwindow;
+typedef struct GLFWmonitor GLFWmonitor;
+#else
 #include "backends/imgui_impl_glfw.h"
+#endif
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplGlfw_InitForOpenGL(GLFWwindow *window, bool install_callbacks);
 CIMGUI_API bool CImGui_ImplGlfw_InitForVulkan(GLFWwindow *window, bool install_callbacks);

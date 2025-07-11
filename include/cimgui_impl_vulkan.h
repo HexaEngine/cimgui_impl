@@ -3,7 +3,69 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_VULKAN
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+// Vulkan and backend types (no Im* typedefs)
+typedef void* VkInstance;
+typedef void* VkPhysicalDevice;
+typedef void* VkDevice;
+typedef void* VkQueue;
+typedef void* VkDescriptorPool;
+typedef void* VkRenderPass;
+typedef unsigned int uint32_t;
+typedef void* VkSampleCountFlagBits;
+typedef void* VkPipelineCache;
+typedef void* VkPipelineRenderingCreateInfoKHR;
+typedef int bool;
+typedef void* VkAllocationCallbacks;
+typedef void* VkDeviceSize;
+typedef void* VkResult;
+typedef void* PFN_vkVoidFunction;
+typedef void* VkCommandBuffer;
+typedef void* VkPipeline;
+typedef void* VkSampler;
+typedef void* VkImageView;
+typedef void* VkImageLayout;
+typedef void* VkDescriptorSet;
+typedef void* VkSurfaceKHR;
+typedef void* VkFormat;
+typedef void* VkColorSpaceKHR;
+typedef void* VkSurfaceFormatKHR;
+typedef void* VkPresentModeKHR;
+typedef void* VkPipelineLayout;
+typedef void* VkCommandPool;
+typedef void* VkFence;
+typedef void* VkImage;
+typedef void* VkFramebuffer;
+typedef void* VkSemaphore;
+typedef void* VkSwapchainKHR;
+typedef void* VkClearValue;
+// Full struct layout for ImGui_ImplVulkan_InitInfo
+struct ImGui_ImplVulkan_InitInfo {
+    uint32_t ApiVersion;
+    VkInstance Instance;
+    VkPhysicalDevice PhysicalDevice;
+    VkDevice Device;
+    uint32_t QueueFamily;
+    VkQueue Queue;
+    VkDescriptorPool DescriptorPool;
+    VkRenderPass RenderPass;
+    uint32_t MinImageCount;
+    uint32_t ImageCount;
+    VkSampleCountFlagBits MSAASamples;
+    VkPipelineCache PipelineCache;
+    uint32_t Subpass;
+    uint32_t DescriptorPoolSize;
+    bool UseDynamicRendering;
+#ifdef IMGUI_IMPL_VULKAN_HAS_DYNAMIC_RENDERING
+    VkPipelineRenderingCreateInfoKHR PipelineRenderingCreateInfo;
+#endif
+    const VkAllocationCallbacks* Allocator;
+    void (*CheckVkResultFn)(VkResult err);
+    VkDeviceSize MinAllocationSize;
+};
+#else
 #include "backends/imgui_impl_vulkan.h"
+#endif
 // [Configuration] in order to use a custom Vulkan function loader:
 // (1) You'll need to disable default Vulkan function prototypes.
 //     We provide a '#define IMGUI_IMPL_VULKAN_NO_PROTOTYPES' convenience configuration flag.
@@ -20,7 +82,7 @@
 CIMGUI_API bool CImGui_ImplVulkan_Init(ImGui_ImplVulkan_InitInfo *info);
 CIMGUI_API void CImGui_ImplVulkan_Shutdown();
 CIMGUI_API void CImGui_ImplVulkan_NewFrame();
-CIMGUI_API void CImGui_ImplVulkan_RenderDrawData(ImDrawData *draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline = VK_NULL_HANDLE);
+CIMGUI_API void CImGui_ImplVulkan_RenderDrawData(ImDrawData *draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline);
 CIMGUI_API void CImGui_ImplVulkan_UpdateTexture(ImTextureData* tex);
 CIMGUI_API void CImGui_ImplVulkan_SetMinImageCount(uint32_t min_image_count);
 // [!] Renderer: User texture binding. Use 'VkDescriptorSet' as texture identifier. Call ImGui_ImplVulkan_AddTexture() to register one. Read the FAQ about ImTextureID/ImTextureRef + https://github.com/ocornut/imgui/pull/914 for discussions.

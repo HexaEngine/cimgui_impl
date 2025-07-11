@@ -3,8 +3,17 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_WIN32
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+// typedefs for Win32 types used in this header
+typedef struct HWND HWND;
+typedef unsigned int UINT;
+typedef unsigned long WPARAM;
+typedef long LPARAM;
+typedef long LRESULT;
+#else
 #include <windows.h>
 #include "backends/imgui_impl_win32.h"
+#endif
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplWin32_Init(void *hwnd);
 CIMGUI_API bool CImGui_ImplWin32_InitForOpenGL(void *hwnd);

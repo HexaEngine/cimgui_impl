@@ -3,7 +3,18 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_SDL2Renderer
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+// typedefs for SDL2Renderer types used in this header
+typedef struct SDL_Renderer SDL_Renderer;
+typedef struct ImDrawData ImDrawData;
+typedef struct ImTextureData ImTextureData;
+// Full struct layout for ImGui_ImplSDLRenderer2_RenderState
+struct ImGui_ImplSDLRenderer2_RenderState {
+    SDL_Renderer* Renderer;
+};
+#else
 #include "backends/imgui_impl_sdl2renderer.h"
+#endif
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplSDLRenderer2_Init(SDL_Renderer *renderer);
 CIMGUI_API void CImGui_ImplSDLRenderer2_Shutdown();

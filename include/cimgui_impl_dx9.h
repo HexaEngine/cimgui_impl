@@ -3,8 +3,11 @@
 
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_D3D9
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct IDirect3DDevice9 IDirect3DDevice9;
+#else
 #include "backends/imgui_impl_dx9.h"
+#endif
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplDX9_Init(IDirect3DDevice9 *device);
 CIMGUI_API void CImGui_ImplDX9_Shutdown();
