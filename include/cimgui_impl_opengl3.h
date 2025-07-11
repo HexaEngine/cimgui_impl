@@ -8,8 +8,7 @@ CIMGUI_API bool CImGui_ImplOpenGL3_Init(const char *glsl_version);
 CIMGUI_API void CImGui_ImplOpenGL3_Shutdown(void);
 CIMGUI_API void CImGui_ImplOpenGL3_NewFrame(void);
 CIMGUI_API void CImGui_ImplOpenGL3_RenderDrawData(ImDrawData *draw_data);
-CIMGUI_API bool CImGui_ImplOpenGL3_CreateFontsTexture(void);
-CIMGUI_API void CImGui_ImplOpenGL3_DestroyFontsTexture(void);
+CIMGUI_API void CImGui_ImplOpenGL3_UpdateTexture(ImTextureData* tex);
 CIMGUI_API bool CImGui_ImplOpenGL3_CreateDeviceObjects(void);
 CIMGUI_API void CImGui_ImplOpenGL3_DestroyDeviceObjects(void);
 #endif

@@ -1,4 +1,5 @@
 #include "cimgui_impl_android.h"
+
 CIMGUI_API bool CImGui_ImplAndroid_Init(ANativeWindow *window)
 {
     return ImGui_ImplAndroid_Init(window);

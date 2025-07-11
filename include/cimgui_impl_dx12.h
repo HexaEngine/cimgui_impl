@@ -9,6 +9,7 @@ CIMGUI_API bool CImGui_ImplDX12_Init(ImGui_ImplDX12_InitInfo *info);
 CIMGUI_API void CImGui_ImplDX12_Shutdown();
 CIMGUI_API void CImGui_ImplDX12_NewFrame();
 CIMGUI_API void CImGui_ImplDX12_RenderDrawData(ImDrawData *draw_data, ID3D12GraphicsCommandList *graphics_command_list);
+CIMGUI_API void CImGui_ImplDX12_UpdateTexture(ImTextureData *tex);
 CIMGUI_API void CImGui_ImplDX12_InvalidateDeviceObjects();
 CIMGUI_API bool CImGui_ImplDX12_CreateDeviceObjects();
 #endif

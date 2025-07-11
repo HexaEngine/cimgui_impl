@@ -1,4 +1,5 @@
 #include "cimgui_impl_dx12.h"
+
 CIMGUI_API bool CImGui_ImplDX12_Init(ImGui_ImplDX12_InitInfo *info)
 {
     return ImGui_ImplDX12_Init(info);
@@ -22,4 +23,8 @@ CIMGUI_API void CImGui_ImplDX12_InvalidateDeviceObjects()
 CIMGUI_API bool CImGui_ImplDX12_CreateDeviceObjects()
 {
     return ImGui_ImplDX12_CreateDeviceObjects();
+}
+CIMGUI_API void CImGui_ImplDX12_UpdateTexture(ImTextureData *tex)
+{
+    ImGui_ImplDX12_UpdateTexture(tex);
 }

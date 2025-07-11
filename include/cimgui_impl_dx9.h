@@ -9,6 +9,7 @@ CIMGUI_API bool CImGui_ImplDX9_Init(IDirect3DDevice9 *device);
 CIMGUI_API void CImGui_ImplDX9_Shutdown();
 CIMGUI_API void CImGui_ImplDX9_NewFrame();
 CIMGUI_API void CImGui_ImplDX9_RenderDrawData(ImDrawData *draw_data);
+CIMGUI_API void CImGui_ImplDX9_UpdateTexture(ImTextureData* tex);
 CIMGUI_API bool CImGui_ImplDX9_CreateDeviceObjects();
 CIMGUI_API void CImGui_ImplDX9_InvalidateDeviceObjects();
 #endif

@@ -4,13 +4,16 @@
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_METAL
 #include "backends/imgui_impl_metal.h"
+#import <AppKit/AppKit.h>
+#import <Metal/Metal.h>
+#import <QuartzCore/QuartzCore.h>
+
 #ifdef __OBJC__
 CIMGUI_API bool CImGui_ImplMetal_Init(void *device);
 CIMGUI_API void CImGui_ImplMetal_Shutdown();
 CIMGUI_API void CImGui_ImplMetal_NewFrame(void *renderPassDescriptor);
 CIMGUI_API void CImGui_ImplMetal_RenderDrawData(ImDrawData *draw_data, void *commandBuffer, void *commandEncoder);
-CIMGUI_API bool CImGui_ImplMetal_CreateFontsTexture(void *device);
-CIMGUI_API void CImGui_ImplMetal_DestroyFontsTexture();
+CIMGUI_API void CImGui_ImplMetal_UpdateTexture(ImTextureData* tex);
 CIMGUI_API bool CImGui_ImplMetal_CreateDeviceObjects(void *device);
 CIMGUI_API void CImGui_ImplMetal_DestroyDeviceObjects();
 #endif
@@ -24,8 +27,7 @@ CIMGUI_API bool CImGui_ImplMetal_Init(MTLDevice *device);
 CIMGUI_API void CImGui_ImplMetal_Shutdown();
 CIMGUI_API void CImGui_ImplMetal_NewFrame(MTLRenderPassDescriptor *renderPassDescriptor);
 CIMGUI_API void CImGui_ImplMetal_RenderDrawData(ImDrawData *draw_data, MTLCommandBuffer *commandBuffer, MTLRenderCommandEncoder *commandEncoder);
-CIMGUI_API bool CImGui_ImplMetal_CreateFontsTexture(MTLDevice *device);
-CIMGUI_API void CImGui_ImplMetal_DestroyFontsTexture();
+CIMGUI_API void CImGui_ImplMetal_UpdateTexture(ImTextureData* tex);
 CIMGUI_API bool CImGui_ImplMetal_CreateDeviceObjects(MTLDevice *device);
 CIMGUI_API void CImGui_ImplMetal_DestroyDeviceObjects();
 #endif

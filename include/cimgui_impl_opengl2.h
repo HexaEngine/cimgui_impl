@@ -8,8 +8,7 @@ CIMGUI_API bool CImGui_ImplOpenGL2_Init(void);
 CIMGUI_API void CImGui_ImplOpenGL2_Shutdown(void);
 CIMGUI_API void CImGui_ImplOpenGL2_NewFrame(void);
 CIMGUI_API void CImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data);
-CIMGUI_API bool CImGui_ImplOpenGL2_CreateFontsTexture(void);
-CIMGUI_API void CImGui_ImplOpenGL2_DestroyFontsTexture(void);
+CIMGUI_API void CImGui_ImplOpenGL2_UpdateTexture(ImTextureData* tex);
 CIMGUI_API bool CImGui_ImplOpenGL2_CreateDeviceObjects(void);
 CIMGUI_API void CImGui_ImplOpenGL2_DestroyDeviceObjects(void);
 #endif

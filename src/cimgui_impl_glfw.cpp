@@ -1,4 +1,5 @@
 #include "cimgui_impl_glfw.h"
+
 CIMGUI_API bool CImGui_ImplGlfw_InitForOpenGL(GLFWwindow *window, bool install_callbacks)
 {
     return ImGui_ImplGlfw_InitForOpenGL(window, install_callbacks);

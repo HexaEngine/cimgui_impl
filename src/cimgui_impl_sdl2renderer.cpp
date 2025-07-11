@@ -16,13 +16,9 @@ CIMGUI_API void CImGui_ImplSDLRenderer2_RenderDrawData(ImDrawData *draw_data, SD
 {
     ImGui_ImplSDLRenderer2_RenderDrawData(draw_data, renderer);
 }
-CIMGUI_API bool CImGui_ImplSDLRenderer2_CreateFontsTexture()
+CIMGUI_API void CImGui_ImplSDLRenderer2_UpdateTexture(ImTextureData* tex)
 {
-    return ImGui_ImplSDLRenderer2_CreateFontsTexture();
-}
-CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyFontsTexture()
-{
-    ImGui_ImplSDLRenderer2_DestroyFontsTexture();
+    ImGui_ImplSDLRenderer2_UpdateTexture(tex);
 }
 CIMGUI_API bool CImGui_ImplSDLRenderer2_CreateDeviceObjects()
 {

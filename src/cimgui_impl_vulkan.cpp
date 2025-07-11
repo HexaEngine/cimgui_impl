@@ -15,13 +15,9 @@ CIMGUI_API void CImGui_ImplVulkan_RenderDrawData(ImDrawData *draw_data, VkComman
 {
     ImGui_ImplVulkan_RenderDrawData(draw_data, command_buffer, pipeline);
 }
-CIMGUI_API bool CImGui_ImplVulkan_CreateFontsTexture()
+CIMGUI_API void CImGui_ImplVulkan_UpdateTexture(ImTextureData* tex)
 {
-    return ImGui_ImplVulkan_CreateFontsTexture();
-}
-CIMGUI_API void CImGui_ImplVulkan_DestroyFontsTexture()
-{
-    ImGui_ImplVulkan_DestroyFontsTexture();
+    ImGui_ImplVulkan_UpdateTexture(tex);
 }
 CIMGUI_API void CImGui_ImplVulkan_SetMinImageCount(uint32_t min_image_count)
 {
