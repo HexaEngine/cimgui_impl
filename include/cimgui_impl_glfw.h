@@ -4,6 +4,7 @@
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_GLFW
 #include "backends/imgui_impl_glfw.h"
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplGlfw_InitForOpenGL(GLFWwindow *window, bool install_callbacks);
 CIMGUI_API bool CImGui_ImplGlfw_InitForVulkan(GLFWwindow *window, bool install_callbacks);
 CIMGUI_API bool CImGui_ImplGlfw_InitForOther(GLFWwindow *window, bool install_callbacks);

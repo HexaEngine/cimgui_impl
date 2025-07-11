@@ -5,6 +5,7 @@
 #ifdef CIMGUI_USE_D3D9
 typedef struct IDirect3DDevice9 IDirect3DDevice9;
 #include "backends/imgui_impl_dx9.h"
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplDX9_Init(IDirect3DDevice9 *device);
 CIMGUI_API void CImGui_ImplDX9_Shutdown();
 CIMGUI_API void CImGui_ImplDX9_NewFrame();

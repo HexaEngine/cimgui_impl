@@ -6,6 +6,7 @@
 typedef struct ID3D11Device ID3D11Device;
 typedef struct ID3D11DeviceContext ID3D11DeviceContext;
 #include "backends/imgui_impl_dx11.h"
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplDX11_Init(ID3D11Device *device, ID3D11DeviceContext *device_context);
 CIMGUI_API void CImGui_ImplDX11_Shutdown();
 CIMGUI_API void CImGui_ImplDX11_NewFrame();

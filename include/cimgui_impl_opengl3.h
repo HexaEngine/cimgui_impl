@@ -4,6 +4,7 @@
 #include "cimgui_config.h"
 #ifdef CIMGUI_USE_OPENGL3
 #include "backends/imgui_impl_opengl3.h"
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplOpenGL3_Init(const char *glsl_version);
 CIMGUI_API void CImGui_ImplOpenGL3_Shutdown(void);
 CIMGUI_API void CImGui_ImplOpenGL3_NewFrame(void);

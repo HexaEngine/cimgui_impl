@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #ifdef __OBJC__
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplMetal_Init(void *device);
 CIMGUI_API void CImGui_ImplMetal_Shutdown();
 CIMGUI_API void CImGui_ImplMetal_NewFrame(void *renderPassDescriptor);
@@ -23,6 +24,7 @@ typedef struct MTLDevice MTLDevice;
 typedef struct MTLRenderPassDescriptor MTLRenderPassDescriptor;
 typedef struct MTLCommandBuffer MTLCommandBuffer;
 typedef struct MTLRenderCommandEncoder MTLRenderCommandEncoder;
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplMetal_Init(MTLDevice *device);
 CIMGUI_API void CImGui_ImplMetal_Shutdown();
 CIMGUI_API void CImGui_ImplMetal_NewFrame(MTLRenderPassDescriptor *renderPassDescriptor);
