@@ -1,0 +1,101 @@
+# This workflow uses the unified cmake.yml from https://github.com/JunaMeinhold/cmake-actions
+# It builds all relevant backends (SDL2, SDL3, GLFW, Base) as separate jobs.
+
+name: Build cimgui_impl (All Backends)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-sdl2:
+    name: Build (SDL2)
+    uses: JunaMeinhold/cmake-actions/.github/workflows/cmake.yml@v1.x.x
+    with:
+      lib-name: ImGuiImplSDL2
+      repo: HexaEngine/cimgui_impl
+      repo-tag: master
+      cmake-flags: -DBACKENDS_SDL2_ONLY=ON -DIMGUI_WCHAR32=ON
+      bin-name-osx: ImGuiImplSDL2.dylib
+      bin-name-linux: ImGuiImplSDL2.so
+      bin-name-android: ImGuiImplSDL2.so
+      bin-name-windows: Release/ImGuiImplSDL2.dll
+      bin-name-osx-normalized: ImGuiImplSDL2.dylib
+      bin-name-linux-normalized: ImGuiImplSDL2.so
+      bin-name-android-normalized: ImGuiImplSDL2.so
+      bin-name-windows-normalized: ImGuiImplSDL2.dll
+      output-dir: build
+      linux-deps: "build-essential cmake libsdl2-dev libglu1-mesa-dev libvulkan-dev patchelf"
+      macos-deps: "cmake sdl2 glew glm"
+      use-vcpkg: true
+      vcpkg-packages: "sdl2"
+      create-pr: false
+      setup-vulkan: true
+
+  build-sdl3:
+    name: Build (SDL3)
+    uses: JunaMeinhold/cmake-actions/.github/workflows/cmake.yml@v1.x.x
+    with:
+      lib-name: ImGuiImplSDL3
+      repo: HexaEngine/cimgui_impl
+      repo-tag: master
+      cmake-flags: -DBACKENDS_SDL3_ONLY=ON -DIMGUI_WCHAR32=ON
+      bin-name-osx: ImGuiImplSDL3.dylib
+      bin-name-linux: ImGuiImplSDL3.so
+      bin-name-android: ImGuiImplSDL3.so
+      bin-name-windows: Release/ImGuiImplSDL3.dll
+      bin-name-osx-normalized: ImGuiImplSDL3.dylib
+      bin-name-linux-normalized: ImGuiImplSDL3.so
+      bin-name-android-normalized: ImGuiImplSDL3.so
+      bin-name-windows-normalized: ImGuiImplSDL3.dll
+      output-dir: build
+      linux-deps: "build-essential cmake libglu1-mesa-dev libvulkan-dev patchelf"
+      macos-deps: "cmake glew glm"
+      pre-build-steps: bash scripts/build_sdl3.sh
+      create-pr: false
+      setup-vulkan: true
+
+  build-glfw:
+    name: Build (GLFW)
+    uses: JunaMeinhold/cmake-actions/.github/workflows/cmake.yml@v1.x.x
+    with:
+      lib-name: ImGuiImplGLFW
+      repo: HexaEngine/cimgui_impl
+      repo-tag: master
+      cmake-flags: -DBACKENDS_GLFW_ONLY=ON -DIMGUI_WCHAR32=ON
+      bin-name-osx: ImGuiImplGLFW.dylib
+      bin-name-linux: ImGuiImplGLFW.so
+      bin-name-android: ImGuiImplGLFW.so
+      bin-name-windows: Release/ImGuiImplGLFW.dll
+      bin-name-osx-normalized: ImGuiImplGLFW.dylib
+      bin-name-linux-normalized: ImGuiImplGLFW.so
+      bin-name-android-normalized: ImGuiImplGLFW.so
+      bin-name-windows-normalized: ImGuiImplGLFW.dll
+      output-dir: build
+      linux-deps: "build-essential cmake libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
+      macos-deps: "cmake glfw glew glm"
+      use-vcpkg: true
+      vcpkg-packages: "glfw3"
+      create-pr: false
+      setup-vulkan: true
+
+  build-base:
+    name: Build (Base)
+    uses: JunaMeinhold/cmake-actions/.github/workflows/cmake.yml@v1.x.x
+    with:
+      lib-name: ImGuiImpl
+      repo: HexaEngine/cimgui_impl
+      repo-tag: master
+      cmake-flags: -DBACKENDS_BASE_ONLY=ON -DIMGUI_WCHAR32=ON
+      bin-name-osx: ImGuiImpl.dylib
+      bin-name-linux: ImGuiImpl.so
+      bin-name-android: ImGuiImpl.so
+      bin-name-windows: Release/ImGuiImpl.dll
+      bin-name-osx-normalized: ImGuiImpl.dylib
+      bin-name-linux-normalized: ImGuiImpl.so
+      bin-name-android-normalized: ImGuiImpl.so
+      bin-name-windows-normalized: ImGuiImpl.dll
+      output-dir: build
+      linux-deps: "build-essential cmake libglu1-mesa-dev libvulkan-dev patchelf"
+      macos-deps: "cmake glew glm"
+      create-pr: false
+      setup-vulkan: true
