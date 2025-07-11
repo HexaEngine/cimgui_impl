@@ -13,7 +13,7 @@ struct ImGui_ImplSDLRenderer2_RenderState {
     SDL_Renderer* Renderer;
 };
 #else
-#include "backends/imgui_impl_sdl2renderer.h"
+#include "backends/imgui_impl_sdlrenderer2.h"
 #endif
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 CIMGUI_API bool CImGui_ImplSDLRenderer2_Init(SDL_Renderer *renderer);
