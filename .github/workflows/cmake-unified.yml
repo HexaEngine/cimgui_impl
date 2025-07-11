@@ -12,9 +12,9 @@ jobs:
       repo: HexaEngine/cimgui_impl
       repo-tag: master
       cmake-flags: -DBACKENDS_SDL2_ONLY=ON -DIMGUI_WCHAR32=ON
-      bin-name-osx: ImGuiImplSDL2.dylib
-      bin-name-linux: ImGuiImplSDL2.so
-      bin-name-android: ImGuiImplSDL2.so
+      bin-name-osx: libImGuiImplSDL2.dylib
+      bin-name-linux: libImGuiImplSDL2.so
+      bin-name-android: libImGuiImplSDL2.so
       bin-name-windows: Release/ImGuiImplSDL2.dll
       bin-name-osx-normalized: ImGuiImplSDL2.dylib
       bin-name-linux-normalized: ImGuiImplSDL2.so
@@ -36,9 +36,9 @@ jobs:
       repo: HexaEngine/cimgui_impl
       repo-tag: master
       cmake-flags: -DBACKENDS_SDL3_ONLY=ON -DIMGUI_WCHAR32=ON
-      bin-name-osx: ImGuiImplSDL3.dylib
-      bin-name-linux: ImGuiImplSDL3.so
-      bin-name-android: ImGuiImplSDL3.so
+      bin-name-osx: libImGuiImplSDL3.dylib
+      bin-name-linux: libImGuiImplSDL3.so
+      bin-name-android: libImGuiImplSDL3.so
       bin-name-windows: Release/ImGuiImplSDL3.dll
       bin-name-osx-normalized: ImGuiImplSDL3.dylib
       bin-name-linux-normalized: ImGuiImplSDL3.so
@@ -59,9 +59,9 @@ jobs:
       repo: HexaEngine/cimgui_impl
       repo-tag: master
       cmake-flags: -DBACKENDS_GLFW_ONLY=ON -DIMGUI_WCHAR32=ON
-      bin-name-osx: ImGuiImplGLFW.dylib
-      bin-name-linux: ImGuiImplGLFW.so
-      bin-name-android: ImGuiImplGLFW.so
+      bin-name-osx: libImGuiImplGLFW.dylib
+      bin-name-linux: libImGuiImplGLFW.so
+      bin-name-android: libImGuiImplGLFW.so
       bin-name-windows: Release/ImGuiImplGLFW.dll
       bin-name-osx-normalized: ImGuiImplGLFW.dylib
       bin-name-linux-normalized: ImGuiImplGLFW.so
@@ -83,9 +83,9 @@ jobs:
       repo: HexaEngine/cimgui_impl
       repo-tag: master
       cmake-flags: -DBACKENDS_BASE_ONLY=ON -DIMGUI_WCHAR32=ON
-      bin-name-osx: ImGuiImpl.dylib
-      bin-name-linux: ImGuiImpl.so
-      bin-name-android: ImGuiImpl.so
+      bin-name-osx: libImGuiImpl.dylib
+      bin-name-linux: libImGuiImpl.so
+      bin-name-android: libImGuiImpl.so
       bin-name-windows: Release/ImGuiImpl.dll
       bin-name-osx-normalized: ImGuiImpl.dylib
       bin-name-linux-normalized: ImGuiImpl.so
