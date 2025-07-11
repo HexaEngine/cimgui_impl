@@ -1,81 +1,7 @@
-#include "imgui/imgui.h"
-#ifdef CIMGUI_FREETYPE
-#include "./imgui/misc/freetype/imgui_freetype.h"
-#endif
-#include "imgui/imgui_internal.h"
-#include "cimgui_impl.h"
-
-#if CIMGUI_USE_OSX | CIMGUI_USE_METAL
+#include "imgui/backends/imgui_impl_metal.h"
 #import <AppKit/AppKit.h>
-#endif
-#if CIMGUI_USE_METAL
 #import <Metal/Metal.h>
 #import <QuartzCore/QuartzCore.h>
-#endif
-
-#if CIMGUI_USE_METAL
-#include "imgui/backends/imgui_impl_metal.h"
-#endif
-
-#if CIMGUI_USE_OSX
-#include "imgui/backends/imgui_impl_osx.h"
-#endif
-
-// OSX Backend Implementations
-#if CIMGUI_USE_OSX
-
-#ifdef __OBJC__
-
-// Follow "Getting Started" link and check examples/ folder to learn about using backends!
-
-CIMGUI_API bool CImGui_ImplOSX_Init(void *view)
-{
-    return ImGui_ImplOSX_Init(reinterpret_cast<NSView *>(view));
-}
-
-CIMGUI_API void CImGui_ImplOSX_Shutdown()
-{
-    ImGui_ImplOSX_Shutdown();
-}
-
-CIMGUI_API void CImGui_ImplOSX_NewFrame(void *view)
-{
-    ImGui_ImplOSX_NewFrame(reinterpret_cast<NSView *>(view));
-}
-
-#endif
-
-//-----------------------------------------------------------------------------
-// C++ API
-//-----------------------------------------------------------------------------
-
-#ifdef IMGUI_IMPL_METAL_CPP_EXTENSIONS
-// #include <AppKit/AppKit.hpp>
-#ifndef __OBJC__
-
-// Follow "Getting Started" link and check examples/ folder to learn about using backends!
-CIMGUI_API bool CImGui_ImplOSX_Init(void *view)
-{
-    return ImGui_ImplOSX_Init(view);
-}
-
-CIMGUI_API void CImGui_ImplOSX_Shutdown()
-{
-    ImGui_ImplOSX_Shutdown();
-}
-
-CIMGUI_API void CImGui_ImplOSX_NewFrame(void *view)
-{
-    ImGui_ImplOSX_NewFrame(view);
-}
-
-#endif
-#endif
-
-#endif
-
-// Metal Backend Implementations
-#if CIMGUI_USE_METAL
 
 #ifdef __OBJC__
 
@@ -176,7 +102,6 @@ CIMGUI_API void CImGui_ImplMetal_DestroyDeviceObjects()
     ImGui_ImplMetal_DestroyDeviceObjects();
 }
 
-#endif
 #endif
 
 #endif

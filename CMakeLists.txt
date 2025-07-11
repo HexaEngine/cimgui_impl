@@ -135,25 +135,22 @@ else()
 	set(TABLES_SOURCE "")
 endif()
 
-include_directories(imgui)
+
 add_definitions("-DIMGUI_DISABLE_OBSOLETE_FUNCTIONS=1")
 
-include_directories()
-set(IMGUI_SOURCES 
-cimgui_impl.cpp 
-imgui/imgui.cpp 
-imgui/imgui_draw.cpp 
-imgui/imgui_demo.cpp 
-imgui/imgui_widgets.cpp
-${TABLES_SOURCE} 
+set(IMGUI_CORE_SOURCES
+    imgui/imgui.cpp
+    imgui/imgui_draw.cpp
+    imgui/imgui_demo.cpp
+    imgui/imgui_widgets.cpp
+    ${TABLES_SOURCE}
 )
 
-if (APPLE)
-	list(APPEND IMGUI_SOURCES cimgui_impl.mm)
-endif()
+set(IMGUI_SOURCES
+    src/cimgui_impl_core.cpp
+)
 
-set(IMGUI_LIBRARIES )
-
+set(IMGUI_LIBRARIES)
 
 add_compile_definitions("IMGUI_IMPL_OPENGL_LOADER_GL3W")
 
@@ -161,58 +158,58 @@ add_compile_definitions("IMGUI_IMPL_OPENGL_LOADER_GL3W")
 option(IMGUI_FREETYPE "add Freetype2" OFF)
 
 if(IMGUI_FREETYPE)
-	FIND_PACKAGE(freetype REQUIRED PATHS ${FREETYPE_PATH})
-	list(APPEND IMGUI_LIBRARIES freetype)
-	list(APPEND IMGUI_SOURCES imgui/misc/freetype/imgui_freetype.cpp)
-	add_definitions("-DCIMGUI_FREETYPE=1")
+    FIND_PACKAGE(freetype REQUIRED PATHS ${FREETYPE_PATH})
+    list(APPEND IMGUI_LIBRARIES freetype)
+    list(APPEND IMGUI_CORE_SOURCES imgui/misc/freetype/imgui_freetype.cpp)
+    add_definitions("-DCIMGUI_FREETYPE=1")
 endif()
 
 message("Building with:")
 
 if (BACKENDS_ANDROID AND ANDROID)
-	message("Backends Android: ON")
-	# android
-	list(APPEND IMGUI_LIBRARIES android)
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_android.cpp)
+    message("Backends Android: ON")
+    list(APPEND IMGUI_LIBRARIES android)
+    list(APPEND IMGUI_SOURCES src/cimgui_impl_android.cpp)
+    list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_android.cpp)
 endif()
 
 if (BACKENDS_WIN32 AND WIN32)
-	message("Backends Win32: ON")
-	# win32
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_win32.cpp)
+    message("Backends Win32: ON")
+    list(APPEND IMGUI_SOURCES src/cimgui_impl_win32.cpp)
+    list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_win32.cpp)
 
-	if (BACKENDS_D3D9)
-		message("Backends D3D9: ON")
-		# dx9
-		list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx9.cpp)
-	endif()
+    if (BACKENDS_D3D9)
+        message("Backends D3D9: ON")
+        list(APPEND IMGUI_SOURCES src/cimgui_impl_dx9.cpp)
+        list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx9.cpp)
+    endif()
 
-	if (BACKENDS_D3D10)
-		message("Backends D3D10: ON")
-		# dx10
-		list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx10.cpp)
-	endif()
+    if (BACKENDS_D3D10)
+        message("Backends D3D10: ON")
+        list(APPEND IMGUI_SOURCES src/cimgui_impl_dx10.cpp)
+        list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx10.cpp)
+    endif()
 
-	if (BACKENDS_D3D11)
-		message("Backends D3D11: ON")
-		# dx11
-		list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx11.cpp)
-	endif()
+    if (BACKENDS_D3D11)
+        message("Backends D3D11: ON")
+        list(APPEND IMGUI_SOURCES src/cimgui_impl_dx11.cpp)
+        list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx11.cpp)
+    endif()
 
-	if (BACKENDS_D3D12)
-		message("Backends D3D12: ON")
-		# dx12
-		list(APPEND IMGUI_LIBRARIES dxgi.lib)
-		list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx12.cpp)
-	endif()
+    if (BACKENDS_D3D12)
+        message("Backends D3D12: ON")
+        list(APPEND IMGUI_LIBRARIES dxgi.lib)
+        list(APPEND IMGUI_SOURCES src/cimgui_impl_dx12.cpp)
+        list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_dx12.cpp)
+    endif()
 endif()
 
 if (BACKENDS_VULKAN)
-	message("Backends Vulkan: ON")
-	# vulkan
-	find_package(Vulkan REQUIRED)
-	list(APPEND IMGUI_LIBRARIES Vulkan::Vulkan)
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_vulkan.cpp)
+    message("Backends Vulkan: ON")
+    find_package(Vulkan REQUIRED)
+    list(APPEND IMGUI_LIBRARIES Vulkan::Vulkan)
+    list(APPEND IMGUI_SOURCES src/cimgui_impl_vulkan.cpp)
+    list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_vulkan.cpp)
 endif()
 
 # OSX
@@ -220,8 +217,9 @@ if (BACKENDS_OSX AND APPLE)
 	message("Backends OSX: ON")
     find_library(COCOA_FRAMEWORK Cocoa REQUIRED)  
 	find_library(GAMECONTROLLER_FRAMEWORK GameController REQUIRED)
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_osx.mm)
     list(APPEND IMGUI_LIBRARIES ${COCOA_FRAMEWORK} ${GAMECONTROLLER_FRAMEWORK})
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_osx.mm)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_osx.mm)
 endif()
 
 # Metal
@@ -229,8 +227,9 @@ if (BACKENDS_METAL AND APPLE)
 	message("Backends Metal: ON")
 	find_library(METAL_FRAMEWORK Metal REQUIRED)
 	find_library(QUARTZCORE_FRAMEWORK QuartzCore REQUIRED)
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_metal.mm)
 	list(APPEND IMGUI_LIBRARIES ${METAL_FRAMEWORK} ${QUARTZCORE_FRAMEWORK})
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_metal.mm)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_metal.mm)
 endif()
 
 # GLFW
@@ -238,13 +237,13 @@ if (BACKENDS_GLFW)
 	message("Backends GLFW: ON")
 	find_package(glfw3 REQUIRED)
 	list(APPEND IMGUI_LIBRARIES glfw)
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_glfw.cpp)
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_glfw.cpp)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_glfw.cpp)
 endif()
 
 #opengl3
 if (BACKENDS_OPENGL3)
 	message("Backends OPENGL3: ON")
-
 	if (ANDROID)
 		find_library(GLES_LIB GLESv3)
 		list(APPEND IMGUI_LIBRARIES EGL GLESv3)
@@ -252,8 +251,8 @@ if (BACKENDS_OPENGL3)
 		find_package(OpenGL REQUIRED)
 		list(APPEND IMGUI_LIBRARIES OpenGL::GL OpenGL::GLU)
 	endif()
-
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_opengl3.cpp)
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_opengl3.cpp)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_opengl3.cpp)
 	include_directories(imgui/examples/libs/gl3w)
 	message(STATUS "OpenGL_LIBRARIES: ${OPENGL_LIBRARIES}")
 endif()
@@ -261,7 +260,8 @@ endif()
 #opengl2
 if (BACKENDS_OPENGL2)
 	message("Backends OPENGL2: ON")
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_opengl2.cpp)
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_opengl2.cpp)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_opengl2.cpp)
 	include_directories(imgui/examples/libs/gl3w)
 	if (!BACKENDS_OPENGL3)
 		find_package(OpenGL REQUIRED)
@@ -272,66 +272,73 @@ endif()
 #sdl2
 if (BACKENDS_SDL2)
 	message("Backends SDL2: ON")
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdl2.cpp)
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdlrenderer2.cpp)
-	
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_sdl2.cpp)
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_sdl2renderer.cpp)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdl2.cpp)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdlrenderer2.cpp)
 	find_package(SDL2 CONFIG REQUIRED)
-
 	if(SDL2_FOUND)
 		get_target_property(SDL_INCLUDE SDL2::SDL2 INTERFACE_INCLUDE_DIRECTORIES)
 		message(STATUS "sdlinclude is " ${SDL_INCLUDE})
-		if ("${SDL_INCLUDE}" STREQUAL "" OR "${SDL_INCLUDE}" STREQUAL "SDL_INCLUDE-NOTFOUND") #if not found latest SDL2 cmake config use older
+		if ("${SDL_INCLUDE}" STREQUAL "" OR "${SDL_INCLUDE}" STREQUAL "SDL_INCLUDE-NOTFOUND")
 			message(STATUS "sdlinclude2 is " ${SDL2_INCLUDE_DIRS})
 			include_directories(${SDL2_INCLUDE_DIRS})
-			set(IMGUI_SDL_LIBRARY ${SDL2_LIBRARIES})
-			message(STATUS IMGUI_SDL_LIBRARY ${SDL2_LIBRARIES})
-		else()#use new one SDL2 config
+			set(IMGUI_SDL2_LIBRARY ${SDL2_LIBRARIES})
+			message(STATUS IMGUI_SDL2_LIBRARY ${SDL2_LIBRARIES})
+		else()
 			include_directories(${SDL_INCLUDE})
-			set(IMGUI_SDL_LIBRARY SDL2::SDL2)
+			set(IMGUI_SDL2_LIBRARY SDL2::SDL2)
 			set(SDL_MAIN SDL2::SDL2main)
-			message(STATUS ${SDL_MAIN} ${IMGUI_SDL_LIBRARY})
+			message(STATUS ${SDL_MAIN} ${IMGUI_SDL2_LIBRARY})
 		endif()
-	else(SDL2_FOUND)
+	else()
 		if(DEFINED SDL_PATH)
 			message(FATAL_ERROR "Cannot find SDL at SDL_PATH")
-		else(DEFINED SDL_PATH)
+		else()
 			message(FATAL_ERROR "Cannot find SDL. Maybe try specifying SDL_PATH?")
-		endif(DEFINED SDL_PATH)
-	endif(SDL2_FOUND)
-endif(BACKENDS_SDL2)
+		endif()
+	endif()
+	list(APPEND IMGUI_LIBRARIES ${IMGUI_SDL2_LIBRARY})
+endif()
 
 #sdl3
 if (BACKENDS_SDL3)
 	message("Backends SDL3: ON")
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdl3.cpp)
-	list(APPEND IMGUI_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdlrenderer3.cpp)
-	
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_sdl3.cpp)
+	list(APPEND IMGUI_SOURCES src/cimgui_impl_sdl3renderer.cpp)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdl3.cpp)
+	list(APPEND IMGUI_CORE_SOURCES ${BACKENDS_FOLDER}imgui_impl_sdlrenderer3.cpp)
 	find_package(SDL3 CONFIG REQUIRED)
-
 	if(SDL3_FOUND)
 		get_target_property(SDL_INCLUDE SDL3::SDL3 INTERFACE_INCLUDE_DIRECTORIES)
 		message(STATUS "sdlinclude is " ${SDL_INCLUDE})
-		if ("${SDL_INCLUDE}" STREQUAL "" OR "${SDL_INCLUDE}" STREQUAL "SDL_INCLUDE-NOTFOUND") #if not found latest SDL2 cmake config use older
+		if ("${SDL_INCLUDE}" STREQUAL "" OR "${SDL_INCLUDE}" STREQUAL "SDL_INCLUDE-NOTFOUND")
 			message(STATUS "sdlinclude2 is " ${SDL3_INCLUDE_DIRS})
 			include_directories(${SDL3_INCLUDE_DIRS})
-			set(IMGUI_SDL_LIBRARY ${SDL3_LIBRARIES})
-			message(STATUS IMGUI_SDL_LIBRARY ${SDL3_LIBRARIES})
-		else()#use new one SDL3 config
+			set(IMGUI_SDL3_LIBRARY ${SDL3_LIBRARIES})
+			message(STATUS IMGUI_SDL3_LIBRARY ${SDL3_LIBRARIES})
+		else()
 			include_directories(${SDL_INCLUDE})
-			set(IMGUI_SDL_LIBRARY SDL3::SDL3)
+			set(IMGUI_SDL3_LIBRARY SDL3::SDL3)
 			set(SDL_MAIN SDL3::SDL3main)
-			message(STATUS ${SDL_MAIN} ${IMGUI_SDL_LIBRARY})
+			message(STATUS ${SDL_MAIN} ${IMGUI_SDL3_LIBRARY})
 		endif()
-	else(SDL3_FOUND)
+	else()
 		if(DEFINED SDL_PATH)
 			message(FATAL_ERROR "Cannot find SDL at SDL_PATH")
-		else(DEFINED SDL_PATH)
+		else()
 			message(FATAL_ERROR "Cannot find SDL. Maybe try specifying SDL_PATH?")
-		endif(DEFINED SDL_PATH)
-	endif(SDL3_FOUND)
-endif(BACKENDS_SDL3)
+		endif()
+	endif()
+	list(APPEND IMGUI_LIBRARIES ${IMGUI_SDL3_LIBRARY})
+endif()
+
+add_library(imgui STATIC ${IMGUI_CORE_SOURCES})
+target_include_directories(imgui PUBLIC "imgui")
+target_link_libraries(imgui PUBLIC ${IMGUI_LIBRARIES})
 
 add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
+target_link_libraries(cimgui_impl PRIVATE imgui)
 
 if(DEFINED lib_name)
     set_target_properties(cimgui_impl PROPERTIES OUTPUT_NAME ${lib_name})
@@ -431,6 +438,8 @@ target_link_libraries(cimgui_impl PRIVATE ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY
 else(MSVC)
 target_link_libraries(cimgui_impl PRIVATE ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY})
 endif()
+
+target_include_directories(cimgui_impl PUBLIC "include")
 
 if (MSVC)
 	if(BACKENDS_GLFW)
