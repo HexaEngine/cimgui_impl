@@ -1,6 +1,3 @@
-# This workflow uses the unified cmake.yml from https://github.com/JunaMeinhold/cmake-actions
-# It builds all relevant backends (SDL2, SDL3, GLFW, Base) as separate jobs.
-
 name: Build cimgui_impl (All Backends)
 
 on:
@@ -24,8 +21,8 @@ jobs:
       bin-name-android-normalized: ImGuiImplSDL2.so
       bin-name-windows-normalized: ImGuiImplSDL2.dll
       output-dir: build
-      linux-deps: "build-essential cmake libsdl2-dev libglu1-mesa-dev libvulkan-dev patchelf"
-      macos-deps: "cmake sdl2 glew glm"
+      linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
+      macos-deps: "cmake sdl2 glfw glew glm"
       use-vcpkg: true
       vcpkg-packages: "sdl2"
       create-pr: false
@@ -48,9 +45,9 @@ jobs:
       bin-name-android-normalized: ImGuiImplSDL3.so
       bin-name-windows-normalized: ImGuiImplSDL3.dll
       output-dir: build
-      linux-deps: "build-essential cmake libglu1-mesa-dev libvulkan-dev patchelf"
-      macos-deps: "cmake glew glm"
-      pre-build-steps: bash scripts/build_sdl3.sh
+      linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxinerama-dev libxss-dev libwayland-dev libwayland-egl-backend-dev libdbus-1-dev libudev-dev libgles2-mesa-dev libegl1-mesa-dev libgl1-mesa-dev libibus-1.0-dev fcitx-libs-dev libsamplerate0-dev ccache libjack-jackd2-dev libdrm-dev libpipewire-0.3-dev libdecor-0-dev qtwayland5 libxkbcommon-dev libsndio-dev libpng-dev libjpeg-dev libtiff-dev libwebp-dev libavif-dev"
+      macos-deps: "cmake sdl2 glfw glew glm"
+      pre-build-steps: "bash scripts/build_sdl3.sh"
       create-pr: false
       setup-vulkan: true
 
@@ -71,8 +68,8 @@ jobs:
       bin-name-android-normalized: ImGuiImplGLFW.so
       bin-name-windows-normalized: ImGuiImplGLFW.dll
       output-dir: build
-      linux-deps: "build-essential cmake libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
-      macos-deps: "cmake glfw glew glm"
+      linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
+      macos-deps: "cmake sdl2 glfw glew glm"
       use-vcpkg: true
       vcpkg-packages: "glfw3"
       create-pr: false
@@ -95,7 +92,7 @@ jobs:
       bin-name-android-normalized: ImGuiImpl.so
       bin-name-windows-normalized: ImGuiImpl.dll
       output-dir: build
-      linux-deps: "build-essential cmake libglu1-mesa-dev libvulkan-dev patchelf"
-      macos-deps: "cmake glew glm"
+      linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
+      macos-deps: "cmake sdl2 glfw glew glm"
       create-pr: false
       setup-vulkan: true
