@@ -60,6 +60,7 @@ jobs:
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
+      android-api: 23
       create-pr: false
 
   build-sdl3:
@@ -87,6 +88,7 @@ jobs:
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
+      android-api: 23
       create-pr: false
 
   build-glfw:
