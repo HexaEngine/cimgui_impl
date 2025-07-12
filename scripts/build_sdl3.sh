@@ -9,8 +9,8 @@ ANDROID_CMAKE_FLAGS="${GHA_ANDROID_CMAKE_FLAGS}"
 
 SRC_DIR="src"
 SDL_DIR="SDL"
-INSTALL_DIR="$SDL_DIR/install"
-BUILD_DIR="$SDL_DIR/build"
+INSTALL_DIR="install"
+BUILD_DIR="build"
 
 cd "$SRC_DIR"
 git clone --recursive https://github.com/libsdl-org/SDL.git $SDL_DIR
