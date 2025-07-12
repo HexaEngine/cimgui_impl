@@ -55,6 +55,7 @@ jobs:
         bash scripts/build_sdl3.sh
       create-pr: false
       setup-vulkan: true
+      checkout-self: true
 
   build-glfw:
     name: Build (GLFW)
