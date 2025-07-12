@@ -7,11 +7,15 @@ ANDROID_API="${GHA_ANDROID_API}"
 ANDROID_NDK="${GHA_ANDROID_NDK}"
 ANDROID_CMAKE_FLAGS="${GHA_ANDROID_CMAKE_FLAGS}"
 
-SDL_DIR="src/SDL"
+SRC_DIR="src"
+SDL_DIR="SDL"
 INSTALL_DIR="$SDL_DIR/install"
 BUILD_DIR="$SDL_DIR/build"
 
+cd "$SRC_DIR"
+git clone --recursive https://github.com/libsdl-org/SDL.git $SDL_DIR
 cd "$SDL_DIR"
+git checkout release-3.2.10
 
 CMAKE_ARGS="-DSDL_STATIC=OFF -DSDL_SHARED=ON -DSDL_TEST=OFF -DCMAKE_BUILD_TYPE=Release"
 
