@@ -24,6 +24,10 @@ jobs:
       output-dir: native
       linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
       macos-deps: "sdl2 glfw glew glm"
+      use-vcpkg: true
+      use-vcpkg-linux: false
+      use-vcpkg-macos: false
+      vcpkg-packages: "vulkan glslang"
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
