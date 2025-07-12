@@ -27,6 +27,7 @@ jobs:
       use-vcpkg: true
       use-vcpkg-linux: false
       use-vcpkg-macos: false
+      use-vcpkg-android: false
       vcpkg-packages-windows: "vulkan glslang"
       setup-vulkan: true
       setup-vulkan-linux: false
