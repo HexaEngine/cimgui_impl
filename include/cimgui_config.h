@@ -34,6 +34,10 @@ typedef unsigned __int64 ImU64;
 // typedef unsigned long long ImU64;
 #endif
 
+#ifdef __APPLE__
+#define TARGET_OS_MAC 1
+#endif // __APPLE__
+
 #include "imgui.h"
 #ifdef CIMGUI_FREETYPE
 #include "misc/freetype/imgui_freetype.h"

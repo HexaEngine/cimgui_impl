@@ -37,7 +37,10 @@ CIMGUI_API void CImGui_ImplSDLGPU3_DestroyDeviceObjects();
 CIMGUI_API void CImGui_ImplSDLGPU3_GetSPIRVVertexShader(const void** ptr, size_t* size);
 CIMGUI_API void CImGui_ImplSDLGPU3_GetSPIRVFragmentShader(const void** ptr, size_t* size);
 CIMGUI_API void CImGui_ImplSDLGPU3_GetDXBCVertexShader(const void** ptr, size_t* size);
-CIMGUI_API void CImGui_ImplSDLGPU3_GetDXBCPixelShader(const void** ptr, size_t* size);
+CIMGUI_API void CImGui_ImplSDLGPU3_GetDXBCFragmentShader(const void** ptr, size_t* size);
+CIMGUI_API void CImGui_ImplSDLGPU3_GetMetallibVertexShader(const void** ptr, size_t* size);
+CIMGUI_API void CImGui_ImplSDLGPU3_GetMetallibFragmentShader(const void** ptr, size_t* size);
+
 #endif // CIMGUI_USE_SDLGPU3
 
 #endif // CIMGUI_IMPL_SDLGPU3_H

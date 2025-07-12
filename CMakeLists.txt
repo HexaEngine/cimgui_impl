@@ -68,6 +68,7 @@ endif()
 if (BACKENDS_NO_BASE)
 	set(BACKENDS_WIN32 OFF)
 	set(BACKENDS_OSX OFF)
+	set(BACKENDS_ANDROID OFF)
 	set(BACKENDS_NO_GRAPHICS ON)
 endif()
 
@@ -108,9 +109,6 @@ elseif(ANDROID)
 	set(BACKENDS_WIN32 OFF)
 	set(BACKENDS_OPENGL2 OFF)
 	set(BACKENDS_VULKAN OFF) # Too complicated at the moment maybe adding it later.
-	set(BACKENDS_GLFW OFF)
-	set(BACKENDS_SDL2 OFF)
-	set(BACKENDS_SDL3 OFF)
 	set(BACKENDS_METAL OFF)
 	set(BACKENDS_OSX OFF)
 
