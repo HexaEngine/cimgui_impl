@@ -27,7 +27,7 @@ jobs:
       use-vcpkg: true
       use-vcpkg-linux: false
       use-vcpkg-macos: false
-      vcpkg-packages: "vulkan glslang"
+      vcpkg-packages-windows: "vulkan glslang"
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
@@ -69,7 +69,7 @@ jobs:
       repo: HexaEngine/cimgui_impl
       repo-tag: master
       checkout-self: true
-      cmake-flags: -DBACKENDS_SDL3_ONLY=ON -DIMGUI_WCHAR32=ON
+      cmake-flags: -DBACKENDS_SDL3_ONLY=ON -DIMGUI_WCHAR32=ON -DCMAKE_PREFIX_PATH="./SDL/install"
       cmake-flags-windows: -DCMAKE_SYSTEM_VERSION=10.0.26100.0
       bin-name-osx: libImGuiImplSDL3.dylib
       bin-name-linux: libImGuiImplSDL3.so
