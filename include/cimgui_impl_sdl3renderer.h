@@ -21,7 +21,7 @@ CIMGUI_API void CImGui_ImplSDLRenderer3_Shutdown();
 CIMGUI_API void CImGui_ImplSDLRenderer3_NewFrame();
 CIMGUI_API void CImGui_ImplSDLRenderer3_RenderDrawData(ImDrawData *draw_data, SDL_Renderer *renderer);
 // Called by Init/NewFrame/Shutdown
-CIMGUI_API bool CImGui_ImplSDLRenderer3_CreateDeviceObjects();
+CIMGUI_API void CImGui_ImplSDLRenderer3_CreateDeviceObjects();
 CIMGUI_API void CImGui_ImplSDLRenderer3_DestroyDeviceObjects();
 // (Advanced) Use e.g. if you need to precisely control the timing of texture updates (e.g. for staged rendering), by setting ImDrawData::Textures = NULL to handle this manually.
 CIMGUI_API void CImGui_ImplSDLRenderer3_UpdateTexture(ImTextureData* tex);
