@@ -20,9 +20,9 @@ CIMGUI_API void CImGui_ImplSDLRenderer2_UpdateTexture(ImTextureData* tex)
 {
     ImGui_ImplSDLRenderer2_UpdateTexture(tex);
 }
-CIMGUI_API bool CImGui_ImplSDLRenderer2_CreateDeviceObjects()
+CIMGUI_API void CImGui_ImplSDLRenderer2_CreateDeviceObjects()
 {
-    return ImGui_ImplSDLRenderer2_CreateDeviceObjects();
+    ImGui_ImplSDLRenderer2_CreateDeviceObjects();
 }
 CIMGUI_API void CImGui_ImplSDLRenderer2_DestroyDeviceObjects()
 {
