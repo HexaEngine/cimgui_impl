@@ -335,12 +335,11 @@ if (BACKENDS_SDL3)
 	list(APPEND IMGUI_LIBRARIES ${IMGUI_SDL3_LIBRARY})
 endif()
 
-add_library(imgui STATIC ${IMGUI_CORE_SOURCES})
-target_include_directories(imgui PUBLIC "imgui")
-target_link_libraries(imgui PUBLIC ${IMGUI_LIBRARIES})
 
-add_library(cimgui_impl SHARED ${IMGUI_SOURCES})
-target_link_libraries(cimgui_impl PRIVATE imgui)
+add_library(cimgui_impl SHARED ${IMGUI_SOURCES} ${IMGUI_CORE_SOURCES})
+target_include_directories(cimgui_impl PUBLIC "imgui")
+target_include_directories(cimgui_impl PUBLIC "include")
+target_link_libraries(cimgui_impl PRIVATE ${IMGUI_LIBRARIES})
 
 if(DEFINED lib_name)
     set_target_properties(cimgui_impl PROPERTIES OUTPUT_NAME ${lib_name})
@@ -441,8 +440,6 @@ target_link_libraries(cimgui_impl PRIVATE ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY
 else(MSVC)
 target_link_libraries(cimgui_impl PRIVATE ${IMGUI_LIBRARIES} ${IMGUI_SDL_LIBRARY})
 endif()
-
-target_include_directories(cimgui_impl PUBLIC "include")
 
 if (MSVC)
 	if(BACKENDS_GLFW)
