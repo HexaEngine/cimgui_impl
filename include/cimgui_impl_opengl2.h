@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_OPENGL2_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_OPENGL2
+#if CIMGUI_USE_OPENGL2
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // No non-Im* types or enums to typedef for OpenGL2 backend
 #else

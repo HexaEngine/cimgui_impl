@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_DX11_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_D3D11
+#if CIMGUI_USE_D3D11
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct ID3D11Device ID3D11Device;
 typedef struct ID3D11DeviceContext ID3D11DeviceContext;

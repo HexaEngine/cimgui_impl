@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_SDL2_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_SDL2
+#if CIMGUI_USE_SDL2
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // typedefs for SDL2 types used in this header
 typedef struct SDL_Window SDL_Window;

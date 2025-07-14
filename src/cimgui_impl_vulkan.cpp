@@ -51,3 +51,7 @@ CIMGUI_API int CImGui_ImplVulkanH_GetMinImageCountFromPresentMode(VkPresentModeK
 {
     return ImGui_ImplVulkanH_GetMinImageCountFromPresentMode(present_mode);
 }
+CIMGUI_API bool CImGui_ImplVulkan_LoadFunctions(uint32_t api_version, PFN_vkVoidFunction(*loader_func)(const char* function_name, void* user_data), void* user_data)
+{
+    return ImGui_ImplVulkan_LoadFunctions(api_version, loader_func, user_data);
+}

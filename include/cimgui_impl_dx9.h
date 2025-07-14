@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_DX9_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_D3D9
+#if CIMGUI_USE_D3D9
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct IDirect3DDevice9 IDirect3DDevice9;
 #else

@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_OPENGL3_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_OPENGL3
+#if CIMGUI_USE_OPENGL3
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // No non-Im* types or enums to typedef for OpenGL3 backend
 #else

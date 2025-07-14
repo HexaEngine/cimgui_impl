@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_WIN32_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_WIN32
+#if CIMGUI_USE_WIN32
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // typedefs for Win32 types used in this header
 typedef struct HWND HWND;

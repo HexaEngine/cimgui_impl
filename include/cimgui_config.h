@@ -38,10 +38,12 @@ typedef unsigned __int64 ImU64;
 #define TARGET_OS_MAC 1
 #endif // __APPLE__
 
+#ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 #include "imgui.h"
 #ifdef CIMGUI_FREETYPE
 #include "misc/freetype/imgui_freetype.h"
 #endif
 #include "imgui_internal.h"
+#endif
 
 #endif

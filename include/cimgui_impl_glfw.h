@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_GLFW_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_GLFW
+#if CIMGUI_USE_GLFW
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct GLFWwindow GLFWwindow;
 typedef struct GLFWmonitor GLFWmonitor;

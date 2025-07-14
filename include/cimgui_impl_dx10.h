@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_DX10_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_D3D10
+#if CIMGUI_USE_D3D10
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct ID3D10Device ID3D10Device;
 typedef struct ID3D10SamplerState ID3D10SamplerState;

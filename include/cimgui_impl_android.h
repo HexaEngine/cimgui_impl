@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_ANDROID_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_ANDROID
+#if CIMGUI_USE_ANDROID
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // typedefs for Android types used in this header
 typedef struct ANativeWindow ANativeWindow;

@@ -2,7 +2,7 @@
 #define CIMGUI_IMPL_OSX_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_OSX
+#if CIMGUI_USE_OSX
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // No non-Im* types or enums to typedef for OSX backend
 #else

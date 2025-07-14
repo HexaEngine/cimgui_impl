@@ -19,6 +19,10 @@ CIMGUI_API bool CImGui_ImplSDL3_InitForSDLRenderer(SDL_Window *window, SDL_Rende
 {
     return ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
 }
+CIMGUI_API bool CImGui_ImplSDL3_InitForSDLGPU(SDL_Window *window)
+{
+    return CImGui_ImplSDL3_InitForSDLGPU(window);
+}
 CIMGUI_API bool CImGui_ImplSDL3_InitForOther(SDL_Window *window)
 {
     return ImGui_ImplSDL3_InitForOther(window);

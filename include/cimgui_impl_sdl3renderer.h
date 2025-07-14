@@ -2,12 +2,10 @@
 #define CIMGUI_IMPL_SDL3_RENDERER_H
 
 #include "cimgui_config.h"
-#ifdef CIMGUI_USE_SDL3Renderer
+#if CIMGUI_USE_SDL3Renderer
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // typedefs for SDL3Renderer types used in this header
 typedef struct SDL_Renderer SDL_Renderer;
-typedef struct ImDrawData ImDrawData;
-typedef struct ImTextureData ImTextureData;
 // Full struct layout for ImGui_ImplSDLRenderer3_RenderState
 struct ImGui_ImplSDLRenderer3_RenderState {
     SDL_Renderer* Renderer;
