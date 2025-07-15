@@ -20,10 +20,12 @@ CIMGUI_API void CImGui_ImplGlfw_NewFrame()
 {
     ImGui_ImplGlfw_NewFrame();
 }
+#ifdef __EMSCRIPTEN__
 CIMGUI_API void CImGui_ImplGlfw_InstallEmscriptenCallbacks(GLFWwindow *window, const char *canvas_selector)
 {
-    return CIMGUI_API void();
+    ImGui_ImplGlfw_InstallEmscriptenCallbacks(window, canvas_selector);
 }
+#endif
 CIMGUI_API void CImGui_ImplGlfw_InstallCallbacks(GLFWwindow *window)
 {
     ImGui_ImplGlfw_InstallCallbacks(window);
