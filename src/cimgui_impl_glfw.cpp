@@ -20,6 +20,10 @@ CIMGUI_API void CImGui_ImplGlfw_NewFrame()
 {
     ImGui_ImplGlfw_NewFrame();
 }
+CIMGUI_API void CImGui_ImplGlfw_InstallEmscriptenCallbacks(GLFWwindow *window, const char *canvas_selector)
+{
+    return CIMGUI_API void();
+}
 CIMGUI_API void CImGui_ImplGlfw_InstallCallbacks(GLFWwindow *window)
 {
     ImGui_ImplGlfw_InstallCallbacks(window);
@@ -64,7 +68,18 @@ CIMGUI_API void CImGui_ImplGlfw_MonitorCallback(GLFWmonitor *monitor, int event)
 {
     ImGui_ImplGlfw_MonitorCallback(monitor, event);
 }
+
+// GLFW helpers
 CIMGUI_API void CImGui_ImplGlfw_Sleep(int milliseconds)
 {
     ImGui_ImplGlfw_Sleep(milliseconds);
+}
+CIMGUI_API float CImGui_ImplGlfw_GetContentScaleForWindow(GLFWwindow *window)
+{
+    return ImGui_ImplGlfw_GetContentScaleForWindow(window);
+}
+
+CIMGUI_API float CImGui_ImplGlfw_GetContentScaleForMonitor(GLFWmonitor *monitor)
+{
+    return ImGui_ImplGlfw_GetContentScaleForMonitor(monitor);
 }

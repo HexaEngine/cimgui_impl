@@ -1,4 +1,4 @@
-name: Build cimgui_impl (All Backends)
+name: Build ImGui Backends
 
 on:
   workflow_dispatch:
@@ -21,7 +21,6 @@ jobs:
       bin-name-linux-normalized: ImGuiImpl.so
       bin-name-android-normalized: ImGuiImpl.so
       bin-name-windows-normalized: ImGuiImpl.dll
-      output-dir: native
       linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
       macos-deps: "sdl2 glfw glew glm"
       use-vcpkg: true
@@ -32,7 +31,6 @@ jobs:
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
-      create-pr: false
 
   build-sdl2:
     name: Build (SDL2)
@@ -52,7 +50,6 @@ jobs:
       bin-name-linux-normalized: ImGuiImplSDL2.so
       bin-name-android-normalized: ImGuiImplSDL2.so
       bin-name-windows-normalized: ImGuiImplSDL2.dll
-      output-dir: native
       linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
       macos-deps: "sdl2 glfw glew glm"
       use-vcpkg: true
@@ -61,8 +58,6 @@ jobs:
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
-      android-api: 23
-      create-pr: false
 
   build-sdl3:
     name: Build (SDL3)
@@ -83,15 +78,12 @@ jobs:
       bin-name-linux-normalized: ImGuiImplSDL3.so
       bin-name-android-normalized: ImGuiImplSDL3.so
       bin-name-windows-normalized: ImGuiImplSDL3.dll
-      output-dir: native
       linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxinerama-dev libxss-dev libwayland-dev libwayland-egl-backend-dev libdbus-1-dev libudev-dev libgles2-mesa-dev libegl1-mesa-dev libgl1-mesa-dev libibus-1.0-dev fcitx-libs-dev libsamplerate0-dev ccache libjack-jackd2-dev libdrm-dev libpipewire-0.3-dev libdecor-0-dev qtwayland5 libxkbcommon-dev libsndio-dev libpng-dev libjpeg-dev libtiff-dev libwebp-dev libavif-dev"
       macos-deps: "sdl2 glfw glew glm"
       pre-configure-steps: "bash scripts/build_sdl3.sh"
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
-      android-api: 23
-      create-pr: false
 
   build-glfw:
     name: Build (GLFW)
@@ -111,7 +103,6 @@ jobs:
       bin-name-linux-normalized: ImGuiImplGLFW.so
       bin-name-android-normalized: ImGuiImplGLFW.so
       bin-name-windows-normalized: ImGuiImplGLFW.dll
-      output-dir: native
       linux-deps: "build-essential cmake libsdl2-dev libglfw3-dev libglu1-mesa-dev libvulkan-dev patchelf"
       macos-deps: "sdl2 glfw glew glm"
       use-vcpkg: true
@@ -120,15 +111,14 @@ jobs:
       setup-vulkan: true
       setup-vulkan-linux: false
       setup-vulkan-windows: false
-      create-pr: false
 
   create-pr:
-    uses: JunaMeinhold/cmake-actions/.github/workflows/create-pr.yml@v1.0
-    needs: [build-base, build-glfw, build-sdl3, build-sdl2]
+    needs: [build-base, build-sdl2, build-sdl3, build-glfw]
+    uses: JunaMeinhold/cmake-actions/.github/workflows/create-pr.yml@v1.x.x
     with:
-      lib-name: Dear ImGui Backends
-      repo-tag: latest
-      output-dir: native
-      branch: native-artifacts-branch
-      base: master
-      reviewers: JunaMeinhold
+        lib-name: "ImGuiImpl"
+        lib-version: "v1.92.1"
+        pr-base-branch: "master"
+        pr-reviewers: JunaMeinhold
+        pr-branch: backends-artifacts
+        pr-manifest-path: imgui_impl
