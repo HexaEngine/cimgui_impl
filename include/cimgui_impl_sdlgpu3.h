@@ -8,6 +8,8 @@
 typedef struct SDL_GPUDevice SDL_GPUDevice;
 typedef int SDL_GPUTextureFormat;
 typedef int SDL_GPUSampleCount;
+typedef int SDL_GPUSwapchainComposition;
+typedef int SDL_GPUPresentMode;
 typedef struct SDL_GPUCommandBuffer SDL_GPUCommandBuffer;
 typedef struct SDL_GPURenderPass SDL_GPURenderPass;
 typedef struct SDL_GPUGraphicsPipeline SDL_GPUGraphicsPipeline;
@@ -16,6 +18,8 @@ struct ImGui_ImplSDLGPU3_InitInfo {
 	SDL_GPUDevice* Device;
 	SDL_GPUTextureFormat ColorTargetFormat;
 	SDL_GPUSampleCount MSAASamples;
+	SDL_GPUSwapchainComposition SwapchainComposition;
+	SDL_GPUPresentMode PresentMode;
 };
 #else
 #include "backends/imgui_impl_sdlgpu3.h"

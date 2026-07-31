@@ -5,11 +5,11 @@
 #if CIMGUI_USE_WIN32
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // typedefs for Win32 types used in this header
-typedef struct HWND HWND;
+typedef struct HWND__ *HWND;
 typedef unsigned int UINT;
-typedef unsigned long WPARAM;
-typedef long LPARAM;
-typedef long LRESULT;
+typedef uintptr_t WPARAM;
+typedef intptr_t LPARAM;
+typedef intptr_t LRESULT;
 #else
 #include <windows.h>
 #include "backends/imgui_impl_win32.h"

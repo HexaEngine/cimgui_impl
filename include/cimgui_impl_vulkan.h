@@ -4,28 +4,28 @@
 #include "cimgui_config.h"
 #if CIMGUI_USE_VULKAN
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+typedef struct VkAllocationCallbacks VkAllocationCallbacks;
+
 typedef struct VkInstance_T* VkInstance;
 typedef struct VkPhysicalDevice_T* VkPhysicalDevice;
 typedef struct VkDevice_T* VkDevice;
 typedef struct VkQueue_T* VkQueue;
-typedef struct VkDescriptorPool_T* VkDescriptorPool;
-typedef struct VkRenderPass_T* VkRenderPass;
-typedef struct VkPipelineCache_T* VkPipelineCache;
-typedef struct VkAllocationCallbacks_T* VkAllocationCallbacks;
 typedef struct VkCommandBuffer_T* VkCommandBuffer;
-typedef struct VkSemaphore_T* VkSemaphore;
-typedef struct VkImage_T* VkImage;
-typedef struct VkImageView_T* VkImageView;
-typedef struct VkFramebuffer_T* VkFramebuffer;
-typedef struct VkSwapchainKHR_T* VkSwapchainKHR;
-typedef struct VkSurfaceKHR_T* VkSurfaceKHR;
-typedef struct VkSurfaceFormatKHR_T* VkSurfaceFormatKHR;
-typedef struct VkPresentModeKHR_T* VkPresentModeKHR;
-typedef struct VkDescriptorSet_T* VkDescriptorSet;
-typedef struct VkSampler_T* VkSampler;
-typedef struct VkCommandPool_T* VkCommandPool;
-typedef struct VkFence_T* VkFence;
-typedef struct VkPipelineLayout_T* VkPipelineLayout;
+typedef struct VkDescriptorPool { uint64_t Handle; } VkDescriptorPool;
+typedef struct VkRenderPass { uint64_t Handle; } VkRenderPass;
+typedef struct VkPipelineCache { uint64_t Handle; } VkPipelineCache;
+typedef struct VkSemaphore { uint64_t Handle; } VkSemaphore;
+typedef struct VkImage { uint64_t Handle; } VkImage;
+typedef struct VkImageView { uint64_t Handle; } VkImageView;
+typedef struct VkFramebuffer { uint64_t Handle; } VkFramebuffer;
+typedef struct VkSwapchainKHR { uint64_t Handle; } VkSwapchainKHR;
+typedef struct VkSurfaceKHR { uint64_t Handle; } VkSurfaceKHR;
+typedef struct VkDescriptorSet { uint64_t Handle; } VkDescriptorSet;
+typedef struct VkSampler { uint64_t Handle; } VkSampler;
+typedef struct VkCommandPool { uint64_t Handle; } VkCommandPool;
+typedef struct VkFence { uint64_t Handle; } VkFence;
+typedef struct VkPipelineLayout { uint64_t Handle; } VkPipelineLayout;
+typedef struct VkPipeline { uint64_t Handle; } VkPipeline;
 typedef struct ImGuiViewport ImGuiViewport;
 typedef struct ImGui_ImplVulkan_PipelineInfo ImGui_ImplVulkan_PipelineInfo;
 
@@ -38,15 +38,14 @@ typedef void (VKAPI_PTR* PFN_vkVoidFunction)(void);
 typedef int VkResult;
 typedef unsigned int VkSampleCountFlagBits;
 typedef unsigned long long VkDeviceSize;
-
-typedef enum VkStructureType;
-
-// Vulkan constants
-#define VK_NULL_HANDLE nullptr
+typedef int VkStructureType;
+typedef int VkDynamicState;
 
 // Format and color space types
 typedef unsigned int VkFormat;
 typedef unsigned int VkColorSpaceKHR;
+typedef int VkPresentModeKHR;
+typedef int VkImageLayout;
 
 typedef uint32_t VkFlags;
 
@@ -77,18 +76,38 @@ typedef enum VkImageUsageFlagBits {
 } VkImageUsageFlagBits;
 typedef VkFlags VkImageUsageFlags;
 
-// Pipeline and layout types
-typedef struct VkPipeline_T* VkPipeline;
-typedef struct VkImageLayout_T* VkImageLayout;
+typedef union VkClearColorValue {
+    float       float32[4];
+    int32_t     int32[4];
+    uint32_t    uint32[4];
+} VkClearColorValue;
 
-// Clear value structure
-typedef struct VkClearValue {
-	float color[4]; // For color attachments
-	struct {
-		float depth; // Depth value
-		unsigned int stencil; // Stencil value
-	} depthStencil; // For depth/stencil attachments
+typedef struct VkClearDepthStencilValue {
+    float       depth;
+    uint32_t    stencil;
+} VkClearDepthStencilValue;
+
+typedef union VkClearValue {
+    VkClearColorValue           color;
+    VkClearDepthStencilValue    depthStencil;
 } VkClearValue;
+
+typedef struct VkSurfaceFormatKHR {
+	VkFormat format;
+	VkColorSpaceKHR colorSpace;
+} VkSurfaceFormatKHR;
+
+typedef struct VkAttachmentDescription {
+	VkFlags flags;
+	VkFormat format;
+	VkSampleCountFlagBits samples;
+	int loadOp;
+	int storeOp;
+	int stencilLoadOp;
+	int stencilStoreOp;
+	VkImageLayout initialLayout;
+	VkImageLayout finalLayout;
+} VkAttachmentDescription;
 
 typedef struct VkPipelineRenderingCreateInfo {
 	VkStructureType    sType;
@@ -101,6 +120,26 @@ typedef struct VkPipelineRenderingCreateInfo {
 } VkPipelineRenderingCreateInfo;
 
 typedef VkPipelineRenderingCreateInfo VkPipelineRenderingCreateInfoKHR;
+
+typedef struct VkShaderModuleCreateInfo {
+	VkStructureType sType;
+	const void* pNext;
+	VkFlags flags;
+	size_t codeSize;
+	const uint32_t* pCode;
+} VkShaderModuleCreateInfo;
+
+typedef struct ImVector_VkDynamicState { int Size; int Capacity; VkDynamicState* Data; } ImVector_VkDynamicState;
+
+struct ImGui_ImplVulkan_PipelineInfo
+{
+	VkRenderPass RenderPass;
+	uint32_t Subpass;
+	VkSampleCountFlagBits MSAASamples;
+	ImVector_VkDynamicState ExtraDynamicStates;
+	VkPipelineRenderingCreateInfoKHR PipelineRenderingCreateInfo;
+	VkImageUsageFlags SwapChainImageUsage;
+};
 
 // Backend uses a small number of descriptors per font atlas + as many as additional calls done to ImGui_ImplVulkan_AddTexture().
 #define CIMGUI_IMPL_VULKAN_MINIMUM_IMAGE_SAMPLER_POOL_SIZE   (8)     // Minimum per atlas
@@ -122,29 +161,22 @@ struct ImGui_ImplVulkan_InitInfo
 	uint32_t                        QueueFamily;
 	VkQueue                         Queue;
 	VkDescriptorPool                DescriptorPool;             // See requirements in note above; ignored if using DescriptorPoolSize > 0
-	VkRenderPass                    RenderPass;                 // Ignored if using dynamic rendering
+	uint32_t                        DescriptorPoolSize;
 	uint32_t                        MinImageCount;              // >= 2
 	uint32_t                        ImageCount;                 // >= MinImageCount
-	VkSampleCountFlagBits           MSAASamples;                // 0 defaults to VK_SAMPLE_COUNT_1_BIT
-
-	// (Optional)
 	VkPipelineCache                 PipelineCache;
-	uint32_t                        Subpass;
-
-	// (Optional) Set to create internal descriptor pool instead of using DescriptorPool
-	uint32_t                        DescriptorPoolSize;
+	ImGui_ImplVulkan_PipelineInfo   PipelineInfoMain;
+	ImGui_ImplVulkan_PipelineInfo   PipelineInfoForViewports;
 
 	// (Optional) Dynamic Rendering
 	// Need to explicitly enable VK_KHR_dynamic_rendering extension to use this, even for Vulkan 1.3.
 	bool                            UseDynamicRendering;
-#ifdef CIMGUI_IMPL_VULKAN_HAS_DYNAMIC_RENDERING
-	VkPipelineRenderingCreateInfoKHR PipelineRenderingCreateInfo;
-#endif
-
 	// (Optional) Allocation, Debugging
 	const VkAllocationCallbacks* Allocator;
 	void                            (*CheckVkResultFn)(VkResult err);
 	VkDeviceSize                    MinAllocationSize;          // Minimum allocation size. Set to 1024*1024 to satisfy zealous best practices validation layer and waste a little memory.
+	VkShaderModuleCreateInfo        CustomShaderVertCreateInfo;
+	VkShaderModuleCreateInfo        CustomShaderFragCreateInfo;
 };
 #else
 #include "backends/imgui_impl_vulkan.h"
@@ -154,7 +186,7 @@ struct ImGui_ImplVulkan_InitInfo
 CIMGUI_API bool             CImGui_ImplVulkan_Init(ImGui_ImplVulkan_InitInfo* info);
 CIMGUI_API void             CImGui_ImplVulkan_Shutdown();
 CIMGUI_API void             CImGui_ImplVulkan_NewFrame();
-CIMGUI_API void             CImGui_ImplVulkan_RenderDrawData(ImDrawData* draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline = VK_NULL_HANDLE);
+CIMGUI_API void             CImGui_ImplVulkan_RenderDrawData(ImDrawData* draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline);
 CIMGUI_API void             CImGui_ImplVulkan_SetMinImageCount(uint32_t min_image_count); // To override MinImageCount after initialization (e.g. if swap chain is recreated)
 CIMGUI_API void             CImGui_ImplVulkan_CreateMainPipeline(const ImGui_ImplVulkan_PipelineInfo* info);
 
@@ -252,16 +284,16 @@ typedef struct ImVector_ImGui_ImplVulkanH_FrameSemaphores { int Size; int Capaci
 // (Used by example's main.cpp. Used by multi-viewport features. Probably NOT used by your own engine/app.)
 struct ImGui_ImplVulkanH_Window
 {
-	int                 Width;
-	int                 Height;
-	VkSwapchainKHR      Swapchain;
+	bool                UseDynamicRendering;
 	VkSurfaceKHR        Surface;
 	VkSurfaceFormatKHR  SurfaceFormat;
 	VkPresentModeKHR    PresentMode;
-	VkRenderPass        RenderPass;
-	bool                UseDynamicRendering;
-	bool                ClearEnable;
+	VkAttachmentDescription AttachmentDesc;
 	VkClearValue        ClearValue;
+	int                 Width;
+	int                 Height;
+	VkSwapchainKHR      Swapchain;
+	VkRenderPass        RenderPass;
 	uint32_t            FrameIndex;             // Current frame being rendered to (0 <= FrameIndex < FrameInFlightCount)
 	uint32_t            ImageCount;             // Number of simultaneous in-flight frames (returned by vkGetSwapchainImagesKHR, usually derived from min_image_count)
 	uint32_t            SemaphoreCount;         // Number of simultaneous in-flight frames + 1, to be able to use it in vkAcquireNextImageKHR
