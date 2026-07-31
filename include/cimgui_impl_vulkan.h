@@ -26,6 +26,8 @@ typedef struct VkSampler_T* VkSampler;
 typedef struct VkCommandPool_T* VkCommandPool;
 typedef struct VkFence_T* VkFence;
 typedef struct VkPipelineLayout_T* VkPipelineLayout;
+typedef struct ImGuiViewport ImGuiViewport;
+typedef struct ImGui_ImplVulkan_PipelineInfo ImGui_ImplVulkan_PipelineInfo;
 
 #define VKAPI_CALL
 #define VKAPI_PTR VKAPI_CALL
@@ -154,6 +156,7 @@ CIMGUI_API void             CImGui_ImplVulkan_Shutdown();
 CIMGUI_API void             CImGui_ImplVulkan_NewFrame();
 CIMGUI_API void             CImGui_ImplVulkan_RenderDrawData(ImDrawData* draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline = VK_NULL_HANDLE);
 CIMGUI_API void             CImGui_ImplVulkan_SetMinImageCount(uint32_t min_image_count); // To override MinImageCount after initialization (e.g. if swap chain is recreated)
+CIMGUI_API void             CImGui_ImplVulkan_CreateMainPipeline(const ImGui_ImplVulkan_PipelineInfo* info);
 
 // (Advanced) Use e.g. if you need to precisely control the timing of texture updates (e.g. for staged rendering), by setting ImDrawData::Textures = NULL to handle this manually.
 CIMGUI_API void             CImGui_ImplVulkan_UpdateTexture(ImTextureData* tex);
@@ -161,7 +164,7 @@ CIMGUI_API void             CImGui_ImplVulkan_UpdateTexture(ImTextureData* tex);
 // Register a texture (VkDescriptorSet == ImTextureID)
 // FIXME: This is experimental in the sense that we are unsure how to best design/tackle this problem
 // Please post to https://github.com/ocornut/imgui/pull/914 if you have suggestions.
-CIMGUI_API VkDescriptorSet  CImGui_ImplVulkan_AddTexture(VkSampler sampler, VkImageView image_view, VkImageLayout image_layout);
+CIMGUI_API VkDescriptorSet  CImGui_ImplVulkan_AddTexture(VkImageView image_view, VkImageLayout image_layout);
 CIMGUI_API void             CImGui_ImplVulkan_RemoveTexture(VkDescriptorSet descriptor_set);
 
 // Optional: load Vulkan functions with a custom function loader
@@ -219,6 +222,7 @@ CIMGUI_API VkPresentModeKHR     CImGui_ImplVulkanH_SelectPresentMode(VkPhysicalD
 CIMGUI_API VkPhysicalDevice     CImGui_ImplVulkanH_SelectPhysicalDevice(VkInstance instance);
 CIMGUI_API uint32_t             CImGui_ImplVulkanH_SelectQueueFamilyIndex(VkPhysicalDevice physical_device);
 CIMGUI_API int                  CImGui_ImplVulkanH_GetMinImageCountFromPresentMode(VkPresentModeKHR present_mode);
+CIMGUI_API ImGui_ImplVulkanH_Window* CImGui_ImplVulkanH_GetWindowDataFromViewport(ImGuiViewport* viewport);
 
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 

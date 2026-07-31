@@ -32,6 +32,7 @@ CIMGUI_API void CImGui_ImplSDLGPU3_PrepareDrawData(ImDrawData* draw_data, SDL_GP
 CIMGUI_API void CImGui_ImplSDLGPU3_RenderDrawData(ImDrawData* draw_data, SDL_GPUCommandBuffer* command_buffer, SDL_GPURenderPass* render_pass, SDL_GPUGraphicsPipeline* pipeline);
 CIMGUI_API void CImGui_ImplSDLGPU3_CreateDeviceObjects();
 CIMGUI_API void CImGui_ImplSDLGPU3_DestroyDeviceObjects();
+CIMGUI_API void CImGui_ImplSDLGPU3_UpdateTexture(ImTextureData* tex);
 CIMGUI_API void CImGui_ImplSDLGPU3_GetSPIRVVertexShader(const void** ptr, size_t* size);
 CIMGUI_API void CImGui_ImplSDLGPU3_GetSPIRVFragmentShader(const void** ptr, size_t* size);
 CIMGUI_API void CImGui_ImplSDLGPU3_GetDXBCVertexShader(const void** ptr, size_t* size);

@@ -35,7 +35,19 @@ CIMGUI_API bool CImGui_ImplSDL2_ProcessEvent(const SDL_Event *event)
 {
     return ImGui_ImplSDL2_ProcessEvent(event);
 }
+CIMGUI_API float CImGui_ImplSDL2_GetContentScaleForWindow(SDL_Window *window)
+{
+    return ImGui_ImplSDL2_GetContentScaleForWindow(window);
+}
+CIMGUI_API float CImGui_ImplSDL2_GetContentScaleForDisplay(int display_index)
+{
+    return ImGui_ImplSDL2_GetContentScaleForDisplay(display_index);
+}
 CIMGUI_API void CImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode, struct _SDL_GameController **manual_gamepads_array, int manual_gamepads_count)
 {
     ImGui_ImplSDL2_SetGamepadMode(mode, manual_gamepads_array, manual_gamepads_count);
+}
+CIMGUI_API void CImGui_ImplSDL2_SetMouseCaptureMode(ImGui_ImplSDL2_MouseCaptureMode mode)
+{
+    ImGui_ImplSDL2_SetMouseCaptureMode(mode);
 }

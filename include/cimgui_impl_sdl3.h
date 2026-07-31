@@ -11,6 +11,7 @@ typedef struct SDL_Gamepad SDL_Gamepad;
 typedef union SDL_Event SDL_Event;
 // enums from backend
 enum ImGui_ImplSDL3_GamepadMode { ImGui_ImplSDL3_GamepadMode_AutoFirst, ImGui_ImplSDL3_GamepadMode_AutoAll, ImGui_ImplSDL3_GamepadMode_Manual };
+enum ImGui_ImplSDL3_MouseCaptureMode { ImGui_ImplSDL3_MouseCaptureMode_Enabled, ImGui_ImplSDL3_MouseCaptureMode_EnabledAfterDrag, ImGui_ImplSDL3_MouseCaptureMode_Disabled };
 #else
 #include "backends/imgui_impl_sdl3.h"
 #endif
@@ -28,6 +29,7 @@ CIMGUI_API bool CImGui_ImplSDL3_ProcessEvent(const SDL_Event *event);
 // Gamepad selection automatically starts in AutoFirst mode, picking first available SDL_Gamepad. You may override this.
 // When using manual mode, caller is responsible for opening/closing gamepad.
 CIMGUI_API void CImGui_ImplSDL3_SetGamepadMode(ImGui_ImplSDL3_GamepadMode mode, SDL_Gamepad **manual_gamepads_array, int manual_gamepads_count);
+CIMGUI_API void CImGui_ImplSDL3_SetMouseCaptureMode(ImGui_ImplSDL3_MouseCaptureMode mode);
 #endif
 
 #endif // CIMGUI_IMPL_SDL3_H

@@ -28,6 +28,10 @@ CIMGUI_API void CImGui_ImplSDLGPU3_DestroyDeviceObjects()
 {
     ImGui_ImplSDLGPU3_DestroyDeviceObjects();
 }
+CIMGUI_API void CImGui_ImplSDLGPU3_UpdateTexture(ImTextureData *tex)
+{
+    ImGui_ImplSDLGPU3_UpdateTexture(tex);
+}
 
 CIMGUI_API void CImGui_ImplSDLGPU3_GetSPIRVVertexShader(const void** ptr, size_t* size) 
 {

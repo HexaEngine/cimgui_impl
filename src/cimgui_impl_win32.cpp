@@ -5,7 +5,7 @@ CIMGUI_API bool CImGui_ImplWin32_Init(void *hwnd)
 }
 CIMGUI_API bool CImGui_ImplWin32_InitForOpenGL(void *hwnd)
 {
-    return ImGui_ImplWin32_Init(hwnd);
+    return ImGui_ImplWin32_InitForOpenGL(hwnd);
 }
 CIMGUI_API void CImGui_ImplWin32_Shutdown()
 {

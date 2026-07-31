@@ -20,14 +20,18 @@ CIMGUI_API void CImGui_ImplVulkan_SetMinImageCount(uint32_t min_image_count)
 {
 	ImGui_ImplVulkan_SetMinImageCount(min_image_count);
 }
+CIMGUI_API void CImGui_ImplVulkan_CreateMainPipeline(const ImGui_ImplVulkan_PipelineInfo* info)
+{
+	ImGui_ImplVulkan_CreateMainPipeline(info);
+}
 
 CIMGUI_API void CImGui_ImplVulkan_UpdateTexture(ImTextureData* tex)
 {
 	ImGui_ImplVulkan_UpdateTexture(tex);
 }
-CIMGUI_API VkDescriptorSet CImGui_ImplVulkan_AddTexture(VkSampler sampler, VkImageView image_view, VkImageLayout image_layout)
+CIMGUI_API VkDescriptorSet CImGui_ImplVulkan_AddTexture(VkImageView image_view, VkImageLayout image_layout)
 {
-	return ImGui_ImplVulkan_AddTexture(sampler, image_view, image_layout);
+	return ImGui_ImplVulkan_AddTexture(image_view, image_layout);
 }
 CIMGUI_API void CImGui_ImplVulkan_RemoveTexture(VkDescriptorSet descriptor_set)
 {
@@ -68,4 +72,8 @@ CIMGUI_API uint32_t CImGui_ImplVulkanH_SelectQueueFamilyIndex(VkPhysicalDevice p
 CIMGUI_API int CImGui_ImplVulkanH_GetMinImageCountFromPresentMode(VkPresentModeKHR present_mode)
 {
 	return ImGui_ImplVulkanH_GetMinImageCountFromPresentMode(present_mode);
+}
+CIMGUI_API ImGui_ImplVulkanH_Window* CImGui_ImplVulkanH_GetWindowDataFromViewport(ImGuiViewport* viewport)
+{
+	return ImGui_ImplVulkanH_GetWindowDataFromViewport(viewport);
 }

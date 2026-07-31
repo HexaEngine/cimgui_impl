@@ -43,3 +43,7 @@ CIMGUI_API void CImGui_ImplSDL3_SetGamepadMode(ImGui_ImplSDL3_GamepadMode mode, 
 {
     ImGui_ImplSDL3_SetGamepadMode(mode, manual_gamepads_array, manual_gamepads_count);
 }
+CIMGUI_API void CImGui_ImplSDL3_SetMouseCaptureMode(ImGui_ImplSDL3_MouseCaptureMode mode)
+{
+    ImGui_ImplSDL3_SetMouseCaptureMode(mode);
+}
